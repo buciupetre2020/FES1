@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Raport final despre analiza fiscalităţii - 7&nbsp; Calcule finale şi simulări venituri la buget</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./tranzactii_imobiliare.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Calcule finale şi simulări venituri la buget</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Raport final despre analiza fiscalităţii</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Introducere</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Generalitati.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Generalităţi</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ratele_impozitarii.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Analiza ratelor impozitării</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./distributional.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Aspecte distributive ale taxării</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Impozit_profit.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Impozitul pe profit</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tipuri_taxe.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Analiza tipurilor de taxe</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tranzactii_imobiliare.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tranzacţiile imobiliare</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./calcule_finale.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Calcule finale şi simulări venituri la buget</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#impozitul-pe-dividendele-companiilor-listate" id="toc-impozitul-pe-dividendele-companiilor-listate" class="nav-link active" data-scroll-target="#impozitul-pe-dividendele-companiilor-listate"><span class="toc-section-number">7.1</span>  Impozitul pe dividendele companiilor listate</a></li>
+  <li><a href="#simulări-finale" id="toc-simulări-finale" class="nav-link" data-scroll-target="#simulări-finale"><span class="toc-section-number">7.2</span>  Simulări finale</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Calcule finale şi simulări venituri la buget</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>În această secţiune adunăm ce am calculat şi anterior înglobând şi simulări asupra impozitelor pe dividende. Din lipsă de date vom simula doar ce s-ar întâmpla dacă ar fi taxate doar dividendele de pe Bursa de Valori Bucureşti. Vom compara suma obţinută cu impozitul încasat de facto de bugetul statului pentru a ne face o idee dacă dividendele companiilor listate sunt majoritare în economie sau nu.</p>
+<section id="impozitul-pe-dividendele-companiilor-listate" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="impozitul-pe-dividendele-companiilor-listate"><span class="header-section-number">7.1</span> Impozitul pe dividendele companiilor listate</h2>
+<p>Impozitul din venitul pe dividende în 2021 a fost de circa 2.596 miliarde de RON, puţin mai mic de 10 % din totalul impozitului pe venitul personal. Pe anul 2021 a fost în efect rata de impozitare de 5 %.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<div id="pxrasddcmm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pxrasddcmm table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#pxrasddcmm thead, #pxrasddcmm tbody, #pxrasddcmm tfoot, #pxrasddcmm tr, #pxrasddcmm td, #pxrasddcmm th {
+  border-style: none;
+}
+
+#pxrasddcmm p {
+  margin: 0;
+  padding: 0;
+}
+
+#pxrasddcmm .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#pxrasddcmm .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pxrasddcmm .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pxrasddcmm .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pxrasddcmm .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pxrasddcmm .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pxrasddcmm .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pxrasddcmm .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pxrasddcmm .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#pxrasddcmm .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#pxrasddcmm .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pxrasddcmm .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pxrasddcmm .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pxrasddcmm .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pxrasddcmm .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pxrasddcmm .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#pxrasddcmm .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#pxrasddcmm .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#pxrasddcmm .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pxrasddcmm .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#pxrasddcmm .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pxrasddcmm .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pxrasddcmm .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pxrasddcmm .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pxrasddcmm .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pxrasddcmm .gt_left {
+  text-align: left;
+}
+
+#pxrasddcmm .gt_center {
+  text-align: center;
+}
+
+#pxrasddcmm .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pxrasddcmm .gt_font_normal {
+  font-weight: normal;
+}
+
+#pxrasddcmm .gt_font_bold {
+  font-weight: bold;
+}
+
+#pxrasddcmm .gt_font_italic {
+  font-style: italic;
+}
+
+#pxrasddcmm .gt_super {
+  font-size: 65%;
+}
+
+#pxrasddcmm .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#pxrasddcmm .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#pxrasddcmm .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#pxrasddcmm .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#pxrasddcmm .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#pxrasddcmm .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#pxrasddcmm .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table" style="table-layout: fixed;; width: 0px" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <colgroup>
+    <col style="width:150px;">
+    <col style="width:150px;">
+    <col style="width:150px;">
+  </colgroup>
+  <thead>
+    
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=""></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Dividende">Dividende</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Impozit">Impozit</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><th id="stub_1_1" scope="row" class="gt_row gt_right gt_stub">2020</th>
+<td headers="stub_1_1 Dividende" class="gt_row gt_right">7,268,947,616</td>
+<td headers="stub_1_1 Impozit" class="gt_row gt_right">363,447,381</td></tr>
+    <tr><th id="stub_1_2" scope="row" class="gt_row gt_right gt_stub">2021</th>
+<td headers="stub_1_2 Dividende" class="gt_row gt_right">7,801,037,517</td>
+<td headers="stub_1_2 Impozit" class="gt_row gt_right">390,051,876</td></tr>
+    <tr><th id="stub_1_3" scope="row" class="gt_row gt_right gt_stub">2022</th>
+<td headers="stub_1_3 Dividende" class="gt_row gt_right">8,665,810,464</td>
+<td headers="stub_1_3 Impozit" class="gt_row gt_right">433,290,523</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+<p>De unde deducem că în anul 2021 dividendele companiilor listate nu au constituit decât circa 15 % din totalul dividendelor extrase din economie. Dorim să propunem un impozit pe dividende de circa 18 %, fapt care ar aduce proporţional de 3.6 ori mai mulţi bani decât cei 2.6 miliarde de RON, adică încă 6.76 miliarde de RON. Desigur, acest estimat este puternic simplificat şi e în cel mai bun caz un maximum teoretic, dependent desigur şi de fluctuaţiile pieţei şi economiei. Vom merge cu un estimat conservator de 6 miliarde notând că în 2023 suma colectată va fi semnificativ mai mare (cum şi în 2022 dividendele totale au crescut cu circa 10 %).</p>
+</section>
+<section id="simulări-finale" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="simulări-finale"><span class="header-section-number">7.2</span> Simulări finale</h2>
+<div class="cell">
+<div class="cell-output-display">
+
+<div id="ywsaiskglc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:90%;height:auto;">
+<style>#ywsaiskglc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ywsaiskglc thead, #ywsaiskglc tbody, #ywsaiskglc tfoot, #ywsaiskglc tr, #ywsaiskglc td, #ywsaiskglc th {
+  border-style: none;
+}
+
+#ywsaiskglc p {
+  margin: 0;
+  padding: 0;
+}
+
+#ywsaiskglc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ywsaiskglc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ywsaiskglc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ywsaiskglc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ywsaiskglc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ywsaiskglc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ywsaiskglc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ywsaiskglc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ywsaiskglc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ywsaiskglc .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ywsaiskglc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ywsaiskglc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ywsaiskglc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ywsaiskglc .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ywsaiskglc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ywsaiskglc .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ywsaiskglc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ywsaiskglc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ywsaiskglc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ywsaiskglc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ywsaiskglc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ywsaiskglc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ywsaiskglc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ywsaiskglc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ywsaiskglc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ywsaiskglc .gt_left {
+  text-align: left;
+}
+
+#ywsaiskglc .gt_center {
+  text-align: center;
+}
+
+#ywsaiskglc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ywsaiskglc .gt_font_normal {
+  font-weight: normal;
+}
+
+#ywsaiskglc .gt_font_bold {
+  font-weight: bold;
+}
+
+#ywsaiskglc .gt_font_italic {
+  font-style: italic;
+}
+
+#ywsaiskglc .gt_super {
+  font-size: 65%;
+}
+
+#ywsaiskglc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ywsaiskglc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ywsaiskglc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ywsaiskglc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ywsaiskglc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ywsaiskglc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ywsaiskglc .gt_indent_5 {
+  text-indent: 25px;
+}
+
+table.gt_table {
+  border: 2px solid black;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_heading">
+      <td colspan="3" class="gt_heading gt_title gt_font_normal" style="">Impact tipuri de măsuri propuse (miliarde RON)</td>
+    </tr>
+    <tr class="gt_heading">
+      <td colspan="3" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="">Calcule proprii pe bilanţurile anilor 2019-2021</td>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="background-color: #1F1F1F;" scope="col" id=""></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="background-color: #1F1F1F; color: #FFFFFF;" scope="col" id="Masura">Masura</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="background-color: #1F1F1F; color: #FFFFFF;" scope="col" id="Impact">Impact</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <th colspan="3" class="gt_group_heading" style="background-color: #CCC444; border-left-width: 1px; border-left-style: solid; border-left-color: #ccc444; border-right-width: 1px; border-right-style: solid; border-right-color: #ccc444; border-top-width: 1px; border-top-style: solid; border-top-color: #ccc444; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #ccc444; font-weight: bold;" scope="colgroup" id="Eliminare scutiri">Eliminare scutiri</th>
+    </tr>
+    <tr class="gt_row_group_first"><th id="stub_1_1" scope="row" class="gt_row gt_left gt_stub" style="background-color: #EFEFEF;"></th>
+<td headers="Eliminare scutiri stub_1_1 Masura" class="gt_row gt_left" style="background-color: #EFEFEF;">ALIMENTAR &amp; AGRICULTURA</td>
+<td headers="Eliminare scutiri stub_1_1 Impact" class="gt_row gt_right" style="background-color: #EFEFEF;">2.08</td></tr>
+    <tr><th id="stub_1_2" scope="row" class="gt_row gt_left gt_stub" style="background-color: #EFEFEF;"></th>
+<td headers="Eliminare scutiri stub_1_2 Masura" class="gt_row gt_left" style="background-color: #EFEFEF;">CONSTRUCŢII</td>
+<td headers="Eliminare scutiri stub_1_2 Impact" class="gt_row gt_right" style="background-color: #EFEFEF;">5.46</td></tr>
+    <tr><th id="stub_1_3" scope="row" class="gt_row gt_left gt_stub" style="background-color: #EFEFEF;"></th>
+<td headers="Eliminare scutiri stub_1_3 Masura" class="gt_row gt_left" style="background-color: #EFEFEF;">IT</td>
+<td headers="Eliminare scutiri stub_1_3 Impact" class="gt_row gt_right" style="background-color: #EFEFEF;">1.99</td></tr>
+    <tr><th id="summary_stub_Eliminare scutiri_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row" style="background-color: #AAAAAA;">TOTAL GRUP</th>
+<td headers="Eliminare scutiri summary_stub_Eliminare scutiri_1 Masura" class="gt_row gt_left gt_summary_row gt_first_summary_row thick gt_last_summary_row" style="background-color: #AAAAAA;">—</td>
+<td headers="Eliminare scutiri summary_stub_Eliminare scutiri_1 Impact" class="gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row" style="background-color: #AAAAAA;">9.53</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="3" class="gt_group_heading" style="background-color: #CCC444; border-left-width: 1px; border-left-style: solid; border-left-color: #ccc444; border-right-width: 1px; border-right-style: solid; border-right-color: #ccc444; border-top-width: 1px; border-top-style: solid; border-top-color: #ccc444; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #ccc444; font-weight: bold;" scope="colgroup" id="Taxe sectoriale">Taxe sectoriale</th>
+    </tr>
+    <tr class="gt_row_group_first"><th id="stub_1_4" scope="row" class="gt_row gt_left gt_stub" style="background-color: #EFEFEF;"></th>
+<td headers="Taxe sectoriale stub_1_4 Masura" class="gt_row gt_left" style="background-color: #EFEFEF;">ENERGIE<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span></td>
+<td headers="Taxe sectoriale stub_1_4 Impact" class="gt_row gt_right" style="background-color: #EFEFEF;">0.86</td></tr>
+    <tr><th id="stub_1_5" scope="row" class="gt_row gt_left gt_stub" style="background-color: #EFEFEF;"></th>
+<td headers="Taxe sectoriale stub_1_5 Masura" class="gt_row gt_left" style="background-color: #EFEFEF;">JOCURI DE NOROC<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>2</sup></span></td>
+<td headers="Taxe sectoriale stub_1_5 Impact" class="gt_row gt_right" style="background-color: #EFEFEF;">0.11</td></tr>
+    <tr><th id="stub_1_6" scope="row" class="gt_row gt_left gt_stub" style="background-color: #EFEFEF;"></th>
+<td headers="Taxe sectoriale stub_1_6 Masura" class="gt_row gt_left" style="background-color: #EFEFEF;">RETAIL<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>3</sup></span></td>
+<td headers="Taxe sectoriale stub_1_6 Impact" class="gt_row gt_right" style="background-color: #EFEFEF;">4.18</td></tr>
+    <tr><th id="stub_1_7" scope="row" class="gt_row gt_left gt_stub" style="background-color: #EFEFEF;"></th>
+<td headers="Taxe sectoriale stub_1_7 Masura" class="gt_row gt_left" style="background-color: #EFEFEF;">TRANZACŢII IMOBILIARE<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>4</sup></span></td>
+<td headers="Taxe sectoriale stub_1_7 Impact" class="gt_row gt_right" style="background-color: #EFEFEF;">0.35</td></tr>
+    <tr><th id="summary_stub_Taxe sectoriale_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row" style="background-color: #AAAAAA;">TOTAL GRUP</th>
+<td headers="Taxe sectoriale summary_stub_Taxe sectoriale_1 Masura" class="gt_row gt_left gt_summary_row gt_first_summary_row thick gt_last_summary_row" style="background-color: #AAAAAA;">—</td>
+<td headers="Taxe sectoriale summary_stub_Taxe sectoriale_1 Impact" class="gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row" style="background-color: #AAAAAA;">5.49</td></tr>
+    <tr class="gt_group_heading_row">
+      <th colspan="3" class="gt_group_heading" style="background-color: #CCC444; border-left-width: 1px; border-left-style: solid; border-left-color: #ccc444; border-right-width: 1px; border-right-style: solid; border-right-color: #ccc444; border-top-width: 1px; border-top-style: solid; border-top-color: #ccc444; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #ccc444; font-weight: bold;" scope="colgroup" id="Creştere impozite">Creştere impozite</th>
+    </tr>
+    <tr class="gt_row_group_first"><th id="stub_1_8" scope="row" class="gt_row gt_left gt_stub" style="background-color: #EFEFEF;"></th>
+<td headers="Creştere impozite stub_1_8 Masura" class="gt_row gt_left" style="background-color: #EFEFEF;">Impozit progresiv pe venit<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>5</sup></span></td>
+<td headers="Creştere impozite stub_1_8 Impact" class="gt_row gt_right" style="background-color: #EFEFEF;">20.00</td></tr>
+    <tr><th id="stub_1_9" scope="row" class="gt_row gt_left gt_stub" style="background-color: #EFEFEF;"></th>
+<td headers="Creştere impozite stub_1_9 Masura" class="gt_row gt_left" style="background-color: #EFEFEF;">Impozit pe dividende<span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>6</sup></span></td>
+<td headers="Creştere impozite stub_1_9 Impact" class="gt_row gt_right" style="background-color: #EFEFEF;">6.00</td></tr>
+    <tr><th id="summary_stub_Creştere impozite_1" scope="row" class="gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick gt_last_summary_row" style="background-color: #AAAAAA;">TOTAL GRUP</th>
+<td headers="Creştere impozite summary_stub_Creştere impozite_1 Masura" class="gt_row gt_left gt_summary_row gt_first_summary_row thick gt_last_summary_row" style="background-color: #AAAAAA;">—</td>
+<td headers="Creştere impozite summary_stub_Creştere impozite_1 Impact" class="gt_row gt_right gt_summary_row gt_first_summary_row thick gt_last_summary_row" style="background-color: #AAAAAA;">26.00</td></tr>
+    <tr><th id="grand_summary_stub_1" scope="row" class="gt_row gt_left gt_stub gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row">TOTAL</th>
+<td headers="grand_summary_stub_1 Masura" class="gt_row gt_left gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" style="background-color: #BF1111; color: #FFFFFF;">—</td>
+<td headers="grand_summary_stub_1 Impact" class="gt_row gt_right gt_grand_summary_row gt_first_grand_summary_row gt_last_summary_row" style="background-color: #BF1111; color: #FFFFFF;">41.02</td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>1</sup></span> 1.2 % impozit pe cifra de afaceri netă ce depăşeşte 1 miliard RON</td>
+    </tr>
+    <tr>
+      <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>2</sup></span> 1.2 % impozit pe cifra de afaceri pentru toate firmele</td>
+    </tr>
+    <tr>
+      <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>3</sup></span> 1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON</td>
+    </tr>
+    <tr>
+      <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>4</sup></span> 10 % taxă pe tranzacţiile imobiliare</td>
+    </tr>
+    <tr>
+      <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>5</sup></span> Asumând cote de 16 % şi 21 % pentru ce trece de 2200 EURO lunar brut (scenariul slovac)</td>
+    </tr>
+    <tr>
+      <td class="gt_footnote" colspan="3"><span class="gt_footnote_marks" style="white-space:nowrap;font-style:italic;font-weight:normal;"><sup>6</sup></span> Impozit pe dividende de 18 %</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+</div>
+</div>
+<p>Şi acum sub formă de pie chart.</p>
+<div class="cell" data-fig.dpi="250">
+<div class="cell-output-display">
+<p><img src="calcule_finale_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<div class="cell" data-fig.dpi="250">
+<div class="cell-output-display">
+<p><img src="calcule_finale_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./tranzactii_imobiliare.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Tranzacţiile imobiliare</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

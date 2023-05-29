@@ -1,0 +1,272 @@
+# Generalităţi
+
+## Venituri şi cheltuieli totale
+
+Vom folosi în general în acest document filele Eurostat `gov_10a_taxag` pentru taxe şi venituri şi `gov_10a_exp` pentru cheltuieli şi `gov_10a_main` pentru agregatele principale ale finanţelor publice.
+
+```{r}
+library(tidyverse)
+theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
+                                     strip_text_family = "Roboto Condensed",
+                                     strip_text_face = "italic",
+                                     axis_title_size = 12))
+```
+
+```{r}
+taxe <- read_csv("database/gov_10a_taxag_prelucrat.csv")
+cheltuieli <- read_csv("database/gov_10a_exp_prelucrat.csv")
+agregate <- read_csv("database/gov_10a_main_prelucrat.csv")
+```
+
+```{r, fig.width=10, fig.height=10, dpi=250}
+agregate %>% filter(grepl("Total general", na_item)) %>% 
+  filter(grepl("Romania|Bulgaria|Ungaria|Cehia|Polonia|Croatia|Media UE", geo)) %>% mutate(na_item = gsub("^.+expenditure$", "Cheltuieli totale", na_item) %>% gsub("^.+revenue", "Venituri totale", .)) %>%
+  ggplot(aes(x=time, y=values, group=geo)) + 
+  geom_line(aes(colour=geo, linewidth=geo=="Romania"), 
+            show.legend = c("linewidth"=FALSE)) + 
+  scale_y_continuous(labels=scales::percent_format(scale=1)) +
+  facet_wrap(~na_item, ncol=1, scales='free') +
+  labs(title=NULL, y="Procent din PIB", x=NULL, 
+       linewidth=NULL, colour="Ţară") +
+  scale_linewidth_manual(values=c(0.5, 1))
+```
+
+Se observă clar din grafic că unde nu excelează deloc România este categoria veniturilor. Cheltuielile sunt şi ele la coada clasamentului, chiar pentru Europa de Est. Să vedem veniturile totale fiscale.
+
+```{r, fig.width=10, fig.height=8, dpi=250}
+taxe %>% filter(grepl("Total receipts from taxes and social.+contributions after deduction", na_item)) %>% 
+    filter(grepl("Romania|Bulgaria|Ungaria|Cehia|Polonia|Croatia|Media UE", geo)) %>%
+    ggplot(aes(x=time, y=values, group=geo)) + 
+    geom_line(aes(colour=geo, linewidth=geo=="Romania"), 
+              show.legend = c("linewidth"=FALSE)) + 
+    scale_y_continuous(labels=scales::percent_format(scale=1)) +
+    labs(title="Venituri fiscale", y="Procent din PIB", x="An", 
+         linewidth=NULL, colour="Ţară") +
+    scale_linewidth_manual(values=c(0.5, 1))
+```
+
+Să vizualizăm pe axa cheltuieli totale vs venituri totale cum stăm, însumând anii 2012-2022. Mărimea etichetei din grafic reprezintă mărimea excedentului sau, după caz, a deficitului bugetar. România iese la iveală uşor.
+
+```{r, fig.width=10, fig.height=7, dpi=250}
+agregate %>% 
+  filter(grepl("Total general", na_item)) %>% 
+  mutate(na_item = gsub("^.+expenditure$", "Cheltuieli totale", na_item) %>%
+           gsub("^.+revenue", "Venituri totale", .)) %>% 
+  mutate(time=lubridate::year(time)) %>% filter(time>2011) %>% 
+  group_by(geo, na_item) %>% 
+  summarise(values=mean(values)) %>% ungroup() %>% 
+  pivot_wider(names_from=c(na_item), values_from=values) %>% 
+  mutate(deficit = 100*(`Venituri totale`-`Cheltuieli totale`)) %>% 
+  mutate(index = if_else(deficit>0, "Excedent", "Deficit")) %>%
+  ggplot(aes(x=`Venituri totale`, y=`Cheltuieli totale`)) +
+  geom_point(aes(colour=index)) +
+  ggrepel::geom_text_repel(aes(label=geo, size=abs(deficit), 
+                               colour=index), 
+                           show.legend = c("size"=FALSE)) + 
+  geom_abline(slope=1, intercept=0, linetype=2) + 
+  scale_colour_brewer(palette="Set1") + 
+  scale_x_continuous(labels=scales::percent_format(scale=1)) +
+  scale_y_continuous(labels=scales::percent_format(scale=1)) +
+  scale_size_continuous(range=c(3, 6)) + 
+  labs(title="Deficitul bugetar", subtitle="Media 2012-2022", 
+       size=NULL, colour="Sold bugetar")
+```
+
+Şi un tabel în ordinea descrescătoare a deficitului bugetar.
+
+```{r, fig.width=8, fig.height=12, dpi=250}
+agregate %>% filter(grepl("Total general", na_item)) %>% 
+  mutate(na_item = gsub("^.+expenditure$", "Cheltuieli totale", na_item) %>%
+           gsub("^.+revenue", "Venituri totale", .)) %>% 
+  mutate(time=lubridate::year(time)) %>% filter(time>2011) %>% 
+  group_by(geo, na_item) %>% summarise(values=mean(values)) %>% 
+  ungroup() %>% pivot_wider(names_from=c(na_item), values_from=values) %>%
+  mutate(Balanta = (`Venituri totale`-`Cheltuieli totale`)) %>% 
+  arrange((Balanta)) %>% filter(row_number()<11) %>% 
+  rename("Ţări"=geo) %>% gt::gt() %>% 
+  gt::fmt_number(columns=2:4, decimals = 2) %>% 
+  gt::fmt_percent(columns=2:4, force_sign = T) %>% 
+  gt::tab_header(title="Media anilor 2012-2022 a balanţei bugetare") %>% 
+  gt::tab_style(style = gt::cell_fill(), locations = gt::cells_title()) %>%
+  gt::tab_style(style=gt::cell_fill(color='#A9A9A9'), 
+                locations = gt::cells_column_labels()) %>% 
+  gt::tab_style(style=gt::cell_text(color="white"), 
+                locations=gt::cells_column_labels()) %>% 
+  gt::tab_style(style=gt::cell_fill(color="#F1F1F1"), 
+                locations=gt::cells_body()) %>% 
+  gt::tab_options(table.border.left.color = "#000000")
+```
+
+Concluzia acestei secţiuni este că nu cheltuielile sunt mari, într-adevăr cu greu ar putea fi tăiate şi mai mult, ci veniturile sunt foarte mici. Doar Irlanda, Elveţia şi Lituania au venituri din PIB mai mici ca noi făcând media ultimilor 10 ani. Pentru anul 2022 România a avut cel mai mic procent din PIB ca venituri, în afară de Irlanda.
+
+## Taxarea capital - muncă conform Băncii Mondiale
+
+Există [un nou set de date](https://blogs.worldbank.org/developmenttalk/new-dataset-measure-effective-taxation-capital-and-labor-globally-1960s) de la Banca Mondială care permite compararea ratelor de taxare efectivă pe capital şi muncă de-a lungul ţărilor şi anilor. Să vedem evoluţia în cele patru ţări din zona noastră.
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+#| fig-dpi: 250
+
+read_csv("https://raw.githubusercontent.com/pierrebachas/Globalization_Factor_Taxation/main/globalETR_bfjz.csv") %>% 
+  select(country_name, year, region, ETR_L, ETR_K) %>% 
+  filter(country_name%in%c("Romania", "Hungary", "Bulgaria", "Poland")) %>% 
+  gather(ETR_L:ETR_K, key="tax_rate", value='valoare') %>% 
+  mutate(country_name=gsub("Poland", "Polonia", country_name) %>% 
+                      gsub("Hungary", "Ungaria", .)) %>%
+  mutate(tax_rate = gsub("ETR_K", "Capital", tax_rate) %>% 
+                    gsub("ETR_L", "Muncă", .)) %>% 
+  ggplot(aes(x=year, y=valoare, group=tax_rate)) + 
+  geom_line(aes(colour=tax_rate), size=1) + 
+  facet_wrap(~country_name, ncol=2, scales='free') +
+  scale_y_continuous(labels=scales::percent_format(scale=100)) +
+  labs(title = "Rata de taxare efectivă capital-muncă", subtitle="Sursa: Banca Mondială",
+       x="Anul", y=NULL, colour="Indicator") +
+  theme(legend.position = "top")
+```
+
+## Categorii de impozite pe venit
+
+Vom vizualiza profile de ţări după veniturile şi cheltuielile lor ca procent din PIB. Acest lucru ne ajută pentru a ne face o idee despre diversele moduri în care cheltuie sau colectează ţările europene banii la buget. Vom aplica metodologia PCA ("Principal Component Analysis" sau "Analiza componentelor principale") pentru a reduce dimensionalitatea de la un set cu număr mare de variabile originale (categorii de venituri sau cheltuieli, după caz) la doar două axe principale care reprezintă o hartă a similarităţii ţărilor considerând variabilele originale. Important, vom folosi versiunea robustă, insensibilă la outlieri, nu cea originală. Axele sunt ecuaţii liniare, simple funcţii liniare compuse din variabile originale, coeficienţii fiind calculaţi în aşa fel încât axele noastre să surprindă cel mai mult cu putinţă din variaţia variabilelor originale.
+
+```{r}
+
+rbiplot <- function(mat, p=1, clusters=4, k=15, scale=TRUE){
+  x <- mat[,apply(mat, MARGIN=2, FUN=mean)>p, drop=F] %>% colnames()
+  pca <- sparsepca::robspca(mat, scale=scale, verbose=FALSE)
+  procent <- pca$eigenvalues^2/sum(pca$eigenvalues^2)
+  procent <- paste(round(100*procent[1:2], 1), "%")
+  rot <- as_tibble(pca$loadings) %>% mutate(var=colnames(mat)) %>% filter(var%in%x)
+  model <- kmeans(pca$scores[,1:2], centers=clusters)$cluster
+  coords <- as_tibble(pca$scores, rownames="geo") %>%
+    mutate(cluster = as.factor(model))
+  ggplot(coords, aes(x=V1, y=V2)) + 
+    ggConvexHull::geom_convexhull(aes(x=V1, y=V2, group=cluster, fill=cluster), alpha=0.2) +
+    geom_point(colour='red3') + 
+    ggrepel::geom_text_repel(aes(label=geo),nudge_y=0.3, max.overlaps = 10) +
+    geom_vline(xintercept = 0,linetype=2) +
+    geom_hline(yintercept=0, linetype=2) +
+    geom_segment(data=rot, aes(xend=k*V1, x=0, yend=k*V2, y=0), 
+                 arrow = arrow(length = unit(0.25, "cm")), colour='steelblue4', alpha=0.9) +
+    ggrepel::geom_text_repel(data=rot, aes(label=var,x=k*V1, y=k*V2), 
+                             alpha=0.9, colour='steelblue4', size=3) +
+    labs(title="PCA - Biplot", subtitle="Componentele principale (robuste) ale cheltuielilor COFOG99 pe 2017-2021", 
+         x=paste0("Dim1 (", procent[1], ")"), y=paste0("Dim2 (", procent[2],")")) +
+    theme(axis.title = element_text(size=14)) +
+    scale_fill_brewer(palette = "Set1")
+  
+}
+
+
+```
+
+Să începem cu veniturile. Avem 34 de variabile originale pe care le vom reduce la cele două axe principale. Împreună cele două axe explică `r 38.2 + 20.6` % din variabilitatea datelor originale (vezi valorile din paranteză). Cu albastru avem contribuţia variabilelor originale la axele noastre afişate. Practic putem explica de ce România este în poziţia în care este observând săgeţile albastre ce bat înspre ea: contribuţiile sociale ale angajaţilor. Asta însemnă că ţările din direcţia asta (est-europene şi baltice în general) au un procent din PIB mai mare colectat în această categorie de venituri. Culorile reprezintă clusterii descoperiţi de metodologia `k-means`.
+
+```{r}
+mat_venituri <- read_csv("/home/petre/R/proiecte/taxare/database/PCA_venituri.csv") %>% column_to_rownames("geo") 
+mat_cheltuieli <- read_csv('/home/petre/R/proiecte/taxare/database/PCA_cheltuieli.csv') %>% column_to_rownames("geo")
+```
+
+```{r, fig.width=10, fig.height=8, dpi=250}
+rbiplot(mat_venituri, p=0.5, clusters=6, k=15) +
+  labs(subtitle = "Componentele principale (robuste) ale veniturilor bugetare pe 2017-2021", title="PCA - biplot cu veniturile bugetare")
+```
+
+Să vedem şi la cheltuieli. Aici putem folosi 71 de variabile originale din setul original furnizat de Eurostat. Fiind un set mai mare, este de aşteptat că avem mai puţină variabilitate explicată de aceste două axe (circa 52. 7 %). Dar profilele sunt foarte clare: România cheltuie asemenea ţărilor est-europene şi baltice, doar că pe poliţie, ordine publică (unde suntem locul 4 în Europa ca procent din PIB), cheltuieli cu organe legislative şi executive, apărare, etc. La polul opus sunt statele progresiste cu cheltuieli pe protecţie socială, sănătate, educaţie, etc.
+
+```{r, fig.width=10, fig.height=8, dpi=250}
+rbiplot(mat_cheltuieli, p=0.3, clusters=4, k=15) +
+  labs(title="PCA - biplot cu cheltuielile bugetare")
+```
+
+Ghidându-ne după aceste grafice putem face analize punctuale mai interesante. De exemplu, care este topul ţărilor care colectează venituri din contribuţii sociale ?
+
+```{r, fig.width=10, fig.height=8, dpi=250}
+mat_venituri %>% as_tibble(rownames='geo') %>% 
+  select(geo, matches("Compulsory")) %>% 
+  mutate(geo = fct_reorder(geo, `Compulsory employees' actual social contributions`)) %>% 
+  ggplot(aes(x=geo, y=`Compulsory employees' actual social contributions`)) +
+  geom_col(fill='indianred3') + coord_flip() + 
+  labs(title="Contribuţii sociale obligatorii", 
+       subtitle="Pentru angajaţi, media 2017-2021", 
+       y="Procent din PIB", x="Ţară") + 
+  scale_y_continuous(labels=scales::percent_format(scale=1))
+
+```
+
+România este prima, lucru care şi explică poziţionarea ei în direcţia acestei variabile pe biplotul cu venituri. La contribuţiile sociale ale gospodăriilor suntem pe locul 3, lucru de aşteptat întrucât aşa cum arată şi biplotul, ele sunt variabile corelate între ele (săgeţi apropiate ca poziţie şi magnitudine înseamnă variabile bine corelate).
+
+Să rămânem însă la impozitele pe venit. Graficul următor este relevator.
+
+```{r, fig.width=10, fig.height=8, dpi=250}
+taxe %>% 
+  filter(grepl("Taxes on income$", na_item)) %>% 
+  filter(time=="2021-01-01") %>% 
+  mutate(geo=fct_reorder(geo, values)) %>% 
+  ggplot(aes(x=geo, y=values)) + 
+  geom_col(fill='indianred3') + coord_flip() + 
+  scale_y_continuous(labels=scales::percent_format(scale=1)) +
+  labs(title="Impozit pe venit - total", subtitle="Anul 2021", 
+       y="Procent din PIB", x="Ţară")
+```
+
+E interesant de văzut şi evoluţia acestei categorii.
+
+```{r, fig.width=10, fig.height=7, dpi=250}
+taxe %>% 
+    filter(grepl("Taxes on income$", na_item)) %>% 
+    filter(grepl("Romania|Bulgaria|Ungaria|Polonia|Croatia|Media UE", geo)) %>%  ggplot(aes(x=time, y=values, group=geo)) + 
+  geom_line(aes(colour=geo, size=geo=="Romania"), 
+            show.legend = c("size"=FALSE)) + 
+  scale_y_continuous(labels=scales::percent_format(scale=1)) +
+  labs(title="Impozite pe venit - total", x="An", y="Procent din PIB") +
+  scale_size_manual(values=c(0.5, 1))
+```
+
+### Impozitul pe profit
+
+Era de aşteptat, România taxează profiturile mai puţin decât media europeană, dar nu cu mult.
+
+```{r, fig.width=10, fig.height=8, dpi=250}
+taxe %>% filter(time=="2021-01-01") %>% 
+  filter(grepl("profits.+gains", na_item)) %>% 
+  arrange((values)) %>% mutate(geo=fct_reorder(geo, values)) %>% 
+  ggplot(aes(x=geo, y=values)) + geom_col(fill='indianred3') + 
+  coord_flip() + labs(title="Impozitul pe profit", 
+                      subtitle="Anul 2021", y="Procent din PIB", x="Ţară") +
+  scale_y_continuous(labels=scales::percent_format(scale=1))
+```
+
+Graficul următor e doar pentru noi, nu l-aş include în raport.
+
+```{r, fig.width=10, fig.height=8, dpi=250}
+taxe %>% filter(time=="2021-01-01") %>% 
+  filter(!grepl("Total", na_item)) %>% 
+  filter(grepl("Media UE|Romania", geo)) %>% 
+  select(-time) %>% spread(geo, values) %>% 
+  mutate_at(2:3, ~replace_na(., 0)) %>% 
+  mutate(delta = `Media UE`-Romania) %>% 
+  arrange(desc(abs(delta))) %>% slice(1:30) %>%
+  mutate(na_item = fct_reorder(na_item, delta)) %>% 
+  ggplot(aes(x=na_item, y=delta)) + 
+  geom_col(fill='indianred3') + coord_flip() +
+  scale_y_continuous(labels=scales::percent_format(scale=1)) +
+  labs(title="Diferenţa dintre media UE şi România", subtitle="Anul 2021",
+       x="Ţară", y="Procent din PIB") +
+  theme(plot.title.position = "plot")
+```
+
+Se pare că doar din impozitul pe venit putem creşte vreo 8 puncte procentuale. Să vedem aceleaşi date sub formă de tabel.
+
+```{r}
+taxe %>% filter(time=="2021-01-01") %>% 
+  filter(!grepl("Total", na_item)) %>% 
+  filter(grepl("Romania|Media UE", geo)) %>% 
+  spread(geo, values)  %>% 
+  mutate(Diferenta = `Media UE`-Romania) %>% 
+  arrange(desc((Diferenta))) %>% select(-time) %>% 
+  drop_na() %>% rename(taxa=na_item) %>% 
+  filter(Diferenta!=0) %>% gt::gt() %>% 
+  gt::fmt_percent(2:4, decimals = 1, scale_values = F) %>% 
+  gt::tab_header(title="Diferenţa dintre media europeană şi România la veniturile din taxe")
+```

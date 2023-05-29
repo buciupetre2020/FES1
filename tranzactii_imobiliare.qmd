@@ -1,0 +1,29 @@
+## Tranzacţiile imobiliare
+
+Vom folosi datele de la ANCPI pe 2022 să estimăm grosier cât s-ar aduna în cazul unei taxe de 10 % pe vânzări. Avem date clare doar despe numărul de imobile vândute pe lună şi judeţ. În 2022 au fost vândute în total 700273 de imobile în toată ţara din care 142703 (20.38 %) doar în Bucureşti. [Presa financiară](https://economedia.ro/analiza-imobiliara-piata-locuintelor-in-2022-an-marcat-de-incertitudini-fluctuatii-in-tranzactii-cresteri-de-preturi-dar-si-corectii.html) dă un estimat în jur de 1 miliard de euro anual în tranzacţii imobiliare. În lipsa unor medii de preţuri per tranzacţie care să fie calculate pe judeţe (indicele Blitz furnizează medii de preţuri per oraşe) nu putem ştii cu adevărat câţi bani vom strânge. Dar folosind estimarea de 1 miliard de euro (1.23 miliarde pentru 2022), a 10 % per tranzacţie se strâng în jur de 0.5 miliarde RON anual. Dar trebuie luat în seamă că există deja o taxă de 3 %. Deci am strânge un surplus de 350 milioane RON în realitate. Suma nu e foarte mare dar nu e neglijabilă. Mai jos avem numărul de tranzacţii per judeţe.
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+#| fig-dpi: 250
+
+library(tidyverse)
+library(gt)
+theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
+                                     strip_text_family = "Roboto Condensed",
+                                     strip_text_face = "italic",
+                                     axis_title_size = 12))
+
+x <- list.files("database/tranzactii_imobiliare") %>%
+here::here("database/tranzactii_imobiliare", .) %>%
+  map_dfr(., ~readxl::read_xlsx(.x, skip = 1) %>% 
+              select(2, 8) %>% drop_na()) %>% janitor::clean_names() %>%
+  group_by(judet) %>% summarise(total = sum(total_imobile)) %>% ungroup() %>%
+  filter(judet != "TOTAL")
+
+x %>% mutate(judet = fct_reorder(judet, total)) %>% 
+  ggplot(aes(x=judet, y=total)) + 
+  geom_col(fill='seagreen4') + coord_flip() + 
+  scale_y_continuous(labels = scales::number_format(big.mark = ",")) + 
+  labs(title="Număr tranzacţii imobiliare", subtitle="Anul 2022")
+```

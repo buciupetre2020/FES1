@@ -1,0 +1,299 @@
+# Impozitul pe profit
+
+## Metodologie
+
+Au fost descărcate situaţiile financiare de pe [data.gov.ro](https://data.gov.ro/dataset/situatii_financiare_2021) pentru ultimul an la care datele au fost accesibile (anume 2021). S-au descărcat doar firmele care au depus bilanţuri de tip BL_BS_SL, UU (simplificat) şi IR. S-au luat datele pe anul 2021 cu privire la impozitul pe profit din execuţia bugetară de pe [siteul MF](https://mfinante.gov.ro/documents/35673/162114/Anexa2_bgc31dec2021.pdf). Au fost încasate in 2021 `20.045 miliarde RON` ca impozit pe profit. Vom vedea câţi bani "încasăm" teoretic aplicând cotele cunoscute de impozitare pe firmele din setul nostru de date.
+
+## Analize exploratorii
+
+```{r}
+library(tidyverse)
+library(gt)
+library(TEMPO)
+theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
+                                     strip_text_family = "Roboto Condensed",
+                                     strip_text_face = "italic",
+                                     axis_title_size = 12))
+
+
+firme <- read_csv(here::here("database", "bl_bs_sl+ir+uu.csv")) %>%
+         select(cui, caen, cifra_afaceri=cifra_de_afaceri_neta, 
+                profit_net, pierdere_neta, salariati=numar_mediu_de_salariati, 
+                categorie) %>% mutate(caen=as.character(caen))
+
+```
+
+Pentru firmele cu bilanţ BL_BS_SL suma este de `16.871 miliarde RON`.
+
+S-a înmulţit cu 0.16 coloana `Profit_net`. Pentru firmele cu bilanţ de tip UU suma este de `2.668 miliarde RON`. Suma este a 8-a parte din cea cu bilanţ de tip BL_BS deşi firmele cu bilanţ UU sunt de 10 ori mai multe. În acest caz a fost calculată în felul următor: pentru firmele fără salariaţi şi cu cifra de afaceri sub 1000000 EURO s-a înmulţit 0.03 cu cifra de afaceri, pentru restul de tip UU s-a înmulţit cu 0.01. Această diferenţiere a dispărut în 2023, firmele fără angajaţi fiind obligate să plătească 16 % din profit indiferent de mărime, dar în 2021 ea era în acţiune. Adunând cele două sume obţinem aproape suma colectată de fapt de statul român.
+
+Avem un număr de circa `r nrow(firme)` companii nefinanciare în economie pentru anul 2021 cu o profitabilitate agregată din cifra de afaceri de circa 9.65 % (ignorând pierderile) sau 7.74 % (înglobând pierderile). Circa 153.703 firme nu au cifra de afaceri în setul de date. Nu este oare declarată la ANAF sau datele sunt parţiale, este greu de aflat. Site-ul listafirme.ro le dă ca fiind 0 pe aceste valori care lipsesc din setul de date.
+
+Care metodă de taxare aduce mai mulţi bani la buget ? Cota pe profit sau cea pe cifra de afaceri ? Din păcate rezultatele sunt dezamăgitoare, cota pe profit aducând doar marginal mai mulţi bani decât cea pe cifra de afaceri. Am simulat 100 de valori uniform distribuite pentru pragul nostru de taxare (în 2021 1 milion de EURO, din 2023 doar 500.000 de EURO) pentru a vedea dacă există vreun optim. Ele încep cu 0 (toate firmele plătesc doar impozit pe profit) şi merg până la 1 milion de EURO. Suma care ar fi încasată presupunând că schimbările afectează doar bilanţurile de tip UU e afişată în graficul următor.
+
+```{r, fig.width=10, fig.height=7, dpi=200}
+profit <- numeric(100)
+praguri <- seq(0, 4870000, length.out=100)
+for(i in 1:100){
+profit[i] <- firme %>% filter(grepl("uu", categorie)) %>% 
+  mutate(profit = if_else(salariati==0 & cifra_afaceri>praguri[i], 
+                          0.16*profit_net, 0.01*cifra_afaceri)) %>% 
+  pull(profit) %>% sum(na.rm=TRUE)
+}
+
+tibble("praguri"=praguri, "profit"=profit) %>% 
+  mutate(profit=profit/1000000000) %>% 
+  ggplot(aes(x=praguri, y=profit)) + geom_line() + geom_point() +
+  labs(title = "Impozit pe profit colectat din bilanţurile de tip UU", 
+       subtitle="Miliarde RON", x="Prag (RON)", y="Impozit colectat") +
+  scale_x_continuous(labels = scales::number_format(big.mark=','))
+
+```
+
+Din păcate s-ar strânge doar cu circa 3 % mai mulţi bani dacă nu ar exista impozitul pe cifra de afaceri.
+
+## Taxe sectoriale
+
+Se pune problema unor taxe sectoriale asemenea taxei ungureşti pe publicitate (CAEN 7311), retail (CAEN 46 şi 47) şi telecomunicaţii (CAEN 61).
+
+```{r}
+incasari_retail <- firme %>% filter(grepl("^4[6-7]", caen)) %>% 
+                   mutate(profit = if_else(cifra_afaceri>1350000000, 
+                                0.027*(cifra_afaceri-1350000000), 0)) %>%
+                   pull(profit) %>% sum(na.rm=TRUE)
+```
+
+Sunt în total `r firme %>% filter(grepl("7311|^4[6-7]|^61", caen)) %>% nrow()`firme în situaţia aceasta din totalul de `r nrow(firme)` analizate. (circa 25.4 %) pe anul 2021. Cât am obţine ca impozit folosind cotele din [Ungaria](https://www.fiscal-requirements.com/news/1025) pt retail (0 % până la 270.000.000 EURO şi 2.7 % pe cifra de afaceri ce depăşeşte 270.000.000 EURO) ? Circa `r incasari_retail/1000000000` miliarde RON! Ar afecta circa 47 de firme din comerţ.
+
+Pentru simulări cu o singură cotă progresivă de impozitare accesează aplicaţia online creată special în acest [scop](https://petrebuciu.shinyapps.io/impozit_profit/). În tabelul aplicaţiei, la variabila `procent` avem procentul de firme din decila respectivă a cifrei de afaceri care şi-ar putea onora noul impozit pe profit din profitul net obţinut.
+
+## Simulări de taxe sectoriale
+
+Să investigăm acum efectul unor potenţiale taxe pe diferite sectoare, pentru început energie, retail, tranzacţii imobiliare şi jocuri de noroc.
+
+### Energie fosilă
+
+Impactul taxelor sectoriale pe sectorul energiei, considerând scenariul implementat în Spania (1.2 % pe cifra de afaceri netă pentru companiile din energie cu cifra de afaceri de peste 1 miliard de EURO) şi unul propus de noi, aceeaşi cotă dar la un prag de 1 miliard de RON. Ca de obicei, folosim ultimele date existente în spaţiul public, cele din 2021 de pe [data.gov.ro](https://data.gov.ro/dataset/situatii_financiare_2021). Vom folosi firmele cu bilanţuri de tip BL BS SL, UU şi IR. Ele sunt grosul companiilor nefinanciare din economia românească.
+
+Codurile CAEN pentru extracţia de petrol şi cărbune sunt `05` şi `06`. Furnizarea şi producţia de energie electrică e acoperită de codurile CAEN `351` (producţia, transportul, distribuţia energiei) şi `352` (idem pentru combustibili).
+
+```{r}
+fosili <- c("Producția, transportul si distributia energiei electrice"="351",
+            "Producția gazelor; distributia combustibililor gazosi prin conducte"="352", "Extracția cărbunelui superior și inferior"="05", 
+            "Extracția petrolului brut și a gazelor naturale"="06")
+```
+
+```{r}
+calculeaza <- function(CAEN, procent, prag, tara="Spania"){
+  if(tara=="Spania"){
+firme %>% filter(grepl(CAEN, caen)) %>% 
+                 mutate(impozit = if_else(cifra_afaceri > prag, 
+                                          procent*(cifra_afaceri-prag),
+                                          0)) %>% 
+    pull(impozit) %>% sum(.,na.rm=TRUE) %>% `/`(., 1000000)
+  } else {
+    firme %>% filter(grepl(CAEN, caen)) %>% 
+      mutate(impozit = if_else(cifra_afaceri > prag, 0.6*profit_net, 0)) %>%
+      pull(impozit) %>% sum(., na.rm=TRUE) %>% `/`(., 1000000)
+  }
+}
+```
+
+```{r}
+valori_fosili_sp <- c("351.", "352.", "^5..$", "^6..$") %>% 
+  map_dbl(., ~calculeaza(CAEN=.x, procent=0.012, 
+                         prag=5000000000, tara="Spania"))
+names(valori_fosili_sp) <- names(fosili)
+
+valori_fosili_ro <- c("351.", "352.", "^5..$", "^6..$") %>% 
+  map_dbl(., ~calculeaza(CAEN=.x, procent=0.012, 
+                         prag=1000000000, tara="Spania"))
+names(valori_fosili_ro) <- names(fosili)
+  
+df_fosili <- enframe(valori_fosili_sp) %>% 
+      mutate(CAEN = fosili) %>% relocate(CAEN) %>% 
+      rename(`Scenariul spaniol`=value) %>%
+      inner_join(enframe(valori_fosili_ro)) %>%
+      rename(`Scenariul propus`=value, Descriere=name)
+
+gt(df_fosili) %>% 
+  tab_header(title = "Impozit colectat teoretic (milioane RON)", 
+             subtitle="Scenariul spaniol şi cel propus") %>%
+  gt::fmt_number(columns = 3:4, decimals = 2) %>% 
+  gt::grand_summary_rows(3:4, fns = list(Total=~sum(.)))
+```
+
+Sunt în total 2290 de firme din sectorul energiei, dar doar 22 au cifra de afaceri peste 1 miliard de RON (scenariul nostru). Şi 7 din ele au declarat pierderi în 2021. Săraci, dar cinstiţi...
+
+```{r}
+sume_energie <- enframe(valori_fosili_ro) %>% mutate(caen = fosili) %>% 
+  select(-name) %>% relocate(caen) %>% rename(valoare=value) %>% 
+  mutate(valoare=valoare/1000)
+```
+
+### Jocuri de noroc
+
+Jocurile de noroc au cod CAEN `92`. 14 firme au cifra de afaceri peste 100 de milioane RON in 2021 şi 150 au peste 10 milioane. Totalul firmelor este 679. Vom implementa mai multe praguri cu o rată de 1.2 %.
+
+```{r}
+map_dbl(c(0, 1000000, 10000000, 100000000),
+        ~calculeaza(CAEN="92..", procent=0.012, prag=.x)) %>%
+  enframe(.) %>% select(-name) %>% 
+  mutate(name=c("Toate", "1 milion", "10 milioane", "100 milioane")) %>%
+  relocate(name) %>% rename(Prag=name, Valoare=value) %>%
+  gt() %>% 
+  tab_header("Impozit colectat de la jocurile de noroc", subtitle="Milioane RON") %>% gt::fmt_number(columns=2, decimals=2)
+```
+
+Vom opta pentru pragul 0, adică toate vor fi impozitate în această manieră.
+
+```{r}
+sume_jocuri <- map_dfr(c("92.."), 
+                       ~ calculeaza(CAEN=.x, procent=0.012, prag=0) %>% 
+      enframe() %>% select(-name) %>%
+      mutate(caen = .x) %>% relocate(caen) %>% 
+      rename(valoare=value) %>% mutate(valoare=valoare/1000)) 
+```
+
+### Tranzacţii imobiliare
+
+Nu cred că merită efortul, se adună 170 de milioane de RON la un prag foarte jos de 1 milion de RON.
+
+### Retail
+
+Codurile CAEN `46` şi `47` se ocupă de tot ce înseamnă comerţ. Să vedem câţi bani se adună la o rată de 1.2 % pe cifra de afaceri netă.
+
+```{r, fig.width=10, fig.height=7, dpi=250}
+seq(0, 1000000000, length.out=100) %>%
+  map_dbl(. ,~calculeaza(CAEN="4[6-7]..", procent=0.012, prag=.x)) %>%
+  enframe() %>% select(-name) %>% 
+  mutate(praguri = seq(0, 1000000000, length.out=100)) %>%
+  ggplot(aes(x=praguri, y=value)) + geom_point() + geom_line() +
+  labs(title="Impozit colectat teoretic din retail", 
+       x="Prag CA", y="milioane RON")
+```
+
+8 miliarde de RON s-ar aduce la buget dacă ar fi aplicat tuturor firmelor din comerţ. Apoi suma scade vertiginos. La un prag de 100 milioane RON s-ar aduna aproximativ 4 miliarde la buget. Ar fi afectate circa 709 firme din 186.301 la acest prag. Este pragul pe care-l vom selecta.
+
+```{r}
+sume_retail <- map_dfr(c("46..", "47.."), 
+                       ~ calculeaza(CAEN=.x, procent=0.012, prag=100000000) %>% 
+      enframe() %>% select(-name) %>%
+      mutate(caen = .x) %>% relocate(caen) %>% 
+      rename(valoare=value) %>% mutate(valoare=valoare/1000)) 
+```
+
+### IT
+
+În industria IT pentru codurile CAEN 5821, 5829, 6201, 6202, 6209 există o scutire totală de la plata impozitului pe venit. Asumând ca toţi salariaţii din aceste firme beneficiază de scutire, obţinem:
+
+```{r}
+numar_it <- firme %>% 
+  filter(caen%in%c(5821, 5829, 6201, 6202, 6209)) %>% 
+  group_by(caen=substr(caen, 1, 2)) %>%
+  summarise(salariati=sum(salariati, na.rm=TRUE)) 
+
+medii_it <- read_csv(here::here("database", "FOM107D.csv")) %>% 
+  set_names(c("caen", "luni","um", "valoare")) %>% 
+  filter(grepl("58|62", caen)) %>% filter(grepl("2021",luni)) %>% 
+  select(-um) %>% group_by(caen) %>% summarise(valoare=mean(valoare)) %>%
+  ungroup() %>%
+  mutate(caen = str_extract(caen, "^[0-9]{2}"))
+
+sume_it <- numar_it %>% inner_join(medii_it) %>% 
+  mutate(sume = 12*salariati*valoare/10000000000) 
+gt::gt(sume_it)
+
+```
+
+Conform MF, doar 97000 de IT în 2021 beneficiau de scutire, ducând suma scutită de la buget undeva la 900 milioane RON.
+
+### Construcţii
+
+Aici avem codurile CAEN 41, 42, 43 şi 2312, 2331, 2332, 2361, 2362, 2363, 2364, 2369, 2370,
+
+2223, 1623, 2512, 2511, 0811, 0812, 2351, 2352, 2399, 711 scutite de impozitul pe venit, contribuţia la sănătate şi plătesc doar 21.25 % din venitul brut ca contribuţie la asigurările sociale.
+
+```{r}
+coduri <- c(2312, 2331, 2332, 2361, 2362, 2363, 2364, 2369, 2370, 2223, 1623, 2512, 2511, 2351, 2352, 2399) %>% as.character()
+
+numar_constructii <- firme %>% mutate(caen=as.character(caen)) %>% 
+  filter(caen%in%coduri | grepl("^41|^42|^43|^711|^0811|^0812", caen)) %>% 
+  group_by(caen = substr(caen, 1, 2) %>% gsub("41|42|43", "F", .)) %>%
+  summarise(salariati=sum(salariati, na.rm=TRUE)) %>% ungroup() 
+
+media_constructii <- read_csv(here::here('database', "FOM107D.csv")) %>% 
+  set_names(c("caen", "luni", "um", "valoare")) %>% 
+  filter(grepl("2021", luni)) %>% 
+  filter(grepl("^23|^08|^22|^16|^25|^F\\s", caen)) %>% 
+  group_by(caen) %>% summarise(valoare=mean(valoare)) %>% 
+  ungroup() %>% mutate(caen=str_extract(caen, "[0-9]+|F"))
+
+sume_constructii <- inner_join(numar_constructii, media_constructii) %>%
+  mutate(sume = 2*1.2*salariati*valoare/1000000000)
+```
+
+### Industria alimentară şi agricultura
+
+Conform legii nr. 135/2022 angajaţii la firmele cu coduri CAEN 01 şi 10 se bucură de aceleaşi scutiri ca şi cei din sectorul construcţiilor.
+
+```{r}
+
+numar_alimentar <- firme %>% filter(cui!=7740456) %>% 
+  mutate(caen=as.character(caen)) %>% 
+  filter(grepl("^1.[0-6]$|^10", caen)) %>% 
+  group_by(caen=if_else(substr(caen, 1, 2) == "10", substr(caen, 1, 2), "01")) %>%
+  summarise(salariati=sum(salariati, na.rm=TRUE)) %>% ungroup() 
+
+media_alimentar <- read_csv(here::here('database', "FOM107D.csv")) %>% 
+  set_names(c("caen", "luni", "um", "valoare")) %>% 
+  filter(grepl("2021", luni)) %>% 
+  filter(grepl("^01|^10", caen)) %>% 
+  group_by(caen = if_else(substr(caen, 1, 2)=="10", substr(caen, 1, 2), "01")) %>%
+  summarise(valoare=mean(valoare)) %>% 
+  ungroup() %>% mutate(caen=str_extract(caen, "[0-9]+"))
+
+sume_alimentar <- inner_join(numar_alimentar, media_alimentar) %>%
+  mutate(sume = 2*1.2*salariati*valoare/1000000000)
+
+```
+
+### Însumat
+
+```{r, fig.align='center'}
+insumat <- sume_alimentar %>% mutate(sector="Alimentar & Agricultura") %>% 
+                   select(sector, caen, valoare=sume) %>%
+  bind_rows(sume_constructii %>% mutate(sector="Construcţii") %>% 
+            select(sector, caen, valoare=sume),
+            sume_energie %>% mutate(sector="Energie"),
+            sume_it %>% mutate(sector="IT") %>% select(sector, caen, valoare=sume), 
+            sume_jocuri %>% mutate(sector="Jocuri de noroc"),
+            sume_retail %>% mutate(sector="Retail"))
+
+insumat %>% rename(CAEN=caen, VALOARE = valoare) %>% 
+  mutate(sector=str_to_upper(sector)) %>%
+  gt::gt(groupname_col = "sector") %>% 
+  gt::fmt_number(columns=3, decimals = 2) %>% 
+  tab_header(title="Impact taxe sectoriale şi eliminări scutiri (miliarde RON)", 
+             subtitle="Calcule proprii pe bilanţurile anului 2021") %>%
+  gt::grand_summary_rows(columns=3, fns=list(TOTAL = ~sum(., na.rm=TRUE)), 
+                         fmt = ~fmt_number(., decimals = 2)) %>%
+  tab_style(style=cell_fill(color="#ccc444"), locations = cells_row_groups()) %>%
+  tab_style(style=cell_borders(color="#ccc444"), locations=cells_row_groups()) %>%
+  tab_style(style=cell_text(weight = "bold"), locations=cells_row_groups()) %>%
+  tab_style(style=cell_fill(color="#1f1f1f"), locations=cells_column_labels()) %>%
+  tab_style(style=cell_text(color='#fff'), locations=cells_column_labels()) %>%
+  tab_style(style=cell_fill(color="#1f1f1f"), locations=cells_stubhead()) %>%
+  tab_style(style=cell_fill(color="#bd1111"), locations=cells_grand_summary()) %>%
+  tab_style(style=cell_text(color="#fff"), locations=cells_grand_summary()) %>%
+  gt::tab_options(container.width = "70%", table.layout = "auto", 
+                  table.align = "center", 
+                  table.additional_css = "table.gt_table {border: 2px solid black;}") %>%
+  gt::tab_footnote(footnote = "Eliminare scutire actuală", 
+                   locations = cells_row_groups(groups=c("ALIMENTAR & AGRICULTURA",
+                                                         "CONSTRUCŢII", "IT"))) %>%
+  gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri netă ce depăşeşte 1 miliard RON", locations = cells_row_groups(groups="ENERGIE")) %>%
+  gt::tab_footnote(footnote = "1.2 % impozit pe cifra de afaceri pentru toate firmele",
+                   locations=cells_row_groups("JOCURI DE NOROC")) %>%
+  gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON", locations=cells_row_groups(groups="RETAIL"))
+```

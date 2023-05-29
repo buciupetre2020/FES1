@@ -1,0 +1,41 @@
+project:
+  type: book
+
+execute:
+  echo: false
+  warning: false
+  message: false
+  error: false
+
+book:
+  title: "Raport final despre analiza fiscalităţii"
+  author: "Petre Buciu"
+  date: "5/25/2023"
+  chapters:
+    - index.qmd
+    - Generalitati.qmd
+    - ratele_impozitarii.qmd
+    - distributional.qmd
+    - Impozit_profit.qmd
+    - tipuri_taxe.qmd
+    - tranzactii_imobiliare.qmd
+    - calcule_finale.qmd
+
+
+format:
+  html:
+    theme: cosmo
+    cover-image: cover.png
+    css: style.css
+    
+  pdf:
+    documentclass: scrreprt
+  epub:
+    cover-image: cover.png
+  docx:
+    toc: true
+    toc-depth: 3
+    crossref:
+      chapters: true
+editor: visual
+

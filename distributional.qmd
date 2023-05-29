@@ -1,0 +1,142 @@
+## Aspecte distributive ale taxării
+
+În acest capitol vom investiga aspecte de ţin de relaţia dintre sistemul fiscal şi distribuţia veniturilor şi a averilor folosind date din noua bază de date `World Inequality Database` ce poate fi accesată [aici](https://wid.world/data/). Vom încerca să demonstrăm că sistemul fiscal din România este în mod evident regresiv. Dar pentru început, să ne familiarizăm cu faptele.
+
+```{r}
+library(tidyverse)
+library(gt)
+theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
+                                     strip_text_family = "Roboto Condensed",
+                                     strip_text_face = "italic",
+                                     axis_title_size = 12))
+
+tari <- read_delim(here::here("database", "WID", "WID_countries.csv"), 
+                  delim=";") %>% drop_na() %>% filter(region=="Europe") %>%
+        inner_join(read_csv(here::here("database", "dictionar_tari.csv")) %>%
+                   rename(shortname=geo)) %>% select(-shortname) %>% 
+        rename(geo=tari) %>% select(-region) %>% rename(region=region2)
+
+metadata <- read_delim(here::here("database", "WID", 
+                                  "WID_metadata_RO.csv")) %>%
+            select(variable, shortname, shorttype)
+
+df <- here::here("database", "WID", 
+                 paste0("WID_data_", tari$alpha2, ".csv")) %>%
+      map_dfr(., ~ read_delim(.x, delim=';') %>% 
+               rename(alpha2=country) %>% 
+               inner_join(tari %>% select(-titlename)) %>% 
+               mutate(age=as.character(age)) %>% 
+               rename(country=alpha2)) %>%
+               filter(year>1989)
+
+```
+
+Procentul din venitul naţional înaintea taxelor care revine diferitelor categorii de distribuţie:
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+#| fig-dpi: 250
+
+df %>% filter(grepl("sdiincj992|sptincj992", variable)) %>% 
+  spread(variable, value) %>% 
+  filter(percentile%in%c("p0p20", "p0p50", "p90p100", "p99p100")) %>% 
+  ggplot(aes(x=year, y=sptincj992, group=geo)) + 
+  geom_line(aes(colour=geo), size=1) + 
+  facet_wrap(~percentile, ncol=2, scales='free') + 
+  gghighlight::gghighlight(geo%in%c("Romania", "Bulgaria", 
+                                    "Polonia", "Ungaria"),
+                           calculate_per_facet = T, use_direct_label = F) +
+  theme(legend.position = "top") + 
+  labs(title="Distribuţia venitului naţional înaintea taxelor", 
+       subtitle="După distribuţie", colour='Ţară', y=NULL, x="Anul") +
+  scale_y_continuous(labels=scales::percent_format())
+```
+
+Şi pentru venitul naţional după taxe:
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+#| fig-dpi: 250
+
+df %>% filter(grepl("sdiincj992|sptincj992", variable)) %>% 
+  spread(variable, value) %>% filter(geo!="Cipru") %>%
+  filter(percentile%in%c("p0p10", "p0p50", "p90p100", "p99p100")) %>% 
+  ggplot(aes(x=year, y=sdiincj992, group=geo)) + 
+  geom_line(aes(colour=geo), size=1) + 
+  facet_wrap(~percentile, ncol=2, scales='free') + 
+  gghighlight::gghighlight(geo%in%c("Romania", "Bulgaria", 
+                                    "Polonia", "Ungaria"),
+                           calculate_per_facet = T, use_direct_label = F) +
+  theme(legend.position = "top") + 
+  labs(title="Distribuţia veniturilor naţionale după taxare", 
+       subtitle="După distribuţie", colour='Ţară', y=NULL, x="Anul") +
+  scale_y_continuous(labels=scales::percent_format())
+```
+
+România, dar şi alte ţări din Europa de Est stau destul de rău la capitolul inegalitate, fiind în top atât înainte cât şi după taxe. În cazul României venitul revenit celor mai bogaţi 1 % din societate e totuşi mai scăzut după taxare, dar la categoria top 10 % situaţia e tot acută comparativ cu restul ţărilor europene.
+
+Vom calcula raportul dintre procentele de venit naţional care revin celor top 10 % şi ultimilor 50 % atât pentru venitul pre-taxe cât şi pentru venitul post-taxe. Cele două rapoarte vor fi pe axele x, respectiv y în graficul următor. Urmărim aceşti doi indicatori pentru media perioadei 2012-2021 (ultimii zece ani).
+
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+#| fig-dpi: 250
+
+ratios <- df %>% 
+    filter(grepl("adiincj992|aptincj992", variable)) %>% 
+    filter(year>1989, age=="992") %>% select(-age, -pop) %>%
+    spread(variable, value) %>% 
+    filter(percentile%in%c("p0p50", "p90p100")) %>% 
+    pivot_wider(names_from=percentile, 
+                values_from = c(adiincj992, aptincj992)) %>% 
+    mutate(ratio_pre = aptincj992_p90p100/aptincj992_p0p50, 
+           ratio_post = adiincj992_p90p100/adiincj992_p0p50) %>% 
+    filter(year>2011) %>%
+    group_by(geo, region) %>% 
+    summarise(ratio_pre = mean(ratio_pre), 
+              ratio_post=mean(ratio_post)) %>% ungroup() 
+
+ratios %>% filter(!geo%in%"Lituania") %>% 
+  ggplot(aes(x=ratio_pre, y=ratio_post)) + 
+  geom_point(colour='red3') + 
+  ggrepel::geom_text_repel(aes(label=geo)) + 
+  labs(title="Raportul veniturilor pentru top 10 % vs bottom 50 %", 
+       subtitle="Media 2012-2021", x="Pre-taxe", y="Post-taxe") + 
+  geom_smooth(method='lm', linetype=2)
+    
+```
+
+Observăm că România are cel mai mare raport atât pre cât şi post taxare. Acest lucru sugerează că sistemul fiscal nu redistribuie suficient către cei din decilele inferioare ale distribuţiei. Acest lucru se întâmplă în ţara cu cea mai mare inegalitate din Europa dacă excludem Serbia (nu apare în imagine). Merită să calculăm şi procentele cu care sistemul fiscal reduce inegalitatea pre-taxe pentru fiecare ţară, media pe ultimii zece ani.
+
+```{r}
+#| fig-width: 10
+#| fig-height: 8
+#| fig-dpi: 250
+
+df %>% 
+    filter(grepl("adiincj992|aptincj992", variable)) %>% 
+    filter(year > 2011, age=="992") %>% select(-age, -pop) %>%
+    spread(variable, value) %>% 
+    group_by(country, percentile, region, geo) %>%
+    summarise(across(adiincj992:aptincj992, mean)) %>%
+    ungroup() %>%
+    filter(percentile%in%c("p0p50", "p90p100")) %>% 
+    pivot_wider(names_from=percentile, 
+                values_from = c(adiincj992, aptincj992)) %>% 
+    mutate(ratio_pre = aptincj992_p90p100/aptincj992_p0p50, 
+           ratio_post = adiincj992_p90p100/adiincj992_p0p50) %>% 
+    mutate(delta = 100*(ratio_pre - ratio_post)/ratio_pre) %>% 
+    select(geo, region, delta) %>% 
+    filter(!grepl("Cipru|Lituania",geo)) %>% 
+    mutate(geo=fct_reorder(geo, delta)) %>% 
+    ggplot(aes(x=geo, y=delta)) + geom_col(fill="indianred3") + 
+    theme(axis.text.x = element_text(angle=90)) +
+    labs(title="Reducerea inegalităţii pre-taxe de sistemul fiscal", 
+         x="Ţară", subtitle="Media 2012 - 2021", y="Procent (%)", colour="Ţară") +
+    scale_y_continuous(labels=scales::percent_format(scale=1)) 
+
+```
+
+Observăm că România se află printre ţările cu cele mai mici raporturi ale reducerii inegalităţii pre-taxe prin taxare. Combinaţia de inegalitate mare pre-taxare combinată cu redistribuţia scăzută duce la situaţia actuală. Procentele mici pentru Spania şi Italia nu trebuie să ne mire, întrucât aceste state cheltuiesc mult cu pensiile (populaţii îmbătrânite), lucru care uniformizează inegalitatea pre-taxe într-o oarecare măsură (inegalitatea pre-taxe este calculată conform autorilor ca venitul naţional revenit factorilor de producţie minus contribuţiile pentru pensii şi asigurări sociale plus distribuţiile pentru ele). Ele au oricum o inegalitate pre-taxe mai redusă în primul rând.

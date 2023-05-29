@@ -1,0 +1,129 @@
+## Calcule finale şi simulări venituri la buget
+
+În această secţiune adunăm ce am calculat şi anterior înglobând şi simulări asupra impozitelor pe dividende. Din lipsă de date vom simula doar ce s-ar întâmpla dacă ar fi taxate doar dividendele de pe Bursa de Valori Bucureşti. Vom compara suma obţinută cu impozitul încasat de facto de bugetul statului pentru a ne face o idee dacă dividendele companiilor listate sunt majoritare în economie sau nu.
+
+## Impozitul pe dividendele companiilor listate
+
+Impozitul din venitul pe dividende în 2021 a fost de circa 2.596 miliarde de RON, puţin mai mic de 10 % din totalul impozitului pe venitul personal. Pe anul 2021 a fost în efect rata de impozitare de 5 %.
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(gt)
+
+read_html("https://m.bvb.ro/FinancialInstruments/CorporateActions/InfoDividend") %>% html_table(header=TRUE) %>% .[[1]] %>% 
+  select(-1) %>% select(1, Year, `Dividends Total`) %>% 
+  mutate(`Dividends Total` = parse_number(`Dividends Total`)) %>% 
+  group_by(Year) %>% 
+  summarise(total = sum(`Dividends Total`, na.rm=TRUE)) %>% 
+  mutate(impozit = total*0.05) %>% 
+  rename(An=Year, Dividende=total, Impozit=impozit) %>% 
+  gt::gt(rowname_col = "An") %>%
+  gt::fmt_number(columns=2:3, sep_mark = ",", decimals = 0) %>%
+  gt::cols_width(~"150px")
+
+```
+
+De unde deducem că în anul 2021 dividendele companiilor listate nu au constituit decât circa 15 % din totalul dividendelor extrase din economie. Dorim să propunem un impozit pe dividende de circa 18 %, fapt care ar aduce proporţional de 3.6 ori mai mulţi bani decât cei 2.6 miliarde de RON, adică încă 6.76 miliarde de RON. Desigur, acest estimat este puternic simplificat şi e în cel mai bun caz un maximum teoretic, dependent desigur şi de fluctuaţiile pieţei şi economiei. Vom merge cu un estimat conservator de 6 miliarde notând că în 2023 suma colectată va fi semnificativ mai mare (cum şi în 2022 dividendele totale au crescut cu circa 10 %).
+
+## Simulări finale
+
+```{r}
+insumari <- read_csv(here::here("database", "taxe_sectoriale_scutiri.csv")) %>%
+  mutate(sector=str_to_upper(sector)) %>%
+  group_by(sector) %>% summarise(valoare=sum(valoare)) %>%
+  rename(Masura = sector, Impact=valoare) %>%
+  bind_rows(tibble("Masura"=c("Impozit progresiv pe venit", 
+                              "Impozit pe dividende", 
+                              "TRANZACŢII IMOBILIARE"),
+                   "Impact"=c(20, 6, 0.35))) %>%
+  mutate(sector = c("Eliminare scutiri", "Eliminare scutiri", "Taxe sectoriale", "Eliminare scutiri", "Taxe sectoriale", "Taxe sectoriale", "Creştere impozite", "Creştere impozite", "Taxe sectoriale")) %>% 
+  relocate(sector) 
+
+insumari %>%
+gt::gt(groupname_col = "sector") %>% 
+  gt::fmt_number(columns=3, decimals = 2) %>% 
+  tab_header(title="Impact tipuri de măsuri propuse (miliarde RON)", 
+             subtitle="Calcule proprii pe bilanţurile anilor 2019-2021") %>%
+  summary_rows(columns=3, fns=list(`TOTAL GRUP`=~sum(., na.rm=TRUE)), 
+               fmt = ~fmt_number(.,decimals=2)) %>%
+  grand_summary_rows(columns=3, fns=list(TOTAL =~ sum(., na.rm=TRUE)), 
+                     fmt=~fmt_number(., decimals=2)) %>%
+  tab_style(style=cell_fill(color="#ccc444"), locations = cells_row_groups()) %>%
+  tab_style(style=cell_borders(color="#ccc444"), locations=cells_row_groups()) %>%
+  tab_style(style=cell_text(weight = "bold"), locations=cells_row_groups()) %>%
+  tab_style(style=cell_fill(color="#1f1f1f"), locations=cells_column_labels()) %>%
+  tab_style(style=cell_text(color='#fff'), locations=cells_column_labels()) %>%
+  tab_style(style=cell_fill(color="#1f1f1f"), locations=cells_stubhead()) %>%
+  tab_style(style=cell_fill(color="#bf1111"), locations=cells_grand_summary()) %>%
+  tab_style(style=cell_text(color="#fff"), locations=cells_grand_summary()) %>%
+  tab_style(style=cell_fill(color="#efefef"), locations=cells_body()) %>%
+  tab_style(style=cell_fill(color="#efefef"), locations=cells_stub()) %>%
+  tab_style(style=cell_fill(color="#aaaaaa"), locations=cells_summary()) %>%
+  tab_style(style=cell_fill(color="#aaaaaa"), locations=cells_stub_summary()) %>%
+  gt::tab_options(container.width = "90%", table.layout = "auto", 
+                  table.align = "center", 
+                  table.additional_css = "table.gt_table {border: 2px solid black;}") %>%
+  gt::tab_footnote(footnote="10 % taxă pe tranzacţiile imobiliare",
+                   locations=cells_body(columns=Masura, 
+                                      rows=grepl("IMOBILIARE", Masura))) %>%
+  gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri netă ce depăşeşte 1 miliard RON", locations = cells_body(columns=Masura, rows=grepl("ENERGIE", Masura))) %>%
+  gt::tab_footnote(footnote = "1.2 % impozit pe cifra de afaceri pentru toate firmele",
+                   locations=cells_body(columns=Masura, 
+                                        rows=grepl("JOCURI", Masura))) %>%
+  gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON", locations=cells_body(columns=Masura, 
+                                          rows=grepl("RETAIL", Masura))) %>%
+  gt::tab_footnote(footnote = "Asumând cote de 16 % şi 21 % pentru ce trece de 2200 EURO lunar brut (scenariul slovac)", 
+                   locations=cells_body(columns=Masura, 
+                                        rows=grepl("venit", Masura))) %>%
+  gt::tab_footnote(footnote="Impozit pe dividende de 18 %", 
+                   locations=cells_body(columns=Masura, 
+                                        rows=grepl("dividende", Masura)))
+```
+
+Şi acum sub formă de pie chart.
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+#| fig-dpi: 250
+
+insumari %>% mutate(index = c(1, 2, 3, 6, 7, 8, 5, 4, 9)) %>%
+  arrange(desc(index)) %>%
+  mutate(procent = 100*Impact/sum(Impact), 
+         ypos=cumsum(procent)-0.5*procent,
+         eticheta = paste0(round(procent, 2), " %")) %>%
+  ggplot(aes(x = 1.8, y = procent, fill = Masura)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta="y", start = 0, direction=1)+
+  geomtextpath::geom_textpath(aes(y = ypos, 
+                                  label = eticheta), color = "white")+
+  scale_fill_manual(values=c("#0073C2FF", "#EFC000FF", "#868686FF", "#CD534CFF", "seagreen4", "red3", "royalblue4", "orange3", "black")) +
+  theme_void() +
+  xlim(0.5, 2.5)
+
+```
+
+```{r}
+#| fig-width: 10
+#| fig-height: 10
+#| fig-dpi: 250
+
+insumari %>% 
+  mutate(procent = 100*Impact/sum(Impact)) %>%
+  group_by(sector) %>%
+  summarise(Impact=sum(Impact), procent=sum(procent)) %>% 
+  ungroup() %>% arrange(desc(sector)) %>%
+  mutate(ypos=cumsum(procent)-0.5*procent,
+         eticheta = paste0(round(procent, 2), " %", "\n", "(", round(Impact,2), ")")) %>%
+  ggplot(aes(x = 1.8, y = procent, fill = sector)) +
+  geom_bar(stat = "identity", color = "white") +
+  coord_polar(theta="y", start = 0, direction=1)+
+  geomtextpath::geom_textpath(aes(y = ypos, 
+                                  label = eticheta), size=6, color = "white")+
+  scale_fill_manual(values=c("#0073C2FF", "#EFC000FF", "#CD534CFF")) +
+  theme_void() +
+  xlim(0.5, 2.5)
+
+
+```
