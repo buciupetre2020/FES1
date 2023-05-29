@@ -1,2 +1,2 @@
-# FES1
-Codul sursă pentru raportul FES "Cum ieşim din subdezvoltare fiscală ?"
+# Cum ieşim din subdezvoltare fiscală ?
+O analiză comparativă a sistemului fiscal românesc în context european, împreună cu noi propuneri de impozitare.
