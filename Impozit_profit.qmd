@@ -28,7 +28,7 @@ Pentru toate firmele din setul de date, suma calculată ca diferenţa dintre pro
 
 Pentru firmele cu bilanţ BL_BS_SL suma este de `14.619 miliarde RON`. Pentru firmele cu bilanţ de tip UU suma este de `3.032 miliarde RON`. Şi `1.666 miliarde de RON` pentru firmele cu bilanţ de tip IR.
 
-Suma olătită de firmele cu bilanţ UU este a 5-a parte din cea cu bilanţ de tip BL_BS deşi firmele cu bilanţ UU sunt de 10 ori mai multe. În 2023, firmele fără angajaţi sunt obligate să plătească 16 % din profit indiferent de mărime.
+Suma plătită de firmele cu bilanţ UU este a 5-a parte din cea cu bilanţ de tip BL_BS deşi firmele cu bilanţ UU sunt de 10 ori mai multe. În 2023, firmele fără angajaţi sunt obligate să plătească 16 % din profit indiferent de mărime.
 
 Avem un număr de circa `r nrow(firme)` companii nefinanciare în economie pentru anul 2021 cu o profitabilitate agregată din cifra de afaceri de circa 9.65 % (ignorând pierderile) sau 7.74 % (înglobând pierderile). Circa 153.703 firme nu au cifra de afaceri în setul de date. Nu este oare declarată la ANAF sau datele sunt parţiale, este greu de aflat. Site-ul listafirme.ro le dă ca fiind 0 pe aceste valori care lipsesc din setul de date. Vom calcula acum rata de taxare efectivă prin următoarea formulă:
 
@@ -54,7 +54,7 @@ profit <- numeric(100)
 praguri <- seq(0, 4870000, length.out=100)
 for(i in 1:100){
 profit[i] <- firme %>% filter(grepl("uu", categorie)) %>% 
-  mutate(profit = if_else(salariati==0 & cifra_afaceri>praguri[i], 
+  mutate(profit = if_else(salariati==0 | cifra_afaceri>praguri[i], 
                           0.16*profit_brut, 0.01*cifra_afaceri)) %>% 
   pull(profit) %>% sum(na.rm=TRUE)
 }
@@ -68,7 +68,7 @@ tibble("praguri"=praguri, "profit"=profit) %>%
 
 ```
 
-Din păcate s-ar strânge doar cu circa 3-4 % mai mulţi bani dacă nu ar exista impozitul pe cifra de afaceri.
+S-ar obţine cu 202 % mai mulţi bani ! Circa 6.9 miliarde RON dacă toate ar plăti impozit pe profit de 16 % ! Dacă pragul ar coborî din nou la 500.000 EURO (aproximativ 2.5 milioane RON) s-ar obţine circa 4.77 miliarde RON de la această categorie de firme în loc de 3 miliarde acum. Un surplus important.
 
 ## Taxe sectoriale
 

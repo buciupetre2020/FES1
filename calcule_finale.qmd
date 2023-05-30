@@ -35,9 +35,10 @@ insumari <- read_csv(here::here("database", "taxe_sectoriale_scutiri.csv")) %>%
   rename(Masura = sector, Impact=valoare) %>%
   bind_rows(tibble("Masura"=c("Impozit progresiv pe venit", 
                               "Impozit pe dividende", 
-                              "TRANZACŢII IMOBILIARE"),
-                   "Impact"=c(20, 6, 0.35))) %>%
-  mutate(sector = c("Eliminare scutiri", "Eliminare scutiri", "Taxe sectoriale", "Eliminare scutiri", "Taxe sectoriale", "Taxe sectoriale", "Creştere impozite", "Creştere impozite", "Taxe sectoriale")) %>% 
+                              "TRANZACŢII IMOBILIARE", 
+                              "Coborâre prag microîntreprinderi"),
+                   "Impact"=c(20, 6, 0.35, 1.76))) %>%
+  mutate(sector = c("Eliminare scutiri", "Eliminare scutiri", "Taxe sectoriale", "Eliminare scutiri", "Taxe sectoriale", "Taxe sectoriale", "Creştere impozite", "Creştere impozite", "Taxe sectoriale", "Creştere impozite")) %>% 
   relocate(sector) 
 
 insumari %>%
@@ -78,7 +79,10 @@ gt::gt(groupname_col = "sector") %>%
                                         rows=grepl("venit", Masura))) %>%
   gt::tab_footnote(footnote="Impozit pe dividende de 18 %", 
                    locations=cells_body(columns=Masura, 
-                                        rows=grepl("dividende", Masura)))
+                                        rows=grepl("dividende", Masura))) %>%
+  gt::tab_footnote(footnote="Scăderea pragului de venit al microîntreprinderii la 500.000 EURO", 
+                   locations=cells_body(columns=Masura, rows=grepl("prag", Masura)))
+
 ```
 
 Şi acum sub formă de pie chart.
@@ -88,7 +92,7 @@ gt::gt(groupname_col = "sector") %>%
 #| fig-height: 10
 #| fig-dpi: 250
 
-insumari %>% mutate(index = c(1, 2, 3, 6, 7, 8, 5, 4, 9)) %>%
+insumari %>% mutate(index = c(1, 3, 4, 7, 8, 9, 6, 5, 10, 2)) %>%
   arrange(desc(index)) %>%
   mutate(procent = 100*Impact/sum(Impact), 
          ypos=cumsum(procent)-0.5*procent,
@@ -98,7 +102,7 @@ insumari %>% mutate(index = c(1, 2, 3, 6, 7, 8, 5, 4, 9)) %>%
   coord_polar(theta="y", start = 0, direction=1)+
   geomtextpath::geom_textpath(aes(y = ypos, 
                                   label = eticheta), color = "white")+
-  scale_fill_manual(values=c("#0073C2FF", "#EFC000FF", "#868686FF", "#CD534CFF", "seagreen4", "red3", "royalblue4", "orange3", "black")) +
+  scale_fill_manual(values=c("#0073C2FF", "#EFC000FF", "#868686FF", "#CD534CFF", "seagreen4", "red3", "royalblue4", "orange3", "black", "purple4")) +
   theme_void() +
   xlim(0.5, 2.5)
 
