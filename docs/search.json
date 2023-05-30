@@ -124,5 +124,12 @@
     "title": "7  Calcule finale şi simulări venituri la buget",
     "section": "7.2 Simulări finale",
     "text": "7.2 Simulări finale\n\n\n\n\n\n\n  \n    \n      Impact tipuri de măsuri propuse (miliarde RON)\n    \n    \n      Calcule proprii pe bilanţurile anilor 2019-2021\n    \n    \n      \n      Masura\n      Impact\n    \n  \n  \n    \n      Eliminare scutiri\n    \n    \nALIMENTAR & AGRICULTURA\n2.08\n    \nCONSTRUCŢII\n5.46\n    \nIT\n1.99\n    TOTAL GRUP\n—\n9.53\n    \n      Taxe sectoriale\n    \n    \nENERGIE1\n0.86\n    \nJOCURI DE NOROC2\n0.11\n    \nRETAIL3\n4.18\n    \nTRANZACŢII IMOBILIARE4\n0.35\n    TOTAL GRUP\n—\n5.49\n    \n      Creştere impozite\n    \n    \nImpozit progresiv pe venit5\n20.00\n    \nImpozit pe dividende6\n6.00\n    \nCoborâre prag microîntreprinderi7\n1.76\n    TOTAL GRUP\n—\n27.76\n    TOTAL\n—\n42.78\n  \n  \n  \n    \n      1 1.2 % impozit pe cifra de afaceri netă ce depăşeşte 1 miliard RON\n    \n    \n      2 1.2 % impozit pe cifra de afaceri pentru toate firmele\n    \n    \n      3 1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON\n    \n    \n      4 10 % taxă pe tranzacţiile imobiliare\n    \n    \n      5 Asumând cote de 16 % şi 21 % pentru ce trece de 2200 EURO lunar brut (scenariul slovac)\n    \n    \n      6 Impozit pe dividende de 18 %\n    \n    \n      7 Scăderea pragului de venit al microîntreprinderii la 500.000 EURO\n    \n  \n\n\n\n\nŞi acum sub formă de pie chart."
+  },
+  {
+    "objectID": "Impozit_profit.html#metodologie",
+    "href": "Impozit_profit.html#metodologie",
+    "title": "4  Impozitul pe profit",
+    "section": "4.1 Metodologie",
+    "text": "4.1 Metodologie\nAu fost descărcate situaţiile financiare de pe data.gov.ro pentru ultimul an la care datele au fost accesibile (anume 2021). S-au descărcat doar firmele care au depus bilanţuri de tip BL_BS_SL, UU (simplificat) şi IR. S-au luat datele pe anul 2021 cu privire la impozitul pe profit din execuţia bugetară de pe siteul MF. Au fost încasate in 2021 20.045 miliarde RON ca impozit pe profit. Vom vedea câţi bani “încasăm” teoretic aplicând cotele cunoscute de impozitare pe firmele din setul nostru de date."
   }
 ]
