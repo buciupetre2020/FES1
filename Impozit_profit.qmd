@@ -18,16 +18,34 @@ theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16,
 
 firme <- read_csv(here::here("database", "bl_bs_sl+ir+uu.csv")) %>%
          select(cui, caen, cifra_afaceri=cifra_de_afaceri_neta, 
-                profit_net, pierdere_neta, salariati=numar_mediu_de_salariati, 
+                profit_net, profit_brut, pierdere_neta, 
+                salariati=numar_mediu_de_salariati, 
                 categorie) %>% mutate(caen=as.character(caen))
 
 ```
 
-Pentru firmele cu bilanţ BL_BS_SL suma este de `16.871 miliarde RON`.
+Pentru toate firmele din setul de date, suma calculată ca diferenţa dintre profitul brut şi cel net (impozitul plătit) este de `19.318 miliarde RON`. Similar cu impozitul colectat.
 
-S-a înmulţit cu 0.16 coloana `Profit_net`. Pentru firmele cu bilanţ de tip UU suma este de `2.668 miliarde RON`. Suma este a 8-a parte din cea cu bilanţ de tip BL_BS deşi firmele cu bilanţ UU sunt de 10 ori mai multe. În acest caz a fost calculată în felul următor: pentru firmele fără salariaţi şi cu cifra de afaceri sub 1000000 EURO s-a înmulţit 0.03 cu cifra de afaceri, pentru restul de tip UU s-a înmulţit cu 0.01. Această diferenţiere a dispărut în 2023, firmele fără angajaţi fiind obligate să plătească 16 % din profit indiferent de mărime, dar în 2021 ea era în acţiune. Adunând cele două sume obţinem aproape suma colectată de fapt de statul român.
+Pentru firmele cu bilanţ BL_BS_SL suma este de `14.619 miliarde RON`. Pentru firmele cu bilanţ de tip UU suma este de `3.032 miliarde RON`. Şi `1.666 miliarde de RON` pentru firmele cu bilanţ de tip IR.
 
-Avem un număr de circa `r nrow(firme)` companii nefinanciare în economie pentru anul 2021 cu o profitabilitate agregată din cifra de afaceri de circa 9.65 % (ignorând pierderile) sau 7.74 % (înglobând pierderile). Circa 153.703 firme nu au cifra de afaceri în setul de date. Nu este oare declarată la ANAF sau datele sunt parţiale, este greu de aflat. Site-ul listafirme.ro le dă ca fiind 0 pe aceste valori care lipsesc din setul de date.
+Suma olătită de firmele cu bilanţ UU este a 5-a parte din cea cu bilanţ de tip BL_BS deşi firmele cu bilanţ UU sunt de 10 ori mai multe. În 2023, firmele fără angajaţi sunt obligate să plătească 16 % din profit indiferent de mărime.
+
+Avem un număr de circa `r nrow(firme)` companii nefinanciare în economie pentru anul 2021 cu o profitabilitate agregată din cifra de afaceri de circa 9.65 % (ignorând pierderile) sau 7.74 % (înglobând pierderile). Circa 153.703 firme nu au cifra de afaceri în setul de date. Nu este oare declarată la ANAF sau datele sunt parţiale, este greu de aflat. Site-ul listafirme.ro le dă ca fiind 0 pe aceste valori care lipsesc din setul de date. Vom calcula acum rata de taxare efectivă prin următoarea formulă:
+
+$$
+Impozit_{efectiv} = 100*\frac{Profit_{brut} - Profit_{net}}{Profit_{brut}}
+$$
+
+```{r}
+firme %>% mutate(impozit=profit_brut-profit_net) %>% 
+  group_by(categorie) %>% 
+  summarise(ratio = 100*sum(profit_brut-profit_net, na.rm=TRUE)/sum(profit_brut, na.rm=TRUE)) %>% 
+  mutate(categorie = gsub("_an2021.txt|web_", "", categorie)) %>% 
+  gt::gt() %>% gt::fmt_number(columns=ratio, decimals=2) %>% 
+  gt::tab_header(title="Rata de taxare efectivă")
+```
+
+Regimul de impozitare pe cifra de afaceri este cu siguranţă avantajos per total.
 
 Care metodă de taxare aduce mai mulţi bani la buget ? Cota pe profit sau cea pe cifra de afaceri ? Din păcate rezultatele sunt dezamăgitoare, cota pe profit aducând doar marginal mai mulţi bani decât cea pe cifra de afaceri. Am simulat 100 de valori uniform distribuite pentru pragul nostru de taxare (în 2021 1 milion de EURO, din 2023 doar 500.000 de EURO) pentru a vedea dacă există vreun optim. Ele încep cu 0 (toate firmele plătesc doar impozit pe profit) şi merg până la 1 milion de EURO. Suma care ar fi încasată presupunând că schimbările afectează doar bilanţurile de tip UU e afişată în graficul următor.
 
@@ -37,7 +55,7 @@ praguri <- seq(0, 4870000, length.out=100)
 for(i in 1:100){
 profit[i] <- firme %>% filter(grepl("uu", categorie)) %>% 
   mutate(profit = if_else(salariati==0 & cifra_afaceri>praguri[i], 
-                          0.16*profit_net, 0.01*cifra_afaceri)) %>% 
+                          0.16*profit_brut, 0.01*cifra_afaceri)) %>% 
   pull(profit) %>% sum(na.rm=TRUE)
 }
 
@@ -50,7 +68,7 @@ tibble("praguri"=praguri, "profit"=profit) %>%
 
 ```
 
-Din păcate s-ar strânge doar cu circa 3 % mai mulţi bani dacă nu ar exista impozitul pe cifra de afaceri.
+Din păcate s-ar strânge doar cu circa 3-4 % mai mulţi bani dacă nu ar exista impozitul pe cifra de afaceri.
 
 ## Taxe sectoriale
 
