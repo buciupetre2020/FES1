@@ -5,10 +5,25 @@
 ```{r}
 library(tidyverse)
 library(gt)
+
+
+culori <- c("#EA5B0C", "#a44a08", "#ea960c", "#ea150c", 
+            "#a40e08", "#000000", "#0865a4", "#a48408")
+
 theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
-                                     strip_text_family = "Roboto Condensed",
+                                     strip_text_family = "Frutiger Bold",
                                      strip_text_face = "italic",
-                                     axis_title_size = 12))
+                                     axis_title_size = 14,
+                                     axis_text_size = 12,
+                                     base_family = "Frutiger",
+                                     plot_title_family = "Frutiger Bold",
+                                     subtitle_family = "Frutiger",
+                                     caption_family = "Frutiger",
+                                     caption_size = 12) +
+  theme(legend.text = element_text(size=14), 
+        legend.title = element_text(size=16),
+        legend.key.size = unit(0.8, "cm")))
+
 
 taxari <- read_csv(here::here("database", "taxation_trends_eurostat.csv"))
 ```
@@ -46,7 +61,7 @@ grafice <- function(df, var, numar=10){
     scale_x_continuous(labels=scales::percent_format(scale=1)) +
     scale_y_continuous(labels=scales::percent_format(scale=1)) +
     scale_size_continuous(range=c(2, 4)) +
-    scale_colour_manual(values=c("steelblue3", "red3")) +
+    scale_colour_manual(values=c(culori[7], culori[4])) +
     gghighlight::gghighlight(geo%in%tari) +
     theme(legend.position = 'top')
 }
@@ -65,7 +80,6 @@ rbiplot <- function(mat, p=1, clusters=4, k=15, scale=TRUE){
   model <- kmeans(pca$scores[,1:2], centers=clusters)$cluster
   coords <- as_tibble(pca$scores, rownames="geo") %>%
     mutate(cluster = as.factor(model))
-  
   ggplot(coords, aes(x=V1, y=V2)) + 
     ggConvexHull::geom_convexhull(aes(x=V1, y=V2, group=cluster, fill=cluster), alpha=0.2) +
     geom_point(colour='red3') + 
@@ -73,13 +87,15 @@ rbiplot <- function(mat, p=1, clusters=4, k=15, scale=TRUE){
     geom_vline(xintercept = 0,linetype=2) +
     geom_hline(yintercept=0, linetype=2) +
     geom_segment(data=rot, aes(xend=k*V1, x=0, yend=k*V2, y=0), 
-                 arrow = arrow(length = unit(0.25, "cm")), colour='steelblue4', alpha=0.9) +
+                 arrow = arrow(length = unit(0.25, "cm")), colour=culori[7]) +
     ggrepel::geom_text_repel(data=rot, aes(label=var,x=k*V1, y=k*V2), 
-                             alpha=0.9, colour='steelblue4', size=3) +
-    labs(title="PCA - Biplot", subtitle="Componentele principale (robuste) ale cheltuielilor COFOG99 pe 2017-2021", 
+                             alpha=0.9, colour=culori[7], size=3) +
+    labs(title="PCA - Biplot", 
+         subtitle="Componentele principale (robuste) ale categoriilor de impozite", 
+         caption="Sursa: calcule pe datele Taxation trends in the European Union",
          x=paste0("Dim1 (", procent[1], ")"), y=paste0("Dim2 (", procent[2],")")) +
     theme(axis.title = element_text(size=14)) +
-    scale_fill_brewer(palette = "Set1")
+    scale_fill_manual(values = culori)
   
 }
 
@@ -172,5 +188,18 @@ Observăm că taxarea pe capital, proprietate şi muncă sunt corelate pozitiv �
 taxari %>% filter(geo=="Romania",what=="PIB") %>% 
   select(-what, -geo) %>% gt::gt(rowname_col = "time") %>% 
   gt::fmt_number(2:6, decimals = 2) %>% 
-  gt::tab_header(title="România - % din PIB pentru diferite taxe")
+  gt::tab_header(title="România - % din PIB pentru diferite taxe", 
+                 subtitle = "Sursa: Taxation Trends in European Union") %>%
+  gt::tab_style(style = gt::cell_fill(color=culori[5]), 
+                locations = gt::cells_title()) %>%
+  gt::tab_style(style=gt::cell_text(color="white"), locations=gt::cells_title()) %>%
+  gt::tab_style(style=gt::cell_fill(color=culori[1]), 
+                locations = gt::cells_column_labels()) %>% 
+  gt::tab_style(style=gt::cell_text(color="white"), 
+                locations=gt::cells_column_labels()) %>% 
+  gt::tab_style(style=gt::cell_fill(color=culori[3], alpha=0.3), 
+                locations=gt::cells_body()) %>% 
+  gt::tab_options(table.border.left.color = "#000000") %>%
+  gt::tab_style(style=gt::cell_fill(color=culori[1], alpha=0.5), 
+                locations=cells_row_groups())
 ```

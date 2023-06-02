@@ -9,10 +9,24 @@ Vom folosi datele de la ANCPI pe 2022 să estimăm grosier cât s-ar aduna în c
 
 library(tidyverse)
 library(gt)
+
+culori <- c("#EA5B0C", "#a44a08", "#ea960c", "#ea150c", 
+            "#a40e08", "#000000", "#0865a4", "#a48408")
+
 theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
-                                     strip_text_family = "Roboto Condensed",
+                                     strip_text_family = "Frutiger Bold",
                                      strip_text_face = "italic",
-                                     axis_title_size = 12))
+                                     axis_title_size = 14,
+                                     axis_text_size = 12,
+                                     base_family = "Frutiger",
+                                     plot_title_family = "Frutiger Bold",
+                                     subtitle_family = "Frutiger",
+                                     caption_family = "Frutiger",
+                                     caption_size = 12) +
+  theme(legend.text = element_text(size=14), 
+        legend.title = element_text(size=16),
+        legend.key.size = unit(0.8, "cm")))
+
 
 x <- list.files("database/tranzactii_imobiliare") %>%
 here::here("database/tranzactii_imobiliare", .) %>%
@@ -23,7 +37,7 @@ here::here("database/tranzactii_imobiliare", .) %>%
 
 x %>% mutate(judet = fct_reorder(judet, total)) %>% 
   ggplot(aes(x=judet, y=total)) + 
-  geom_col(fill='seagreen4') + coord_flip() + 
+  geom_col(fill=culori[1]) + coord_flip() + 
   scale_y_continuous(labels = scales::number_format(big.mark = ",")) + 
   labs(title="Număr tranzacţii imobiliare", subtitle="Anul 2022")
 ```

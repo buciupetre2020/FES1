@@ -5,10 +5,25 @@
 ```{r}
 library(tidyverse)
 library(gt)
+
+
+culori <- c("#EA5B0C", "#a44a08", "#ea960c", "#ea150c", 
+            "#a40e08", "#000000", "#0865a4", "#a48408")
+
 theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
-                                     strip_text_family = "Roboto Condensed",
+                                     strip_text_family = "Frutiger Bold",
                                      strip_text_face = "italic",
-                                     axis_title_size = 12))
+                                     axis_title_size = 14,
+                                     axis_text_size = 12,
+                                     base_family = "Frutiger",
+                                     plot_title_family = "Frutiger Bold",
+                                     subtitle_family = "Frutiger",
+                                     caption_family = "Frutiger",
+                                     caption_size = 12) +
+  theme(legend.text = element_text(size=14), 
+        legend.title = element_text(size=16),
+        legend.key.size = unit(0.8, "cm")))
+
 
 tari <- read_delim(here::here("database", "WID", "WID_countries.csv"), 
                   delim=";") %>% drop_na() %>% filter(region=="Europe") %>%
@@ -49,8 +64,10 @@ df %>% filter(grepl("sdiincj992|sptincj992", variable)) %>%
                            calculate_per_facet = T, use_direct_label = F) +
   theme(legend.position = "top") + 
   labs(title="Distribuţia venitului naţional înaintea taxelor", 
-       subtitle="După distribuţie", colour='Ţară', y=NULL, x="Anul") +
-  scale_y_continuous(labels=scales::percent_format())
+       subtitle="După distribuţie", colour='Ţară', y=NULL, x="Anul", 
+       caption="Sursa: World Inequality Database") +
+  scale_y_continuous(labels=scales::percent_format()) +
+  scale_color_manual(values=culori[c(1, 3, 5, 8)])
 ```
 
 Şi pentru venitul naţional după taxe:
@@ -71,8 +88,10 @@ df %>% filter(grepl("sdiincj992|sptincj992", variable)) %>%
                            calculate_per_facet = T, use_direct_label = F) +
   theme(legend.position = "top") + 
   labs(title="Distribuţia veniturilor naţionale după taxare", 
-       subtitle="După distribuţie", colour='Ţară', y=NULL, x="Anul") +
-  scale_y_continuous(labels=scales::percent_format())
+       subtitle="După distribuţie", colour='Ţară', y=NULL, x="Anul", 
+       caption="Sursa: World Inequality Database") +
+  scale_y_continuous(labels=scales::percent_format()) +
+  scale_color_manual(values=culori[c(1, 3, 5, 8)])
 ```
 
 România, dar şi alte ţări din Europa de Est stau destul de rău la capitolul inegalitate, fiind în top atât înainte cât şi după taxe. În cazul României venitul revenit celor mai bogaţi 1 % din societate e totuşi mai scăzut după taxare, dar la categoria top 10 % situaţia e tot acută comparativ cu restul ţărilor europene.
@@ -100,11 +119,12 @@ ratios <- df %>%
 
 ratios %>% filter(!geo%in%"Lituania") %>% 
   ggplot(aes(x=ratio_pre, y=ratio_post)) + 
-  geom_point(colour='red3') + 
+  geom_point(colour=culori[1]) + 
   ggrepel::geom_text_repel(aes(label=geo)) + 
   labs(title="Raportul veniturilor pentru top 10 % vs bottom 50 %", 
-       subtitle="Media 2012-2021", x="Pre-taxe", y="Post-taxe") + 
-  geom_smooth(method='lm', linetype=2)
+       subtitle="Media 2012-2021", x="Pre-taxe", y="Post-taxe", 
+       caption="Sursa: calcule pe datele din World Inequality Database") + 
+  geom_smooth(method='lm', linetype=2, fill=culori[1], colour=culori[2])
     
 ```
 
@@ -131,10 +151,11 @@ df %>%
     select(geo, region, delta) %>% 
     filter(!grepl("Cipru|Lituania",geo)) %>% 
     mutate(geo=fct_reorder(geo, delta)) %>% 
-    ggplot(aes(x=geo, y=delta)) + geom_col(fill="indianred3") + 
+    ggplot(aes(x=geo, y=delta)) + geom_col(fill=culori[1]) + 
     theme(axis.text.x = element_text(angle=90)) +
     labs(title="Reducerea inegalităţii pre-taxe de sistemul fiscal", 
-         x="Ţară", subtitle="Media 2012 - 2021", y="Procent (%)", colour="Ţară") +
+         x="Ţară", subtitle="Media 2012 - 2021", y="Procent (%)", colour="Ţară",
+         caption="Sursa: calcule pe datele din World Inequality Database") +
     scale_y_continuous(labels=scales::percent_format(scale=1)) 
 
 ```

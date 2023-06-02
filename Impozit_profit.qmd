@@ -10,11 +10,23 @@ Au fost descărcate situaţiile financiare de pe [data.gov.ro](https://data.gov.
 library(tidyverse)
 library(gt)
 library(TEMPO)
-theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
-                                     strip_text_family = "Roboto Condensed",
-                                     strip_text_face = "italic",
-                                     axis_title_size = 12))
 
+culori <- c("#EA5B0C", "#a44a08", "#ea960c", "#ea150c", 
+            "#a40e08", "#000000", "#0865a4", "#a48408")
+
+theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
+                                     strip_text_family = "Frutiger Bold",
+                                     strip_text_face = "italic",
+                                     axis_title_size = 14,
+                                     axis_text_size = 12,
+                                     base_family = "Frutiger",
+                                     plot_title_family = "Frutiger Bold",
+                                     subtitle_family = "Frutiger",
+                                     caption_family = "Frutiger",
+                                     caption_size = 12) +
+  theme(legend.text = element_text(size=14), 
+        legend.title = element_text(size=16),
+        legend.key.size = unit(0.8, "cm")))
 
 firme <- read_csv(here::here("database", "bl_bs_sl+ir+uu.csv")) %>%
          select(cui, caen, cifra_afaceri=cifra_de_afaceri_neta, 
@@ -42,7 +54,9 @@ firme %>% mutate(impozit=profit_brut-profit_net) %>%
   summarise(ratio = 100*sum(profit_brut-profit_net, na.rm=TRUE)/sum(profit_brut, na.rm=TRUE)) %>% 
   mutate(categorie = gsub("_an2021.txt|web_", "", categorie)) %>% 
   gt::gt() %>% gt::fmt_number(columns=ratio, decimals=2) %>% 
-  gt::tab_header(title="Rata de taxare efectivă")
+  gt::tab_header(title="Rata de taxare efectivă") %>%
+  gt::tab_style(style=gt::cell_fill(color=culori[1]), locations=cells_title()) %>%
+  gt::tab_style(style=gt::cell_text(color="white"), locations=cells_title())
 ```
 
 Regimul de impozitare pe cifra de afaceri este cu siguranţă avantajos per total.
@@ -54,7 +68,7 @@ profit <- numeric(100)
 praguri <- seq(0, 4870000, length.out=100)
 for(i in 1:100){
 profit[i] <- firme %>% filter(grepl("uu", categorie)) %>% 
-  mutate(profit = if_else(salariati==0 | cifra_afaceri>praguri[i], 
+  mutate(profit = if_else(cifra_afaceri>praguri[i], 
                           0.16*profit_brut, 0.01*cifra_afaceri)) %>% 
   pull(profit) %>% sum(na.rm=TRUE)
 }
@@ -68,7 +82,7 @@ tibble("praguri"=praguri, "profit"=profit) %>%
 
 ```
 
-S-ar obţine cu 202 % mai mulţi bani ! Circa 6.9 miliarde RON dacă toate ar plăti impozit pe profit de 16 % ! Dacă pragul ar coborî din nou la 500.000 EURO (aproximativ 2.5 milioane RON) s-ar obţine circa 4.77 miliarde RON de la această categorie de firme în loc de 3 miliarde acum. Un surplus important.
+S-ar obţine cu 202 % mai mulţi bani ! Circa 6.9 miliarde RON dacă toate ar plăti impozit pe profit de 16 % ! Dacă pragul ar coborî din nou la 500.000 EURO (aproximativ 2.5 milioane RON) s-ar obţine circa 4.77 miliarde RON de la această categorie de firme în loc de 3 miliarde acum. Un surplus important. Pentru un prag de 250.000 EURO (aproximativ 1.25 milioane RON) s-ar obţine circa 5.95 miliarde. Cu circa 2.9 miliarde RON în plus. Vom asuma 2.5 miliarde RON ca să ne luăm o marjă de eroare. Aceste estimate trebuie privite cu suspiciune din cauza faptului că firmele nu iau decizii statice, ci sunt influenţate de oportunităţile existente sau create.
 
 ## Taxe sectoriale
 
@@ -296,13 +310,13 @@ insumat %>% rename(CAEN=caen, VALOARE = valoare) %>%
              subtitle="Calcule proprii pe bilanţurile anului 2021") %>%
   gt::grand_summary_rows(columns=3, fns=list(TOTAL = ~sum(., na.rm=TRUE)), 
                          fmt = ~fmt_number(., decimals = 2)) %>%
-  tab_style(style=cell_fill(color="#ccc444"), locations = cells_row_groups()) %>%
-  tab_style(style=cell_borders(color="#ccc444"), locations=cells_row_groups()) %>%
+  tab_style(style=cell_fill(color=culori[3]), locations = cells_row_groups()) %>%
+  tab_style(style=cell_borders(color=culori[3]), locations=cells_row_groups()) %>%
   tab_style(style=cell_text(weight = "bold"), locations=cells_row_groups()) %>%
-  tab_style(style=cell_fill(color="#1f1f1f"), locations=cells_column_labels()) %>%
+  tab_style(style=cell_fill(color=culori[5]), locations=cells_column_labels()) %>%
   tab_style(style=cell_text(color='#fff'), locations=cells_column_labels()) %>%
-  tab_style(style=cell_fill(color="#1f1f1f"), locations=cells_stubhead()) %>%
-  tab_style(style=cell_fill(color="#bd1111"), locations=cells_grand_summary()) %>%
+  tab_style(style=cell_fill(color=culori[5]), locations=cells_stubhead()) %>%
+  tab_style(style=cell_fill(color=culori[5]), locations=cells_grand_summary()) %>%
   tab_style(style=cell_text(color="#fff"), locations=cells_grand_summary()) %>%
   gt::tab_options(container.width = "70%", table.layout = "auto", 
                   table.align = "center", 
