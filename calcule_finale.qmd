@@ -109,7 +109,7 @@ gt::gt(groupname_col = "sector") %>%
   gt::tab_style(style=cell_text(weight = "bold"), 
                 locations=cells_summary()) %>%
   gt::tab_style(style=cell_text(weight='bold'), 
-                locations=cells_grand_summary())
+                locations=cells_grand_summary()) 
 
 ```
 

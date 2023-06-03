@@ -64,7 +64,7 @@ segmente <- df %>%
 df %>% filter(time%in%c(2014, 2019)) %>% 
   mutate(time=as.factor(time)) %>% mutate(id=paste(geo, time)) %>% 
   select(-1,-2) %>% relocate(id) %>% select(1, 2, profit_revenues) %>% 
-  column_to_rownames("id") %>% kmeans(centers=4) %>% .[[1]] %>% 
+  column_to_rownames("id") %>% kmeans(centers=5) %>% .[[1]] %>% 
   enframe() %>% separate(name, into=c("geo", "time"), sep=" ") %>% 
   inner_join(df %>% filter(time%in%c(2014, 2019)) %>% 
              mutate(time=as.character(time))) %>% rename(cluster=value) %>%
@@ -72,17 +72,20 @@ df %>% filter(time%in%c(2014, 2019)) %>%
   ggplot(aes(x=income_revenues, y=profit_revenues, group=time)) + 
   ggConvexHull::geom_convexhull(aes(x=income_revenues, y=profit_revenues, 
                                     group=cluster, fill=cluster), alpha=0.4) +
-  geom_point(aes(colour=time, shape=time), size=2)  +
+  geom_point(aes(colour=time, shape=time, size=geo=="Romania"), 
+             show.legend = c("size"=FALSE))  +
   geom_segment(data=segmente, inherit.aes = F,
                aes(x=income_revenues_2014, xend=income_revenues_2019, 
                    y=profit_revenues_2014, yend=profit_revenues_2019), 
                linetype=2, colour="grey50") +
   labs(title="Încasările din taxa pe profit versus venit", subtitle="% din PIB", 
        x="Venit individual şi gospodării", y="Profit", colour="An", shape="An", fill="Cluster", caption="Sursa: Eurostat, gov_10a_taxag") +
-  ggrepel::geom_text_repel(aes(label=geo), max.overlaps = 7) +
+  ggrepel::geom_text_repel(aes(label=geo, size=geo=="Romania"), 
+                           max.overlaps = 7, show.legend = c("size"=FALSE)) +
   scale_fill_manual(values = culori) +
   scale_x_continuous(labels=scales::percent_format(scale=1)) +
-  scale_y_continuous(labels=scales::percent_format(scale=1))
+  scale_y_continuous(labels=scales::percent_format(scale=1)) +
+  scale_size_manual(values=c(3, 5))
 
 ```
 
@@ -93,11 +96,14 @@ rate <- read_csv(here::here("database", "rate_praguri_venit_oecd_total.csv"))
 
 rate %>% 
   ggplot(aes(x=Year, y=Value, group=geo)) +
-  geom_line(colour='#EA5B0C') + 
+  geom_line(aes(colour=geo)) + 
   labs(title="Cea mai mare rată a taxării marginale", 
-       x="An", y="% din venit", caption="Sursa: OECD, Tabelul I.7") + 
-  gghighlight::gghighlight(geo%in%c("Ungaria", "Polonia", "Danemarca")) +
-  scale_y_continuous(labels=scales::percent_format(scale=1)) 
+       x="An", y="% din venit", caption="Sursa: OECD, Tabelul I.7", colour="Ţară") + 
+  gghighlight::gghighlight(geo%in%c("Ungaria", "Polonia", "Danemarca", 
+                                    "Austria", "Spania", "Italia"),
+                           use_direct_label = F) +
+  scale_y_continuous(labels=scales::percent_format(scale=1)) +
+  scale_color_manual(values=culori[-6])
 
 ```
 
@@ -106,14 +112,15 @@ rate %>%
 Pentru început vom analiza longitudinal variaţia încasărilor din taxele pe venit folosind un model din categoria "latent growth curve" de tip bayesian. Modelul asumă intercepturi şi pante random pentru fiecare ţară în parte. Dar mai întâi o ilustraţie grafică cu datele brute.
 
 ```{r, fig.height=8, fig.width=10, dpi=250}
-df %>% filter(!grepl("Croatia|Elvetia", geo)) %>% 
+df %>% #filter(!grepl("Croatia|Elvetia", geo)) %>% 
   ggplot(aes(x=time, y=income_revenues, group=geo)) + 
   geom_line(aes(colour=geo), size=0.9) + 
   scale_y_continuous(labels = scales::percent_format(scale=1)) + 
-  gghighlight::gghighlight(geo%in%c("Romania", "Bulgaria")) + 
+  gghighlight::gghighlight(geo%in%c("Romania", "Bulgaria", "Cehia", 
+                                    "Franta", "Ungaria", "Spania")) + 
   labs(title="Încasările din impozitul pe venit", 
        x=NULL, y="Procent din PIB", caption="Sursa: Eurostat, gov_10a_taxag") +
-  scale_color_manual(values=culori[c(1, 5)])
+  scale_color_manual(values=culori[-6]) 
 ```
 
 Mai jos ilustrăm rezultatele (parametrii) modelului. Mai întâi valorile pantelor. Interpretarea este simplă, panta este valoarea medie anuală cu care cresc (sau scad) încasările din impozitul pe venit. Fiecare ţară are câte o pantă şi un intercept. Interceptul este valoarea din anul 1998, anul cu care începe analiza noastră şi pentru care avem datele. Practic este punctul de plecare al ţării respective. Modelul mai furnizează şi corelaţia dintre pante şi intercepturi. Dacă corelaţia e pozitivă, înseamnă că ţările care încasau la început mai mult au crescut în continuare şi mai repede decât media celorlalte, dacă este negativă, înseamnă că există un fenomen de convergenţă - cele care încasau puţin cresc mai mult decât cele care încasau de la început mai mult.
