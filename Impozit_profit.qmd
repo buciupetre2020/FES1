@@ -53,10 +53,14 @@ firme %>% mutate(impozit=profit_brut-profit_net) %>%
   group_by(categorie) %>% 
   summarise(ratio = 100*sum(profit_brut-profit_net, na.rm=TRUE)/sum(profit_brut, na.rm=TRUE)) %>% 
   mutate(categorie = gsub("_an2021.txt|web_", "", categorie)) %>% 
-  gt::gt() %>% gt::fmt_number(columns=ratio, decimals=2) %>% 
-  gt::tab_header(title="Rata de taxare efectivă") %>%
+  gt::gt() %>% gt::fmt_percent(columns=ratio, decimals=2, scale_values = FALSE) %>% 
+  gt::tab_header(title="Rata de taxare efectivă în 2021", 
+                 subtitle="Sursa: situaţiile financiare de pe data.gov.ro") %>%
   gt::tab_style(style=gt::cell_fill(color=culori[1]), locations=cells_title()) %>%
-  gt::tab_style(style=gt::cell_text(color="white"), locations=cells_title())
+  gt::tab_style(style=gt::cell_text(color="white"), locations=cells_title()) %>% 
+  gtExtras::gt_theme_538() %>%
+  gt::tab_style(style=cell_fill(color=culori[5]), locations = cells_column_labels()) %>%
+  gt::tab_style(style=gt::cell_text(color="white"), locations=cells_column_labels())
 ```
 
 Regimul de impozitare pe cifra de afaceri este cu siguranţă avantajos per total.
@@ -327,5 +331,5 @@ insumat %>% rename(CAEN=caen, VALOARE = valoare) %>%
   gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri netă ce depăşeşte 1 miliard RON", locations = cells_row_groups(groups="ENERGIE")) %>%
   gt::tab_footnote(footnote = "1.2 % impozit pe cifra de afaceri pentru toate firmele",
                    locations=cells_row_groups("JOCURI DE NOROC")) %>%
-  gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON", locations=cells_row_groups(groups="RETAIL"))
+  gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON", locations=cells_row_groups(groups="RETAIL")) %>% gtExtras::gt_theme_538()
 ```

@@ -48,7 +48,8 @@ De unde deducem că în anul 2021 dividendele companiilor listate nu au constitu
 ## Simulări finale
 
 ```{r}
-insumari <- read_csv(here::here("database", "taxe_sectoriale_scutiri.csv")) %>%
+insumari <- read_csv(here::here("database", 
+                                "taxe_sectoriale_scutiri.csv")) %>%
   mutate(sector=str_to_upper(sector)) %>%
   group_by(sector) %>% summarise(valoare=sum(valoare)) %>%
   rename(Masura = sector, Impact=valoare) %>%
@@ -101,7 +102,14 @@ gt::gt(groupname_col = "sector") %>%
                    locations=cells_body(columns=Masura, 
                                         rows=grepl("dividende", Masura))) %>%
   gt::tab_footnote(footnote="Scăderea pragului de venit al microîntreprinderii la 250.000 EURO", 
-                   locations=cells_body(columns=Masura, rows=grepl("prag", Masura)))
+                   locations=cells_body(columns=Masura, rows=grepl("prag", Masura))) %>% 
+  gt::tab_footnote(footnote = "Mai probabilă este estimarea MF de 0.9 miliarde RON", locations=cells_body(columns=Impact, 
+                                    rows=grepl("IT", Masura))) %>% 
+  gtExtras::gt_theme_538() %>%
+  gt::tab_style(style=cell_text(weight = "bold"), 
+                locations=cells_summary()) %>%
+  gt::tab_style(style=cell_text(weight='bold'), 
+                locations=cells_grand_summary())
 
 ```
 
@@ -145,7 +153,7 @@ insumari %>%
   coord_polar(theta="y", start = 0, direction=1)+
   geomtextpath::geom_textpath(aes(y = ypos, 
                                   label = eticheta), size=6, color = "white")+
-  scale_fill_manual(values=c("#0073C2FF", "#EFC000FF", "#CD534CFF")) +
+  scale_fill_manual(values=c(culori[1], culori[5], culori[8])) +
   theme_void() +
   xlim(0.5, 2.5)
 

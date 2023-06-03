@@ -115,7 +115,9 @@ agregate %>% filter(grepl("Total general", na_item)) %>%
   gt::tab_style(style=gt::cell_fill(color=culori[3], alpha=0.3), 
                 locations=gt::cells_body()) %>% 
   gt::tab_options(table.border.left.color = "#000000") %>%
-  gt::tab_caption("Sursa: calcule pe Eurostat, gov_10a_main")
+  gt::tab_caption("Sursa: calcule pe Eurostat, gov_10a_main") %>% 
+  gtExtras::gt_theme_538() %>% 
+  gtExtras::gt_highlight_rows(rows=6)
 ```
 
 Concluzia acestei secţiuni este că nu cheltuielile sunt mari, într-adevăr cu greu ar putea fi tăiate şi mai mult, ci veniturile sunt foarte mici. Doar Irlanda, Elveţia şi Lituania au venituri din PIB mai mici ca noi făcând media ultimilor 10 ani. Pentru anul 2022 România a avut cel mai mic procent din PIB ca venituri, în afară de Irlanda.
