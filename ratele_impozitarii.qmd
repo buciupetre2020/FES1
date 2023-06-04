@@ -344,10 +344,14 @@ corporate_rate <- read_csv(here::here("database",
                                       "income_profit_gdp_inflation.csv"))
 
 ggplot(corporate_rate,aes(x=time, y=profit_rate, group=geo)) + 
-  geom_line() + gghighlight::gghighlight(geo=="Romania") +
+  geom_line(aes(colour=geo), size=0.9) + 
+  gghighlight::gghighlight(geo%in%c("Romania", "Bulgaria", "Polonia", 
+                                    "Cehia", "Slovacia", "Ungaria"), 
+                           use_direct_label = F) +
   scale_y_continuous(labels=scales::percent_format(scale=1)) +
   labs(title="Rata impozării pe profitul companiilor", x="An", 
-       y="Procent din profit", caption ="Sursa: TaxFoundation")
+       y="Procent din profit", caption ="Sursa: TaxFoundation", colour="Ţară") +
+  scale_color_manual(values=culori[-6])
 
 ```
 
@@ -404,59 +408,13 @@ Din acestă imagine nu trebuie să se tragă concluzia, falsă, cum că rata imp
 
 ## Scenarii de impozitare progresivă
 
-În această secţiune investigăm diferite scenarii de impozitare progresivă pentru România. Întrucât datele sunt limitate am optat pentru un calcul simplu care foloseşte distribuţia veniturilor salariale în categorii pe decile. Doar ILOSTAT furnizează aceste date pentru România la nivel de decilă, Eurostat având ceva similar pentru intervale de 20 %. În acest fel putem estima raportul cu care ar putea creşte încasările la buget din veniturile salariale prin impozitul de venit. Dar oamenii obţin venit şi prin alte mijloace decât un salariu însă acestea sunt datele cu lucrăm. Cel puţin aceste calcule ne permit estimarea unei limite superioare. Valoarea reală va fi cel mai probabil mai mică. De asemenea, asumăm că distribuţia veniturilor nu s-a schimbat semnificativ din 2019 încoace, ultimul an pentru care există datele de pe ILOSTAT, tabelul `LAP_2LID_QTL_RT_A`.
+În această secţiune investigăm diferite scenarii de impozitare progresivă pentru România. Singura bază de date care are datele suficient de granulare este `World Inequality Database`. Are date la nivel de percentile cu media venitului pre-taxe (şi post-taxe, dar nu ne interesează aici) per percentilă.
 
-```{r}
-distrib <- read_csv(here::here("database", "ILO_Romania.csv")) %>% 
-           filter(time==2019) %>% select(-time)
-
-
-raport <- function(coefs, k){
-((coefs[1])*sum(distrib$obs_value[1:k]) + 
-    (coefs[2])*sum(distrib$obs_value[(k+1):10]))/(0.1*sum(distrib$obs_value[1:k]) + 
-                                              0.1*sum(distrib$obs_value[(k+1):10]))
-}
-
-```
-
-Pentru a explora diferite scenarii de impozitare progresivă am creat următoarea [aplicaţie](https://petrebuciu.shinyapps.io/taxare/). Singura constantă este faptul că impozitarea este constrânsă la două trepte (cred că este rezonabil pentru România), restul fiind variabile ce pot fi explorate. Jos este un grafic care explorează asemenea posibilităţi asumând pragul pentru cea de a doua cotă la nivelul câştigului salarial brut de 2200 EURO (top 8-9 % conform distribuţiei veniturilor salariale din baza de date a `World Inequality Database`. Pragul a fost împrumutat de la Slovacia: pragul la ei este de 38000 EURO brut anual. Ajustat la PIB-ul per capita, la noi ar veni 2200 EURO brut lunar.
-
-```{r}
-# aici calculăm percentila în care se încadrează un venit de 2200-2300 de EURO. Este #percentila 92 % la venitul naţional pre-taxe.
-
-read_delim(here::here("database", "WID", "WID_data_RO.csv"), delim=";") %>% 
-  filter(variable=="adiincj992") %>% 
-  filter(between(value, 2200*12*5, 2300*12*5)) %>% 
-  filter(year==2019) %>% pull(percentile)
-```
-
-```{r, fig.width=10, fig.height=10, dpi=300}
-multiplicator <- expand_grid("cota_1"=seq(0, 0.5, by=0.01), 
-            "cota_2"=seq(0, 0.5, by=0.01)) %>% 
-  mutate(coefs = map2(cota_1, cota_2, c)) %>% 
-  mutate(ratio = map_dbl(coefs, ~raport(.x, k=9))) %>% 
-  mutate(ratio2 = cut(ratio, breaks=c(-0.01, 1, 2, 3, 4, 5))) %>% 
-  ggplot(aes(x=cota_1, y=cota_2, fill=ratio2, 
-             text=paste("Raport:", round(ratio, 3)))) + geom_tile() +
-  scale_fill_viridis_d(option="E") +
-  scale_x_continuous(labels=scales::percent_format()) +
-  scale_y_continuous(labels=scales::percent_format()) +
-  labs(title = "Factorul multiplicativ al încasărilor", 
-       x="Prima cotă", y="A doua cotă", fill="Factor")
-
-plotly::ggplotly(multiplicator)
-
-```
-
-Însă nu propunem şi cotele Slovaciei, ci ceva mai modest: 16 % ( în loc de 19 %) şi 21 % (în loc de 25 %). Impozitul pe venitul din salarii a fost de circa 28 de miliarde de RON în 2021 conform [MF](https://mfinante.gov.ro/documents/35673/162114/nota_bgc31dec2021.pdf). Asumând impozitul pe venit slovac pe veniturile din salarii s-ar cumula circa 20 de miliarde de RON la buget. Pentru anul 2021. Nu mai ajustăm în jos această sumă deoarece colectările vor fi cu siguranţă semnificativ mai mari în 2023.
-
-### Calcul alternativ folosind datele WID
-
-Vom calcula sumele colectate ca impozit pe venit folosind distribuţiile la nivel de percentilă ale datelor furnizate de `World Inequality Database`. Datele WID sunt furnizate până la anul 2021, deci avem avantajul dublu al unei distribuţii mai recente şi mai fine.
+Pentru a explora diferite scenarii de impozitare progresivă am creat următoarea [aplicaţie](https://petrebuciu.shinyapps.io/taxare/). Singura constantă este faptul că impozitarea este constrânsă la două trepte (cred că este rezonabil pentru România), restul fiind variabile ce pot fi explorate. Jos este un grafic care explorează asemenea posibilităţi asumând pragul pentru cea de a doua cotă la nivelul câştigului salarial brut de 2200 EURO (top 8-9 % conform distribuţiei veniturilor salariale din baza de date a `World Inequality Database`.
 
 ```{r}
 distrib_wid <- read_delim(here::here("database", "WID", "WID_data_RO.csv")) %>% 
-  filter(variable=="sptincj992") %>% filter(year==2021) %>% 
+  filter(variable=="aptincj992") %>% filter(year==2021) %>% 
   filter(country=="RO") %>% select(percentile, value) 
 
 pe <- numeric(100)
@@ -469,14 +427,69 @@ distrib_wid <- distrib_wid %>% filter(percentile%in%pe) %>%
   mutate(percentile = factor(percentile, levels=pe, ordered=T)) %>% 
   arrange(percentile)
 
-
-raport_wid <- function(coefs, k){
-    ((coefs[1])*sum(distrib_wid$value[1:k]) + 
-         (coefs[2])*sum(distrib_wid$value[(k+1):100]))/(0.1*sum(distrib_wid$value[1:k]) + 
-                                                0.1*sum(distrib_wid$value[(k+1):100]))
-}
-
-raport_wid(coefs=c(0.16, 0.21), k=92)
+distrib_wid %>% 
+  filter(between(value, 2100*5*12, 2300*5*12)) %>% pull(percentile)
 ```
 
-Obţinem un surplus de 78.6 % foarte similar cu cel calculat pe datele de la ILOSTAT, care dă doar 71.8 %. Vom rămâne însă pe scenariul calculat pe datele ILOSTAT pentru că ne oferă o concluzie mai conservatoare.
+Pragul a fost împrumutat de la Slovacia: pragul la ei este de 38000 EURO brut anual. Ajustat la PIB-ul per capita, la noi ar veni 2200 EURO brut lunar. Vom folosi acest prag pentru patru mari scenarii. Puteţi explora toate scenariile, folosind fie aplicaţia (care permite şi alt prag) fie imaginea interactivă de mai jos care fixează pragul la 2200 EURO şi lasă cotele să varieze. Puteţi afla suma strânsă totala din impozit multiplicând factorul din grafic sau aplicaţie cu 28 miliarde de RON (impozitul pe venitul din salarii din 2021, conform [MF](https://mfinante.gov.ro/documents/35673/162114/nota_bgc31dec2021.pdf)). Noi vom propune patru scenarii în cele ce urmează.
+
+```{r}
+raport_wid <- function(coefs, prag){
+  x <- distrib_wid %>% mutate(categ = row_number()) 
+  k <- x %>% filter(between(value, 60*(prag-100), 60*(prag+100))) %>% 
+       pull(categ) %>% .[1] %>% as.integer()
+  
+  val <- ((coefs[1])*sum(x$value[1:k]) + 
+         (coefs[2])*sum(x$value[(k+1):100]))/(0.1*sum(x$value))
+  
+  val2 <- (coefs[1]*sum(x$value) + 
+             coefs[2]*sum(x$value[(k+1):100] - prag*60))/(0.1*sum(x$value))
+  
+    c(val, val2, as.integer(100-k))
+}
+
+```
+
+```{r, fig.width=10, fig.height=10, dpi=300}
+multiplicator <- expand_grid("cota_1"=seq(0, 0.5, by=0.01), 
+            "cota_2"=seq(0, 0.5, by=0.01)) %>% 
+  mutate(coefs = map2(cota_1, cota_2, c)) %>% 
+  mutate(ratio = map_dbl(coefs, ~raport_wid(.x, prag=2200)[2])) %>% 
+  mutate(ratio2 = cut(ratio, breaks=c(-0.01, 1, 2, 3, 4, 5, 10))) %>% 
+  ggplot(aes(x=cota_1, y=cota_2, fill=ratio2, 
+             text=paste("Raport:", round(ratio, 3)))) + geom_tile() +
+  scale_fill_viridis_d(option="E") +
+  scale_x_continuous(labels=scales::percent_format()) +
+  scale_y_continuous(labels=scales::percent_format()) +
+  labs(title = "Factorul multiplicativ al încasărilor", 
+       x="Prima cotă", y="A doua cotă", fill="Factor")
+
+plotly::ggplotly(multiplicator)
+
+```
+
+Sugestia noastră finală este un scenariu intermediar între cel slovac şi cel cu progresivitate scăzută de 10 % - 16 %: anume cotă de 16 % ( în loc de 19 %) şi 21 % (în loc de 25 %) pentru tot ce trece de prag. Marginal, nu efectiv. Asumând acestă variantă s-ar acumula în plus circa 21.8 miliarde de RON la buget. Pentru anul 2021. Nu mai ajustăm în jos această sumă deoarece colectările vor fi cu siguranţă semnificativ mai mari în 2023.
+
+### Cele patru scenarii
+
+Vom calcula sumele colectate ca impozit pe venit folosind distribuţiile la nivel de percentilă ale datelor furnizate de `World Inequality Database`. Datele WID sunt furnizate până la anul 2021, deci avem avantajul dublu al unei distribuţii mai recente şi mai fine decât permit alte baze de date (Eurostat, ILOSTAT, etc). S-a folosit următoarea formulă de calcul:
+
+$$
+Multiplicator = \frac{cota_{mica}*\Sigma_{p1}^{p100} V_{brute} + cota_{mare}*\Sigma_{p93}^{p100} (V_{brute}-2200)}{0.1* \Sigma_{p1}^{p100} V_{brute}}
+$$
+
+### Scenariul I
+
+Cote de 10 % şi 16 % pe orice sumă care depăşeşte 2200 EURO brut. Se strâng cu `r paste(100*(round(raport_wid(coefs=c(0.1, 0.16), prag=2200)[2] - 1, 4)), "%")` mai mulţi bani. Acest lucru înseamnă 9.24 miliarde de RON. Îl vom rotunji la 8 miliarde RON, notând că valoarea va fi mult mai mare în 2023, aşa ne luăm o marjă de eroare semnificativă.
+
+### Scenariul II
+
+Cote de 10 şi 19 % pe orice sumă depăşeşte 2200 EURO brut. Se strâng cu `r paste(100*(round(raport_wid(coefs=c(0.1, 0.19), prag=2200) -1, 4)[2]), "%")` mai mulţi bani. Acest lucru înseamnă 10.97 miliarde de RON. Îl vom rotunji la 10 miliarde.
+
+### Scenariul III
+
+Sugestia noastră personală cu cote de 16 şi 21 %. Se strâng cu `r paste(100*(round(raport_wid(coefs=c(0.16, 0.21), prag=2200) -1, 4)[2]), "%")` mai mulţi bani. Acest lucru înseamnă 28.92 miliarde de RON. Îl vom rotunji la 25 de miliarde RON, o marjă semnificativă.
+
+### Scenariul IV
+
+Scenariul slovac, cu trepte de 19 şi 25 %. Se strâng cu `r paste(100*(round(raport_wid(coefs=c(0.19, 0.25), prag=2200) -1, 4)[2]), "%")` mai mulţi bani. Acest lucru înseamnă 39.65 miliarde de RON. Îl vom rotunji la 30 de miliarde RON.

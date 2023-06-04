@@ -57,11 +57,11 @@ insumari <- read_csv(here::here("database",
                               "Impozit pe dividende", 
                               "TRANZACŢII IMOBILIARE", 
                               "Coborâre prag microîntreprinderi"),
-                   "Impact"=c(20, 6, 0.35, 2.5))) %>%
+                   "Impact"=c(25, 6, 0.35, 2.5))) %>%
   mutate(sector = c("Eliminare scutiri", "Eliminare scutiri", "Taxe sectoriale", "Eliminare scutiri", "Taxe sectoriale", "Taxe sectoriale", "Creştere impozite", "Creştere impozite", "Taxe sectoriale", "Creştere impozite")) %>% 
   relocate(sector) 
 
-insumari %>%
+tabel_total <- insumari %>%
 gt::gt(groupname_col = "sector") %>% 
   gt::fmt_number(columns=3, decimals = 2) %>% 
   tab_header(title="Impact tipuri de măsuri propuse (miliarde RON)", 
@@ -85,7 +85,7 @@ gt::gt(groupname_col = "sector") %>%
             locations=cells_grand_summary()) %>%
   gt::tab_options(container.width = "90%", table.layout = "auto", 
                   table.align = "center", 
-                  table.additional_css = "table.gt_table {border: 2px solid black;}") %>%
+                  table.additional_css = "table.gt_table {border: 2px solid black;}", footnotes.padding = 1) %>%
   gt::tab_footnote(footnote="10 % taxă pe tranzacţiile imobiliare",
                    locations=cells_body(columns=Masura, 
                                       rows=grepl("IMOBILIARE", Masura))) %>%
@@ -95,7 +95,7 @@ gt::gt(groupname_col = "sector") %>%
                                         rows=grepl("JOCURI", Masura))) %>%
   gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON", locations=cells_body(columns=Masura, 
                                           rows=grepl("RETAIL", Masura))) %>%
-  gt::tab_footnote(footnote = "Asumând cote de 16 % şi 21 % pentru ce trece de 2200 EURO lunar brut (scenariul slovac)", 
+  gt::tab_footnote(footnote = "Asumând cote de 16 % şi 21 % pentru ce trece de 2200 EURO lunar brut (scenariul slovac atenuat)", 
                    locations=cells_body(columns=Masura, 
                                         rows=grepl("venit", Masura))) %>%
   gt::tab_footnote(footnote="Impozit pe dividende de 18 %", 
@@ -110,7 +110,7 @@ gt::gt(groupname_col = "sector") %>%
                 locations=cells_summary()) %>%
   gt::tab_style(style=cell_text(weight='bold'), 
                 locations=cells_grand_summary()) 
-
+tabel_total
 ```
 
 Şi acum sub formă de pie chart.
