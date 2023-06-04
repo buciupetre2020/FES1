@@ -14,19 +14,21 @@ library(TEMPO)
 culori <- c("#EA5B0C", "#a44a08", "#ea960c", "#ea150c", 
             "#a40e08", "#000000", "#0865a4", "#a48408")
 
-theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
+theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 14, 
                                      strip_text_family = "Frutiger Bold",
                                      strip_text_face = "italic",
-                                     axis_title_size = 14,
-                                     axis_text_size = 12,
+                                     axis_title_size = 10,
+                                     axis_text_size = 8,
                                      base_family = "Frutiger",
                                      plot_title_family = "Frutiger Bold",
                                      subtitle_family = "Frutiger",
-                                     caption_family = "Frutiger",
-                                     caption_size = 12) +
-  theme(legend.text = element_text(size=14), 
-        legend.title = element_text(size=16),
-        legend.key.size = unit(0.8, "cm")))
+                                     caption_family = "Frutiger", 
+                                     caption_size = 8,
+                                     plot_title_size = 14,
+                                     subtitle_size = 10) +
+  theme(legend.text = element_text(size=8), 
+        legend.title = element_text(size=10),
+        legend.key.size = unit(0.5, "cm")))
 
 firme <- read_csv(here::here("database", "bl_bs_sl+ir+uu.csv")) %>%
          select(cui, caen, cifra_afaceri=cifra_de_afaceri_neta, 
@@ -67,7 +69,7 @@ Regimul de impozitare pe cifra de afaceri este cu siguranţă avantajos per tota
 
 Care metodă de taxare aduce mai mulţi bani la buget ? Cota pe profit sau cea pe cifra de afaceri ? Din păcate rezultatele sunt dezamăgitoare, cota pe profit aducând doar marginal mai mulţi bani decât cea pe cifra de afaceri. Am simulat 100 de valori uniform distribuite pentru pragul nostru de taxare (în 2021 1 milion de EURO, din 2023 doar 500.000 de EURO) pentru a vedea dacă există vreun optim. Ele încep cu 0 (toate firmele plătesc doar impozit pe profit) şi merg până la 1 milion de EURO. Suma care ar fi încasată presupunând că schimbările afectează doar bilanţurile de tip UU e afişată în graficul următor.
 
-```{r, fig.width=10, fig.height=7, dpi=200}
+```{r, fig.width=5, fig.height=4, dpi=200}
 profit <- numeric(100)
 praguri <- seq(0, 4870000, length.out=100)
 for(i in 1:100){
@@ -80,9 +82,11 @@ profit[i] <- firme %>% filter(grepl("uu", categorie)) %>%
 tibble("praguri"=praguri, "profit"=profit) %>% 
   mutate(profit=profit/1000000000) %>% 
   ggplot(aes(x=praguri, y=profit)) + geom_line() + geom_point() +
-  labs(title = "Impozit pe profit colectat din bilanţurile de tip UU", 
-       subtitle="Miliarde RON", x="Prag (RON)", y="Impozit colectat") +
-  scale_x_continuous(labels = scales::number_format(big.mark=','))
+  labs(title = "Impozit pe profit colectat de la microîntreprinderi", 
+       subtitle="Miliarde RON", x="Prag (RON)", y="Impozit colectat", 
+       caption="Sursa: calcule proprii pe bilanţurile anului 2021") +
+  scale_x_continuous(labels = scales::number_format(big.mark=',')) +
+  theme(plot.title = element_text(size=12))
 
 ```
 
@@ -199,14 +203,15 @@ Nu cred că merită efortul, se adună 170 de milioane de RON la un prag foarte 
 
 Codurile CAEN `46` şi `47` se ocupă de tot ce înseamnă comerţ. Să vedem câţi bani se adună la o rată de 1.2 % pe cifra de afaceri netă.
 
-```{r, fig.width=10, fig.height=7, dpi=250}
+```{r, fig.width=5, fig.height=4, dpi=200}
 seq(0, 1000000000, length.out=100) %>%
   map_dbl(. ,~calculeaza(CAEN="4[6-7]..", procent=0.012, prag=.x)) %>%
   enframe() %>% select(-name) %>% 
   mutate(praguri = seq(0, 1000000000, length.out=100)) %>%
   ggplot(aes(x=praguri, y=value)) + geom_point() + geom_line() +
   labs(title="Impozit colectat teoretic din retail", 
-       x="Prag CA", y="milioane RON")
+       x="Prag CA", y="milioane RON", 
+       caption="Sursa: Calcule proprii pe bilanţurile firmelor, 2021")
 ```
 
 8 miliarde de RON s-ar aduce la buget dacă ar fi aplicat tuturor firmelor din comerţ. Apoi suma scade vertiginos. La un prag de 100 milioane RON s-ar aduna aproximativ 4 miliarde la buget. Ar fi afectate circa 709 firme din 186.301 la acest prag. Este pragul pe care-l vom selecta.

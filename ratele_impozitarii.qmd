@@ -9,20 +9,23 @@ library(Matrix)
 library(tidyverse)
 library(eurostat)
 library(patchwork)
+library(gt)
 library(CausalImpact)
-theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
+theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 14, 
                                      strip_text_family = "Frutiger Bold",
                                      strip_text_face = "italic",
-                                     axis_title_size = 14,
-                                     axis_text_size = 12,
+                                     axis_title_size = 10,
+                                     axis_text_size = 8,
                                      base_family = "Frutiger",
                                      plot_title_family = "Frutiger Bold",
                                      subtitle_family = "Frutiger",
                                      caption_family = "Frutiger", 
-                                     caption_size = 12) +
-  theme(legend.text = element_text(size=14), 
-        legend.title = element_text(size=16),
-        legend.key.size = unit(0.8, "cm")))
+                                     caption_size = 8,
+                                     plot_title_size = 14,
+                                     subtitle_size = 10) +
+  theme(legend.text = element_text(size=8), 
+        legend.title = element_text(size=10),
+        legend.key.size = unit(0.5, "cm")))
 
 culori <- c("#EA5B0C", "#a44a08", "#ea960c", "#ea150c", 
             "#a40e08", "#ffe0c2", "#0865a4", "#a48408")
@@ -32,7 +35,7 @@ df <- read_csv(here::here("database", "income_profit_gdp_inflation.csv"))
 
 ```
 
-```{r, fig.height=12, fig.width=8, dpi=250}
+```{r, fig.height=7, fig.width=5, dpi=200}
 #rata de taxare efectivă
 taxe %>% filter(time%in%c(2010, 2020)) %>% 
   arrange(time) %>% mutate(time=as.factor(time)) %>% 
@@ -46,7 +49,8 @@ taxe %>% filter(time%in%c(2010, 2020)) %>%
        y="Rata de taxare efectivă", x="Ţară", fill="Anul", 
        caption="Sursa: Eurostat, earn_nt_taxrate") +
   scale_y_continuous(labels = scales::percent_format(scale=1)) +
-  scale_fill_manual(values=culori[c(1, 5)])
+  scale_fill_manual(values=culori[c(1, 5)]) +
+  theme(legend.position = 'top')
 
 ```
 
@@ -54,7 +58,7 @@ Observăm din acest grafic că Belgia, Germania şi Danemarca sunt ţările cu c
 
 Acum vom vizualiza relaţia încasări din impozitul pe profit vs încasări din impozitul pe venit şi vom împărţi (prin metoda \*k-means\*) ţările în patru clusteri. Am ales o diferenţă de 5 ani între cele două perioade afişate astfel încăt să excludem şi impactul crizei economice din 2008-2009 dar şi al pandemiei de COVID din 2020. Aşadar, în acest grafic apar anii 2014 şi 2019.
 
-```{r, fig.height=8, fig.width=10, dpi=250}
+```{r, fig.height=6, fig.width=8.5, dpi=200}
 
 segmente <- df %>% 
   select(geo, time, income_revenues, profit_revenues) %>% 
@@ -85,20 +89,21 @@ df %>% filter(time%in%c(2014, 2019)) %>%
   scale_fill_manual(values = culori) +
   scale_x_continuous(labels=scales::percent_format(scale=1)) +
   scale_y_continuous(labels=scales::percent_format(scale=1)) +
-  scale_size_manual(values=c(3, 5))
+  scale_size_manual(values=c(3, 4))
 
 ```
 
 În continuare vom vizualiza cea mai mare rată a taxării marginale pentru fiecare ţară şi cum a variat în timp. Vom folosi datele de la OECD întrucât Eurostat nu are informaţii de acest gen. Dar menţionez că apar nişte discrepanţe între datele acestea şi ce mai spune Google.
 
-```{r, fig.width=10, fig.height=8, dpi=250}
+```{r, fig.width=6.25, fig.height=5, dpi=200}
 rate <- read_csv(here::here("database", "rate_praguri_venit_oecd_total.csv"))
 
 rate %>% 
   ggplot(aes(x=Year, y=Value, group=geo)) +
   geom_line(aes(colour=geo)) + 
   labs(title="Cea mai mare rată a taxării marginale", 
-       x="An", y="% din venit", caption="Sursa: OECD, Tabelul I.7", colour="Ţară") + 
+       x="An", y="% din venit", caption="Sursa: OECD, Tabelul I.7", 
+       colour="Ţară") + 
   gghighlight::gghighlight(geo%in%c("Ungaria", "Polonia", "Danemarca", 
                                     "Austria", "Spania", "Italia"),
                            use_direct_label = F) +
@@ -111,7 +116,7 @@ rate %>%
 
 Pentru început vom analiza longitudinal variaţia încasărilor din taxele pe venit folosind un model din categoria "latent growth curve" de tip bayesian. Modelul asumă intercepturi şi pante random pentru fiecare ţară în parte. Dar mai întâi o ilustraţie grafică cu datele brute.
 
-```{r, fig.height=8, fig.width=10, dpi=250}
+```{r, fig.height=5, fig.width=6.25, dpi=200}
 df %>% #filter(!grepl("Croatia|Elvetia", geo)) %>% 
   ggplot(aes(x=time, y=income_revenues, group=geo)) + 
   geom_line(aes(colour=geo), size=0.9) + 
@@ -119,13 +124,14 @@ df %>% #filter(!grepl("Croatia|Elvetia", geo)) %>%
   gghighlight::gghighlight(geo%in%c("Romania", "Bulgaria", "Cehia", 
                                     "Franta", "Ungaria", "Spania")) + 
   labs(title="Încasările din impozitul pe venit", 
-       x=NULL, y="Procent din PIB", caption="Sursa: Eurostat, gov_10a_taxag") +
+       x=NULL, y="Procent din PIB", 
+       caption="Sursa: Eurostat, gov_10a_taxag") + 
   scale_color_manual(values=culori[-6]) 
 ```
 
 Mai jos ilustrăm rezultatele (parametrii) modelului. Mai întâi valorile pantelor. Interpretarea este simplă, panta este valoarea medie anuală cu care cresc (sau scad) încasările din impozitul pe venit. Fiecare ţară are câte o pantă şi un intercept. Interceptul este valoarea din anul 1998, anul cu care începe analiza noastră şi pentru care avem datele. Practic este punctul de plecare al ţării respective. Modelul mai furnizează şi corelaţia dintre pante şi intercepturi. Dacă corelaţia e pozitivă, înseamnă că ţările care încasau la început mai mult au crescut în continuare şi mai repede decât media celorlalte, dacă este negativă, înseamnă că există un fenomen de convergenţă - cele care încasau puţin cresc mai mult decât cele care încasau de la început mai mult.
 
-```{r, fig.height=10, fig.width=10, dpi=250}
+```{r, fig.height=6, fig.width=6, dpi=200}
 model <- read_rds(here::here("model.R"))
 
 brms::as_draws_df(model) %>%  
@@ -147,7 +153,7 @@ brms::as_draws_df(model) %>%
 
 Şi intercepturile:
 
-```{r, fig.height=10, fig.width=10,dpi=250}
+```{r, fig.height=6, fig.width=6,dpi=200}
 brms::as_draws_df(model) %>%  
   select(contains("Intercept")) %>% 
   select(-contains("sd"), -contains("cor"), -contains("b_Intercept")) %>% 
@@ -188,7 +194,7 @@ Pentru Slovacia (2013):
 
 Ne-am aştepta să vedem cele mai mari efecte la Lituania şi Slovacia.
 
-```{r, fig.height=8, fig.width=10, dpi=250}
+```{r, fig.height=6, fig.width=7.5, dpi=200}
 
 df %>% 
   mutate(time=paste0(time,"-01-01") %>% as.Date()) %>%
@@ -208,7 +214,7 @@ df %>%
 
 Aparent ar exista un impact pozitiv al cotei progresive asupra încasărilor din impozitul pe venit ... însă e foarte important să ne uităm în paralel şi la încasările totale... dacă acestea cresc odată cu încasările din taxa pe venit e clar că există o altă variabilă, alta decât rata taxării pe venit, care le influenţează pe amândouă, căci logic vorbind rata taxării pe venit nu ar trebui să influenţeze colectarea taxelor pe profit, pe mediu, TVA sau oricare altă taxă în afara de cea pe venit. Vom standardiza datele ca să putem să le suprapunem şi să observăm dacă au acelaşi trend.
 
-```{r, fig.width=10, fig.height=8, dpi=250}
+```{r, fig.width=7.5, fig.height=6, dpi=200}
 df <- read_csv(here::here("database", "income_profit_gdp_inflation.csv")) %>%
       inner_join(read_csv(here::here("database", "taxe_total.csv")) %>%
       mutate(time=lubridate::year(time))) %>%
@@ -251,7 +257,7 @@ Aparent este cazul pentru toate tările noastre. Cel puţin parţial, acolo unde
 
 În cazul nostru putem să ne plângem doar de lipsa unor controale mai bune, îşi de numărul limitat de observaţii, nsă în rest respectăm aproximativ premizele. Să vizualizăm impactul cotei progresive asupra încasărilor în cele patru ţări. Graficele se citesc în modul următor: primul subgrafic cu negru reprezintă încasările din taxa pe venit, seria de timp originală sau variabila-răspuns. Cu roşu punctat este seria prezisă de model (şi fit-ul ei) în absenţa intervenţiei. În al doilea subgrafic avem impactul "cauzal" iar în al treilea impactul "cauzal" cumulativ. Predicţiile furnizat de model vin şi cu intervale 'credibile' (în limbajul statisticii bayesiene) de 95 %.
 
-```{r, fig.height=12, fig.width=8, dpi=250}
+```{r, fig.height=6, fig.width=6, dpi=200}
 prag <- c("Slovacia"=11, "Lituania"=17, "Letonia"=16, "Cehia"=11)
 
 
@@ -274,16 +280,9 @@ plot.CausalImpact <- function(model){
     geom_vline(xintercept=x$time[model$model$pre.period[2]] + 1, linetype=2, 
                colour='grey50') +
     geom_hline(yintercept=0, linetype=2) +
-    labs(caption="Impactul renunţării la cota unică", x=NULL)
-  
-  g3 <- x %>% ggplot(aes(x=time, y=cum.effect)) + 
-    geom_line(linetype=2, colour=culori[1]) + 
-    geom_ribbon(aes(x=time, ymin=cum.effect.lower, ymax=cum.effect.upper), 
-                alpha=0.3, fill=culori[1]) +
-    geom_vline(xintercept=x$time[model$model$pre.period[2]]+ 1, linetype=2, colour='grey50') +
-    geom_hline(yintercept=0, linetype=2) +
-    labs(caption="Impactul cumulativ", x=NULL)
-  g1 / g2 / g3 
+    labs(caption="Impactul renunţării la cota unică", x=NULL) +
+    theme(plot.margin = margin(-1, 0.5, -2, 0.5, "cm"))
+  g1 / g2
 }
 
 
@@ -310,7 +309,7 @@ plot(model$Slovacia) +
 
 În Slovacia avem cel mai clar o dovada a creşterii încasărilor ca urmare a cotei progresive.
 
-```{r, fig.height=12, fig.width=8, dpi=250}
+```{r, fig.height=6, fig.width=6, dpi=200}
 plot(model$Lituania) + 
   patchwork::plot_annotation(title="Lituania (2019)", 
   subtitle="Impactul trecerii la cota progresivă \nasupra veniturilor din taxa pe venit", caption="Sursa: calcule pe Eurostat, gov_10a_taxag")
@@ -318,7 +317,7 @@ plot(model$Lituania) +
 
 În Lituania deşi avem o creştere marcată a încasărilor din impozitul pe venit fix în anul trecerii la cota progresivă, avem o creştere semnificativă şi a celorlalte încasări de taxe, deci impactul "cauzal" calculat de model rămâne mai mic.
 
-```{r, fig.height=12, fig.width=8, dpi=250}
+```{r, fig.height=6, fig.width=6, dpi=200}
 plot(model$Letonia) + 
   patchwork::plot_annotation(title="Letonia (2018)", 
   subtitle="Impactul trecerii la cota progresivă \nasupra veniturilor din taxa pe venit", caption="Sursa: calcule pe Eurostat, gov_10a_taxag")
@@ -326,7 +325,7 @@ plot(model$Letonia) +
 
 În Letonia nu avem niciun impact decelabil.
 
-```{r, fig.height=12, fig.width=8, dpi=250}
+```{r, fig.height=6, fig.width=6, dpi=200}
 plot(model$Cehia) +
   patchwork::plot_annotation(title="Cehia (2013)", 
   subtitle="Impactul trecerii la cota progresivă \nasupra veniturilor din taxa pe venit", caption="Sursa: calcule pe Eurostat, gov_10a_taxag")
@@ -339,7 +338,7 @@ plot(model$Cehia) +
 
 În această secţiune vom analiza impozitul pe profit şi impactul lui asupra încasărilor. Spre deosebire de cel pe venit, acesta se schimbă semnificativ mai frecvent şi nu avem o singură intervenţie pe care să o putem cuantifica. De asemenea avem şi număr mic de puncte pentru a putea testa ipoteze prin metoda ecuaţiilor structurale sau chiar şi pentru o banală analiză regresivă. Ne vom limita aşadar doar la analize exploratorii.
 
-```{r, fig.width=10, fig.height=8, dpi=250}
+```{r, fig.width=7.5, fig.height=6, dpi=200}
 corporate_rate <- read_csv(here::here("database",
                                       "income_profit_gdp_inflation.csv"))
 
@@ -357,7 +356,7 @@ ggplot(corporate_rate,aes(x=time, y=profit_rate, group=geo)) +
 
 Observăm că mai toate sunt în scădere. Efectul a treizeci de ani de neoliberalism.
 
-```{r, fig.height=8, fig.width=10, dpi=250}
+```{r, fig.height=6, fig.width=7.5, dpi=200}
 
 culorile <- c("2010"=culori[1], "2020"=culori[5])
 
@@ -381,7 +380,7 @@ corporate_rate %>% filter(time%in%c(2010, 2020)) |>
 
 Acelaşi lucru se vede şi aici. În continuare urmărim trendurile dintre încasări şi rata impozitării şi creşterea PIB-ului. Din nou, vom standardiza datele ca să le putem vizualiza în axă comună.
 
-```{r, fig.width=10, fig.height=12, dpi=250}
+```{r, fig.width=6, fig.height=9, dpi=200}
 
 tari <- c("Polonia", "Ungaria", "Cehia", "Slovacia", 
           "Letonia", "Lituania", "Romania", "Bulgaria")
@@ -493,3 +492,46 @@ Sugestia noastră personală cu cote de 16 şi 21 %. Se strâng cu `r paste(100*
 ### Scenariul IV
 
 Scenariul slovac, cu trepte de 19 şi 25 %. Se strâng cu `r paste(100*(round(raport_wid(coefs=c(0.19, 0.25), prag=2200) -1, 4)[2]), "%")` mai mulţi bani. Acest lucru înseamnă 39.65 miliarde de RON. Îl vom rotunji la 30 de miliarde RON.
+
+## Concluzii
+
+Creşterea impozitului pe venit reprezintă cea mai importantă componentă din pachetul de sugestii pe care le facem în acest raport. Vom ilustra rezultatele de până acum într-un tabel. Vom compara sumele cu cerinţele salariale ale profesorilor, cu impact calculat de autorităţi de circa 8 miliarde RON (creştere de 25 % şi aducerea salariilor debutanţilor la nivelul salariului mediu pe economie).
+
+```{r}
+tibble("Scenariu"=c("Scenariul I: cote 10%, 16%", 
+                    "Scenariul II: cote 10%, 19%", 
+                    "Scenariul III: cote 16%, 21%",
+                    "Scenariul IV: cote 19%, 25%"),
+       "Suma"=c(8, 10, 25, 30),
+       "Buget" = 100*c(8, 10, 25, 30)/379.6,
+       "PIB" = 100*c(8, 10, 25, 30)/1182,
+       "Cerinţele profesorilor"=c(8,10,25,30)/8) %>%
+  gt::gt() %>% gtExtras::gt_theme_538() %>%
+  gt::tab_spanner(label="Procentul (%) din", columns=c(Buget, PIB)) %>%
+  gt::fmt_percent(columns=c(Buget, PIB), decimals = 2, scale_values = F) %>%
+  gt::fmt_number(columns=5) %>%
+  tab_header(title="Cele patru scenarii de impozitare", 
+             subtitle="Sursa: calcule proprii pe datele World Inequality Database") %>%
+  tab_footnote(footnote = "Pragul este de 2200 EURO brut (top 8 %)",
+               locations=cells_title()) %>%
+  tab_footnote(footnote="De câte ori depăşesc sumele colectate cerinţele profesorilor de majorare salarială cu 25 %", 
+               locations=cells_column_labels(columns=`Cerinţele profesorilor`)) %>% 
+  tab_footnote(footnote="Miliarde RON", 
+               locations = cells_column_labels(columns=2)) %>%
+  gt::opt_row_striping() %>% 
+  gt::tab_style(style=cell_fill(color=culori[1]), 
+                locations=cells_column_labels()) %>% 
+  tab_style(style=cell_fill(color=culori[1]), 
+            locations=cells_column_spanners()) %>%
+  tab_style(style=cell_text(color='white'), 
+            locations=cells_column_labels()) %>%
+  tab_style(style=cell_text(color='white'),
+            locations=cells_column_spanners()) %>%
+  gt::opt_vertical_padding(scale=1.2) %>%
+  tab_style(style=cell_borders(sides = "bottom", color="black", 
+                               weight = px(2)), 
+            locations=cells_body(rows = 4))
+  
+```
+
+O ultimă discuţie în acest capitol vizează chestiunea scutirilor. După formula de calcul afişată mai sus pare că nu am luat în calcul existenţa scutirilor, care sunt semnificative, din moment ce circa 10-15% din salariaţi nu mai plătesc impozit pe venit începând cu 2023. În practică e greu să iei în seamă impactul scutirilor când tot ce ai sunt venituri per percentilă, nu pe coduri CAEN. Sigur, mai există şi datele cu salarii medii per coduri CAEN, dar nu pe distribuţii. În aceste condiţii am ajuns la un compromis calculând multiplicatorul ca şi cum nu ar exista scutirile, dar multiplicând cu o sumă care cuprinde aceste scutiri. Putem considera că şi în formula multiplicatorului, acele scutiri ar apărea şi la numitor şi la numărător ( de ex am folosi coeficienţi mai mici sau mai mulţi coeficienţi diferiţi şi sus şi jos) probabil moderând impactul lor în calculul final. Nu putem garanta însă matematic acest lucru, e doar o justificare pentru alegerile făcute.

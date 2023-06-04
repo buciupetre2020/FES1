@@ -6,19 +6,22 @@ Vom folosi în general în acest document filele Eurostat `gov_10a_taxag` pentru
 
 ```{r}
 library(tidyverse)
-theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
+library(gt)
+theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 14, 
                                      strip_text_family = "Frutiger Bold",
                                      strip_text_face = "italic",
-                                     axis_title_size = 14,
-                                     axis_text_size = 12,
+                                     axis_title_size = 10,
+                                     axis_text_size = 8,
                                      base_family = "Frutiger",
                                      plot_title_family = "Frutiger Bold",
                                      subtitle_family = "Frutiger",
-                                     caption_family = "Frutiger",
-                                     caption_size = 12) +
-  theme(legend.text = element_text(size=14), 
-        legend.title = element_text(size=16),
-        legend.key.size = unit(0.8, "cm")))
+                                     caption_family = "Frutiger", 
+                                     caption_size = 8,
+                                     plot_title_size = 14,
+                                     subtitle_size = 10) +
+  theme(legend.text = element_text(size=8), 
+        legend.title = element_text(size=10),
+        legend.key.size = unit(0.5, "cm")))
 
 culori <- c("#EA5B0C", "#a44a08", "#ea960c", "#ea150c", 
             "#a40e08", "#000000", "#0865a4", "#a48408")
@@ -30,7 +33,7 @@ cheltuieli <- read_csv("database/gov_10a_exp_prelucrat.csv")
 agregate <- read_csv("database/gov_10a_main_prelucrat.csv")
 ```
 
-```{r, fig.width=10, fig.height=10, dpi=250}
+```{r, fig.width=7, fig.height=7, dpi=200}
 agregate %>% filter(grepl("Total general", na_item)) %>% 
   filter(grepl("Romania|Bulgaria|Ungaria|Cehia|Polonia|Croatia|Media UE", geo)) %>% mutate(na_item = gsub("^.+expenditure$", "Cheltuieli totale", na_item) %>% 
                  gsub("^.+revenue", "Venituri totale", .)) %>%
@@ -47,7 +50,7 @@ agregate %>% filter(grepl("Total general", na_item)) %>%
 
 Se observă clar din grafic că unde nu excelează deloc România este categoria veniturilor. Cheltuielile sunt şi ele la coada clasamentului, chiar pentru Europa de Est. Să vedem veniturile totale fiscale.
 
-```{r, fig.width=10, fig.height=8, dpi=250}
+```{r, fig.width=7.5, fig.height=6, dpi=200}
 taxe %>% 
   filter(grepl("Total receipts from taxes and social.+contributions after deduction",
                na_item)) %>% 
@@ -64,7 +67,7 @@ taxe %>%
 
 Să vizualizăm pe axa cheltuieli totale vs venituri totale cum stăm, însumând anii 2012-2022. Mărimea etichetei din grafic reprezintă mărimea excedentului sau, după caz, a deficitului bugetar. România iese la iveală uşor.
 
-```{r, fig.width=10, fig.height=7, dpi=250}
+```{r, fig.width=7, fig.height=5, dpi=200}
 agregate %>% 
   filter(grepl("Total general", na_item)) %>% 
   mutate(na_item = gsub("^.+expenditure$", "Cheltuieli totale", na_item) %>%
@@ -84,14 +87,14 @@ agregate %>%
   scale_colour_manual(values=culori[c(1, 5)]) + 
   scale_x_continuous(labels=scales::percent_format(scale=1)) +
   scale_y_continuous(labels=scales::percent_format(scale=1)) +
-  scale_size_continuous(range=c(3, 6)) + 
+  scale_size_continuous(range=c(2, 4)) + 
   labs(title="Deficitul bugetar", subtitle="Media 2012-2022", 
        size=NULL, colour="Sold bugetar", caption="Sursa: Eurostat, gov_10a_main")
 ```
 
 Şi un tabel în ordinea descrescătoare a deficitului bugetar.
 
-```{r, fig.width=8, fig.height=12, dpi=250}
+```{r, fig.width=8, fig.height=12, dpi=200}
 agregate %>% filter(grepl("Total general", na_item)) %>% 
   mutate(na_item = gsub("^.+expenditure$", "Cheltuieli totale", na_item) %>%
            gsub("^.+revenue", "Venituri totale", .)) %>% 
@@ -127,9 +130,9 @@ Concluzia acestei secţiuni este că nu cheltuielile sunt mari, într-adevăr cu
 Există [un nou set de date](https://blogs.worldbank.org/developmenttalk/new-dataset-measure-effective-taxation-capital-and-labor-globally-1960s) de la Banca Mondială care permite compararea ratelor de taxare efectivă pe capital şi muncă de-a lungul ţărilor şi anilor. Să vedem evoluţia în cele patru ţări din zona noastră.
 
 ```{r}
-#| fig-width: 10
-#| fig-height: 10
-#| fig-dpi: 250
+#| fig-width: 7
+#| fig-height: 7
+#| fig-dpi: 200
 
 read_csv("https://raw.githubusercontent.com/pierrebachas/Globalization_Factor_Taxation/main/globalETR_bfjz.csv") %>% 
   select(country_name, year, region, ETR_L, ETR_K) %>% 
@@ -168,14 +171,15 @@ rbiplot <- function(mat, p=1, clusters=4, k=15, scale=TRUE){
   ggplot(coords, aes(x=V1, y=V2)) + 
     ggConvexHull::geom_convexhull(aes(x=V1, y=V2, group=cluster, fill=cluster), alpha=0.2) +
     geom_point(colour='red3') + 
-    ggrepel::geom_text_repel(aes(label=geo),nudge_y=0.3, max.overlaps = 10) +
+    ggrepel::geom_text_repel(aes(label=geo),nudge_y=0.3, max.overlaps = 10, size=3) +
     geom_vline(xintercept = 0,linetype=2) +
     geom_hline(yintercept=0, linetype=2) +
     geom_segment(data=rot, aes(xend=k*V1, x=0, yend=k*V2, y=0), 
                  arrow = arrow(length = unit(0.25, "cm")), colour=culori[7]) +
     ggrepel::geom_text_repel(data=rot, aes(label=var,x=k*V1, y=k*V2), 
-                             alpha=0.9, colour=culori[7], size=3) +
-    labs(title="PCA - Biplot", subtitle="Componentele principale (robuste) ale cheltuielilor COFOG99 pe 2017-2021", 
+                             alpha=0.9, colour=culori[7], size=2) +
+    labs(title="PCA - Biplot", 
+         subtitle="Componentele principale (robuste) ale cheltuielilor COFOG99 pe 2017-2021", 
          caption="Sursa: calcule pe Eurostat, gov_10a_main",
          x=paste0("Dim1 (", procent[1], ")"), y=paste0("Dim2 (", procent[2],")")) +
     theme(axis.title = element_text(size=14)) +
@@ -193,21 +197,21 @@ mat_venituri <- read_csv("/home/petre/R/proiecte/taxare/database/PCA_venituri.cs
 mat_cheltuieli <- read_csv('/home/petre/R/proiecte/taxare/database/PCA_cheltuieli.csv') %>% column_to_rownames("geo")
 ```
 
-```{r, fig.width=10, fig.height=8, dpi=250}
+```{r, fig.width=7.5, fig.height=6, dpi=200}
 rbiplot(mat_venituri, p=0.5, clusters=6, k=15) +
   labs(subtitle = "Componentele principale (robuste) ale veniturilor bugetare pe 2017-2021", title="PCA - biplot cu veniturile bugetare")
 ```
 
 Să vedem şi la cheltuieli. Aici putem folosi 71 de variabile originale din setul original furnizat de Eurostat. Fiind un set mai mare, este de aşteptat că avem mai puţină variabilitate explicată de aceste două axe (circa 52. 7 %). Dar profilele sunt foarte clare: România cheltuie asemenea ţărilor est-europene şi baltice, doar că pe poliţie, ordine publică (unde suntem locul 4 în Europa ca procent din PIB), cheltuieli cu organe legislative şi executive, apărare, etc. La polul opus sunt statele progresiste cu cheltuieli pe protecţie socială, sănătate, educaţie, etc.
 
-```{r, fig.width=10, fig.height=8, dpi=250}
+```{r, fig.width=7.5, fig.height=6, dpi=200}
 rbiplot(mat_cheltuieli, p=0.3, clusters=4, k=15) +
   labs(title="PCA - biplot cu cheltuielile bugetare")
 ```
 
 Ghidându-ne după aceste grafice putem face analize punctuale mai interesante. De exemplu, care este topul ţărilor care colectează venituri din contribuţii sociale ?
 
-```{r, fig.width=10, fig.height=8, dpi=250}
+```{r, fig.width=7.5, fig.height=6, dpi=200}
 mat_venituri %>% as_tibble(rownames='geo') %>% 
   select(geo, matches("Compulsory")) %>% 
   mutate(geo = fct_reorder(geo, `Compulsory employees' actual social contributions`)) %>% 
@@ -224,7 +228,7 @@ România este prima, lucru care şi explică poziţionarea ei în direcţia aces
 
 Să rămânem însă la impozitele pe venit. Graficul următor este relevator.
 
-```{r, fig.width=10, fig.height=8, dpi=250}
+```{r, fig.width=7.5, fig.height=6, dpi=200}
 taxe %>% 
   filter(grepl("Taxes on income$", na_item)) %>% 
   filter(time=="2021-01-01") %>% 
@@ -239,7 +243,7 @@ taxe %>%
 
 E interesant de văzut şi evoluţia acestei categorii.
 
-```{r, fig.width=10, fig.height=7, dpi=250}
+```{r, fig.width=7, fig.height=5, dpi=200}
 taxe %>% 
     filter(grepl("Taxes on income$", na_item)) %>% 
     filter(grepl("Romania|Bulgaria|Ungaria|Polonia|Croatia|Media UE", geo)) %>%  
@@ -257,7 +261,7 @@ taxe %>%
 
 Era de aşteptat, România taxează profiturile mai puţin decât media europeană, dar nu cu mult.
 
-```{r, fig.width=10, fig.height=8, dpi=250}
+```{r, fig.width=7.5, fig.height=6, dpi=200}
 taxe %>% filter(time=="2021-01-01") %>% 
   filter(grepl("profits.+gains", na_item)) %>% 
   arrange((values)) %>% mutate(geo=fct_reorder(geo, values)) %>% 
@@ -270,7 +274,7 @@ taxe %>% filter(time=="2021-01-01") %>%
 
 Graficul următor e doar pentru noi, nu l-aş include în raport.
 
-```{r, fig.width=10, fig.height=8, dpi=250}
+```{r, fig.width=7.5, fig.height=6, dpi=200}
 taxe %>% filter(time=="2021-01-01") %>% 
   filter(!grepl("Total", na_item)) %>% 
   filter(grepl("Media UE|Romania", geo)) %>% 
@@ -300,4 +304,42 @@ taxe %>% filter(time=="2021-01-01") %>%
   filter(Diferenta!=0) %>% gt::gt() %>% 
   gt::fmt_percent(2:4, decimals = 1, scale_values = F) %>% 
   gt::tab_header(title="Diferenţa dintre media europeană şi România la veniturile din taxe")
+```
+
+## Concluzie
+
+Mai avem mult de colectat până să ajungem la media grupului Visegrad, care este ilustrată în tabelul următor:
+
+```{r}
+agregate %>% filter(grepl("Total general government revenue", na_item)) %>% 
+  filter(grepl("Romania|Cehia|Slovacia|Ungaria|Polonia", geo)) %>% 
+  spread(geo, values) %>% 
+  mutate(delta = -Romania + (Cehia + Polonia + Slovacia + Ungaria)/4) %>% 
+  select(-1) %>% filter(time>"2011-01-01") %>% rename(Anul=time) %>% 
+  gt::gt() %>% gtExtras::gt_theme_538() %>% 
+  tab_header(title="Bugetul total pentru România şi Vişegrad", 
+             subtitle="Sursa: Eurostat, gov_10a_main") %>% opt_row_striping() %>%
+  gt::tab_footnote(footnote="Diferenţa dintre media Vişegrad şi România", 
+               locations=cells_column_labels(columns=delta)) %>%
+  gtExtras::gt_color_rows(columns=2:7) %>%
+  gt::fmt_percent(columns=2:7, decimals=2, scale_values = F)
+```
+
+Observăm că suntem cu circa 7.5 -8 % procente din PIB în urma grupului Vişegrad la veniturile totale, şi asta în vremurile bune. Făcând o medie pe ultimii zece ani, avem o diferenţă de circa `28 miliarde de EURO` (nu RON !) faţă de media acestui grup.
+
+```{r, fig.width=5, fig.height=4, dpi=200}
+taxe %>% filter(grepl("Total tax", na_item)) %>% 
+    filter(grepl("Romania|Cehia|Slovacia|Ungaria|Polonia", geo)) %>% 
+    spread(geo, values) %>% 
+    mutate(medie = (Cehia + Polonia + Slovacia + Ungaria)/4) %>% 
+    select(-1) %>% filter(time>"2011-01-01") %>% rename(Anul=time) %>% 
+    drop_na() %>% select(Anul, Romania, medie) %>% 
+    gather(2:3, key="Indicator", value='valoare') %>% 
+    ggplot(aes(x=Anul, y=valoare, group=Indicator)) + 
+    geom_line(aes(colour=Indicator), size=1) + 
+    labs(title="Veniturile fiscale: media Vişegrad şi România", 
+         x=NULL, y="% din PIB", colour="Regiune", 
+         caption="Sursa: Eurostat, gov_10a_taxag") +  
+    scale_color_manual(values=culori[c(1, 5)]) +
+    theme(legend.position = 'top')
 ```

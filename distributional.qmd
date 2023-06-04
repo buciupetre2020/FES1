@@ -10,20 +10,21 @@ library(gt)
 culori <- c("#EA5B0C", "#a44a08", "#ea960c", "#ea150c", 
             "#a40e08", "#000000", "#0865a4", "#a48408")
 
-theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 16, 
+theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 14, 
                                      strip_text_family = "Frutiger Bold",
                                      strip_text_face = "italic",
-                                     axis_title_size = 14,
-                                     axis_text_size = 12,
+                                     axis_title_size = 10,
+                                     axis_text_size = 8,
                                      base_family = "Frutiger",
                                      plot_title_family = "Frutiger Bold",
                                      subtitle_family = "Frutiger",
-                                     caption_family = "Frutiger",
-                                     caption_size = 12) +
-  theme(legend.text = element_text(size=14), 
-        legend.title = element_text(size=16),
-        legend.key.size = unit(0.8, "cm")))
-
+                                     caption_family = "Frutiger", 
+                                     caption_size = 8,
+                                     plot_title_size = 14,
+                                     subtitle_size = 10) +
+  theme(legend.text = element_text(size=8), 
+        legend.title = element_text(size=10),
+        legend.key.size = unit(0.5, "cm")))
 
 tari <- read_delim(here::here("database", "WID", "WID_countries.csv"), 
                   delim=";") %>% drop_na() %>% filter(region=="Europe") %>%
@@ -49,9 +50,9 @@ df <- here::here("database", "WID",
 Procentul din venitul naţional înaintea taxelor care revine diferitelor categorii de distribuţie:
 
 ```{r}
-#| fig-width: 10
-#| fig-height: 10
-#| fig-dpi: 250
+#| fig-width: 7
+#| fig-height: 7
+#| fig-dpi: 200
 
 df %>% filter(grepl("sdiincj992|sptincj992", variable)) %>% 
   spread(variable, value) %>% 
@@ -73,9 +74,9 @@ df %>% filter(grepl("sdiincj992|sptincj992", variable)) %>%
 Şi pentru venitul naţional după taxe:
 
 ```{r}
-#| fig-width: 10
-#| fig-height: 10
-#| fig-dpi: 250
+#| fig-width: 7
+#| fig-height: 7
+#| fig-dpi: 200
 
 df %>% filter(grepl("sdiincj992|sptincj992", variable)) %>% 
   spread(variable, value) %>% filter(geo!="Cipru") %>%
@@ -99,9 +100,9 @@ România, dar şi alte ţări din Europa de Est stau destul de rău la capitolul
 Vom calcula raportul dintre procentele de venit naţional care revin celor top 10 % şi ultimilor 50 % atât pentru venitul pre-taxe cât şi pentru venitul post-taxe. Cele două rapoarte vor fi pe axele x, respectiv y în graficul următor. Urmărim aceşti doi indicatori pentru media perioadei 2012-2021 (ultimii zece ani).
 
 ```{r}
-#| fig-width: 8
-#| fig-height: 6
-#| fig-dpi: 250
+#| fig-width: 6
+#| fig-height: 5
+#| fig-dpi: 200
 
 ratios <- df %>% 
     filter(grepl("adiincj992|aptincj992", variable)) %>% 
@@ -120,7 +121,7 @@ ratios <- df %>%
 ratios %>% filter(!geo%in%"Lituania") %>% 
   ggplot(aes(x=ratio_pre, y=ratio_post)) + 
   geom_point(colour=culori[1]) + 
-  ggrepel::geom_text_repel(aes(label=geo)) + 
+  ggrepel::geom_text_repel(aes(label=geo), size=3) + 
   labs(title="Raportul veniturilor pentru top 10 % vs bottom 50 %", 
        subtitle="Media 2012-2021", x="Pre-taxe", y="Post-taxe", 
        caption="Sursa: calcule pe datele din World Inequality Database") + 
@@ -131,9 +132,9 @@ ratios %>% filter(!geo%in%"Lituania") %>%
 Observăm că România are cel mai mare raport atât pre cât şi post taxare. Acest lucru sugerează că sistemul fiscal nu redistribuie suficient către cei din decilele inferioare ale distribuţiei. Acest lucru se întâmplă în ţara cu cea mai mare inegalitate din Europa dacă excludem Serbia (nu apare în imagine). Merită să calculăm şi procentele cu care sistemul fiscal reduce inegalitatea pre-taxe pentru fiecare ţară, media pe ultimii zece ani.
 
 ```{r}
-#| fig-width: 10
-#| fig-height: 8
-#| fig-dpi: 250
+#| fig-width: 7
+#| fig-height: 5
+#| fig-dpi: 200
 
 df %>% 
     filter(grepl("adiincj992|aptincj992", variable)) %>% 
