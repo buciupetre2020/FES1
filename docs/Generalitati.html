@@ -15,6 +15,69 @@ span.underline{text-decoration: underline;}
 div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 <script id="quarto-search-options" type="application/json">{
@@ -170,50 +233,161 @@ ul.task-list{list-style: none;}
 <h2 data-number="1.1" class="anchored" data-anchor-id="venituri-şi-cheltuieli-totale"><span class="header-section-number">1.1</span> Venituri şi cheltuieli totale</h2>
 <p>Vom folosi în general în acest document filele Eurostat <code>gov_10a_taxag</code> pentru taxe şi venituri şi <code>gov_10a_exp</code> pentru cheltuieli şi <code>gov_10a_main</code> pentru agregatele principale ale finanţelor publice.</p>
 <div class="cell">
-
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(hrbrthemes<span class="sc">::</span><span class="fu">theme_ipsum_tw</span>(<span class="at">strip_text_size =</span> <span class="dv">14</span>, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">strip_text_family =</span> <span class="st">"Frutiger Bold"</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">strip_text_face =</span> <span class="st">"italic"</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">axis_title_size =</span> <span class="dv">10</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">axis_text_size =</span> <span class="dv">8</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">base_family =</span> <span class="st">"Frutiger"</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">plot_title_family =</span> <span class="st">"Frutiger Bold"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">subtitle_family =</span> <span class="st">"Frutiger"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">caption_family =</span> <span class="st">"Frutiger"</span>, </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">caption_size =</span> <span class="dv">8</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">plot_title_size =</span> <span class="dv">14</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">subtitle_size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>), </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">"cm"</span>)))</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>culori <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#EA5B0C"</span>, <span class="st">"#a44a08"</span>, <span class="st">"#ea960c"</span>, <span class="st">"#ea150c"</span>, </span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">"#a40e08"</span>, <span class="st">"#000000"</span>, <span class="st">"#0865a4"</span>, <span class="st">"#a48408"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>taxe <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"database/gov_10a_taxag_prelucrat.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>cheltuieli <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"database/gov_10a_exp_prelucrat.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>agregate <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"database/gov_10a_main_prelucrat.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>agregate <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Total general"</span>, na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Romania|Bulgaria|Ungaria|Cehia|Polonia|Croatia|Media UE"</span>, geo)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">na_item =</span> <span class="fu">gsub</span>(<span class="st">"^.+expenditure$"</span>, <span class="st">"Cheltuieli totale"</span>, na_item) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">gsub</span>(<span class="st">"^.+revenue"</span>, <span class="st">"Venituri totale"</span>, .)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>time, <span class="at">y=</span>values, <span class="at">group=</span>geo)) <span class="sc">+</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">colour=</span>geo, <span class="at">linewidth=</span>geo<span class="sc">==</span><span class="st">"Romania"</span>), </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="fu">c</span>(<span class="st">"linewidth"</span><span class="ot">=</span><span class="cn">FALSE</span>)) <span class="sc">+</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>na_item, <span class="at">ncol=</span><span class="dv">1</span>, <span class="at">scales=</span><span class="st">'free'</span>) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="st">"Procent din PIB"</span>, <span class="at">x=</span><span class="cn">NULL</span>, </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">linewidth=</span><span class="cn">NULL</span>, <span class="at">colour=</span><span class="st">"Ţară"</span>, <span class="at">caption=</span><span class="st">"Sursa: Eurostat, gov_10a_main"</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linewidth_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span>culori)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="1400"></p>
 </div>
 </div>
 <p>Se observă clar din grafic că unde nu excelează deloc România este categoria veniturilor. Cheltuielile sunt şi ele la coada clasamentului, chiar pentru Europa de Est. Să vedem veniturile totale fiscale.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>taxe <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Total receipts from taxes and social.+contributions after deduction"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>               na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Romania|Bulgaria|Ungaria|Cehia|Polonia|Croatia|Media UE"</span>, geo)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>time, <span class="at">y=</span>values, <span class="at">group=</span>geo)) <span class="sc">+</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">colour=</span>geo, <span class="at">linewidth=</span>geo<span class="sc">==</span><span class="st">"Romania"</span>), </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">show.legend =</span> <span class="fu">c</span>(<span class="st">"linewidth"</span><span class="ot">=</span><span class="cn">FALSE</span>)) <span class="sc">+</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Venituri fiscale"</span>, <span class="at">y=</span><span class="st">"Procent din PIB"</span>, <span class="at">x=</span><span class="st">"An"</span>, </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">linewidth=</span><span class="cn">NULL</span>, <span class="at">colour=</span><span class="st">"Ţară"</span>, <span class="at">caption=</span><span class="st">"Sursa: Eurostat, gov_10a_taxag"</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_linewidth_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span>culori)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="1500"></p>
 </div>
 </div>
 <p>Să vizualizăm pe axa cheltuieli totale vs venituri totale cum stăm, însumând anii 2012-2022. Mărimea etichetei din grafic reprezintă mărimea excedentului sau, după caz, a deficitului bugetar. România iese la iveală uşor.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>agregate <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Total general"</span>, na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">na_item =</span> <span class="fu">gsub</span>(<span class="st">"^.+expenditure$"</span>, <span class="st">"Cheltuieli totale"</span>, na_item) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">gsub</span>(<span class="st">"^.+revenue"</span>, <span class="st">"Venituri totale"</span>, .)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time=</span>lubridate<span class="sc">::</span><span class="fu">year</span>(time)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time<span class="sc">&gt;</span><span class="dv">2011</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(geo, na_item) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">values=</span><span class="fu">mean</span>(values)) <span class="sc">%&gt;%</span> <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from=</span><span class="fu">c</span>(na_item), <span class="at">values_from=</span>values) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">deficit =</span> <span class="dv">100</span><span class="sc">*</span>(<span class="st">`</span><span class="at">Venituri totale</span><span class="st">`</span><span class="sc">-</span><span class="st">`</span><span class="at">Cheltuieli totale</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">index =</span> <span class="fu">if_else</span>(deficit<span class="sc">&gt;</span><span class="dv">0</span>, <span class="st">"Excedent"</span>, <span class="st">"Deficit"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span><span class="st">`</span><span class="at">Venituri totale</span><span class="st">`</span>, <span class="at">y=</span><span class="st">`</span><span class="at">Cheltuieli totale</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">colour=</span>index)) <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label=</span>geo, <span class="at">size=</span><span class="fu">abs</span>(deficit), </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                               <span class="at">colour=</span>index), </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">show.legend =</span> <span class="fu">c</span>(<span class="st">"size"</span><span class="ot">=</span><span class="cn">FALSE</span>)) <span class="sc">+</span> </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope=</span><span class="dv">1</span>, <span class="at">intercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span>culori[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)]) <span class="sc">+</span> </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">range=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)) <span class="sc">+</span> </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Deficitul bugetar"</span>, <span class="at">subtitle=</span><span class="st">"Media 2012-2022"</span>, </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">size=</span><span class="cn">NULL</span>, <span class="at">colour=</span><span class="st">"Sold bugetar"</span>, <span class="at">caption=</span><span class="st">"Sursa: Eurostat, gov_10a_main"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="1400"></p>
 </div>
 </div>
 <p>Şi un tabel în ordinea descrescătoare a deficitului bugetar.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>agregate <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Total general"</span>, na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">na_item =</span> <span class="fu">gsub</span>(<span class="st">"^.+expenditure$"</span>, <span class="st">"Cheltuieli totale"</span>, na_item) <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">gsub</span>(<span class="st">"^.+revenue"</span>, <span class="st">"Venituri totale"</span>, .)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time=</span>lubridate<span class="sc">::</span><span class="fu">year</span>(time)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time<span class="sc">&gt;</span><span class="dv">2011</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(geo, na_item) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">values=</span><span class="fu">mean</span>(values)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="fu">pivot_wider</span>(<span class="at">names_from=</span><span class="fu">c</span>(na_item), <span class="at">values_from=</span>values) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Balanta =</span> (<span class="st">`</span><span class="at">Venituri totale</span><span class="st">`</span><span class="sc">-</span><span class="st">`</span><span class="at">Cheltuieli totale</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>((Balanta)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">row_number</span>()<span class="sc">&lt;</span><span class="dv">11</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"Ţări"</span><span class="ot">=</span>geo) <span class="sc">%&gt;%</span> gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">decimals =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_percent</span>(<span class="at">columns=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">force_sign =</span> T, <span class="at">scale_values =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">accounting =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_header</span>(<span class="at">title=</span><span class="st">"Media anilor 2012-2022 a balanţei bugetare"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style =</span> gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">5</span>]), </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations =</span> gt<span class="sc">::</span><span class="fu">cells_title</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span>gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">color=</span><span class="st">"white"</span>), <span class="at">locations=</span>gt<span class="sc">::</span><span class="fu">cells_title</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span>gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">1</span>]), </span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations =</span> gt<span class="sc">::</span><span class="fu">cells_column_labels</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span>gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">color=</span><span class="st">"white"</span>), </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations=</span>gt<span class="sc">::</span><span class="fu">cells_column_labels</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span>gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">3</span>], <span class="at">alpha=</span><span class="fl">0.3</span>), </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations=</span>gt<span class="sc">::</span><span class="fu">cells_body</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_options</span>(<span class="at">table.border.left.color =</span> <span class="st">"#000000"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_caption</span>(<span class="st">"Sursa: calcule pe Eurostat, gov_10a_main"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  gtExtras<span class="sc">::</span><span class="fu">gt_theme_538</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>  gtExtras<span class="sc">::</span><span class="fu">gt_highlight_rows</span>(<span class="at">rows=</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
-<div id="zbxocbeclb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="swhpqbtybb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#zbxocbeclb table {
+#swhpqbtybb table {
   font-family: Chivo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zbxocbeclb thead, #zbxocbeclb tbody, #zbxocbeclb tfoot, #zbxocbeclb tr, #zbxocbeclb td, #zbxocbeclb th {
+#swhpqbtybb thead, #swhpqbtybb tbody, #swhpqbtybb tfoot, #swhpqbtybb tr, #swhpqbtybb td, #swhpqbtybb th {
   border-style: none;
 }
 
-#zbxocbeclb p {
+#swhpqbtybb p {
   margin: 0;
   padding: 0;
 }
 
-#zbxocbeclb .gt_table {
+#swhpqbtybb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -239,12 +413,12 @@ ul.task-list{list-style: none;}
   border-left-color: #000000;
 }
 
-#zbxocbeclb .gt_caption {
+#swhpqbtybb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zbxocbeclb .gt_title {
+#swhpqbtybb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -256,7 +430,7 @@ ul.task-list{list-style: none;}
   border-bottom-width: 0;
 }
 
-#zbxocbeclb .gt_subtitle {
+#swhpqbtybb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -268,7 +442,7 @@ ul.task-list{list-style: none;}
   border-top-width: 0;
 }
 
-#zbxocbeclb .gt_heading {
+#swhpqbtybb .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -280,13 +454,13 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#zbxocbeclb .gt_bottom_border {
+#swhpqbtybb .gt_bottom_border {
   border-bottom-style: none;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zbxocbeclb .gt_col_headings {
+#swhpqbtybb .gt_col_headings {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -301,7 +475,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#zbxocbeclb .gt_col_heading {
+#swhpqbtybb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -321,7 +495,7 @@ ul.task-list{list-style: none;}
   overflow-x: hidden;
 }
 
-#zbxocbeclb .gt_column_spanner_outer {
+#swhpqbtybb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -333,15 +507,15 @@ ul.task-list{list-style: none;}
   padding-right: 4px;
 }
 
-#zbxocbeclb .gt_column_spanner_outer:first-child {
+#swhpqbtybb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zbxocbeclb .gt_column_spanner_outer:last-child {
+#swhpqbtybb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zbxocbeclb .gt_column_spanner {
+#swhpqbtybb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #000000;
@@ -353,11 +527,11 @@ ul.task-list{list-style: none;}
   width: 100%;
 }
 
-#zbxocbeclb .gt_spanner_row {
+#swhpqbtybb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zbxocbeclb .gt_group_heading {
+#swhpqbtybb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -383,7 +557,7 @@ ul.task-list{list-style: none;}
   text-align: left;
 }
 
-#zbxocbeclb .gt_empty_group_heading {
+#swhpqbtybb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -398,15 +572,15 @@ ul.task-list{list-style: none;}
   vertical-align: middle;
 }
 
-#zbxocbeclb .gt_from_md > :first-child {
+#swhpqbtybb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zbxocbeclb .gt_from_md > :last-child {
+#swhpqbtybb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zbxocbeclb .gt_row {
+#swhpqbtybb .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -425,7 +599,7 @@ ul.task-list{list-style: none;}
   overflow-x: hidden;
 }
 
-#zbxocbeclb .gt_stub {
+#swhpqbtybb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -438,7 +612,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#zbxocbeclb .gt_stub_row_group {
+#swhpqbtybb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -452,15 +626,15 @@ ul.task-list{list-style: none;}
   vertical-align: top;
 }
 
-#zbxocbeclb .gt_row_group_first td {
+#swhpqbtybb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zbxocbeclb .gt_row_group_first th {
+#swhpqbtybb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zbxocbeclb .gt_summary_row {
+#swhpqbtybb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -470,16 +644,16 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#zbxocbeclb .gt_first_summary_row {
+#swhpqbtybb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zbxocbeclb .gt_first_summary_row.thick {
+#swhpqbtybb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zbxocbeclb .gt_last_summary_row {
+#swhpqbtybb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -489,7 +663,7 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#zbxocbeclb .gt_grand_summary_row {
+#swhpqbtybb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -499,7 +673,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#zbxocbeclb .gt_first_grand_summary_row {
+#swhpqbtybb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -509,7 +683,7 @@ ul.task-list{list-style: none;}
   border-top-color: #D3D3D3;
 }
 
-#zbxocbeclb .gt_last_grand_summary_row_top {
+#swhpqbtybb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -519,11 +693,11 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#zbxocbeclb .gt_striped {
+#swhpqbtybb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zbxocbeclb .gt_table_body {
+#swhpqbtybb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -532,7 +706,7 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#zbxocbeclb .gt_footnotes {
+#swhpqbtybb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -546,7 +720,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#zbxocbeclb .gt_footnote {
+#swhpqbtybb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -555,7 +729,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#zbxocbeclb .gt_sourcenotes {
+#swhpqbtybb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -569,7 +743,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#zbxocbeclb .gt_sourcenote {
+#swhpqbtybb .gt_sourcenote {
   font-size: 12px;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -577,63 +751,63 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#zbxocbeclb .gt_left {
+#swhpqbtybb .gt_left {
   text-align: left;
 }
 
-#zbxocbeclb .gt_center {
+#swhpqbtybb .gt_center {
   text-align: center;
 }
 
-#zbxocbeclb .gt_right {
+#swhpqbtybb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zbxocbeclb .gt_font_normal {
+#swhpqbtybb .gt_font_normal {
   font-weight: normal;
 }
 
-#zbxocbeclb .gt_font_bold {
+#swhpqbtybb .gt_font_bold {
   font-weight: bold;
 }
 
-#zbxocbeclb .gt_font_italic {
+#swhpqbtybb .gt_font_italic {
   font-style: italic;
 }
 
-#zbxocbeclb .gt_super {
+#swhpqbtybb .gt_super {
   font-size: 65%;
 }
 
-#zbxocbeclb .gt_footnote_marks {
+#swhpqbtybb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zbxocbeclb .gt_asterisk {
+#swhpqbtybb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zbxocbeclb .gt_indent_1 {
+#swhpqbtybb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zbxocbeclb .gt_indent_2 {
+#swhpqbtybb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zbxocbeclb .gt_indent_3 {
+#swhpqbtybb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zbxocbeclb .gt_indent_4 {
+#swhpqbtybb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zbxocbeclb .gt_indent_5 {
+#swhpqbtybb .gt_indent_5 {
   text-indent: 25px;
 }
 
@@ -709,6 +883,26 @@ tbody tr:last-child {
 <h2 data-number="1.2" class="anchored" data-anchor-id="taxarea-capital---muncă-conform-băncii-mondiale"><span class="header-section-number">1.2</span> Taxarea capital - muncă conform Băncii Mondiale</h2>
 <p>Există <a href="https://blogs.worldbank.org/developmenttalk/new-dataset-measure-effective-taxation-capital-and-labor-globally-1960s">un nou set de date</a> de la Banca Mondială care permite compararea ratelor de taxare efectivă pe capital şi muncă de-a lungul ţărilor şi anilor. Să vedem evoluţia în cele patru ţări din zona noastră.</p>
 <div class="cell" data-fig.dpi="200">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/pierrebachas/Globalization_Factor_Taxation/main/globalETR_bfjz.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country_name, year, region, ETR_L, ETR_K) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country_name<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"Romania"</span>, <span class="st">"Hungary"</span>, <span class="st">"Bulgaria"</span>, <span class="st">"Poland"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(ETR_L<span class="sc">:</span>ETR_K, <span class="at">key=</span><span class="st">"tax_rate"</span>, <span class="at">value=</span><span class="st">'valoare'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country_name=</span><span class="fu">gsub</span>(<span class="st">"Poland"</span>, <span class="st">"Polonia"</span>, country_name) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">gsub</span>(<span class="st">"Hungary"</span>, <span class="st">"Ungaria"</span>, .)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">tax_rate =</span> <span class="fu">gsub</span>(<span class="st">"ETR_K"</span>, <span class="st">"Capital"</span>, tax_rate) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">gsub</span>(<span class="st">"ETR_L"</span>, <span class="st">"Muncă"</span>, .)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>valoare, <span class="at">group=</span>tax_rate)) <span class="sc">+</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">colour=</span>tax_rate), <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>country_name, <span class="at">ncol=</span><span class="dv">2</span>, <span class="at">scales=</span><span class="st">'free'</span>) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">100</span>)) <span class="sc">+</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Rata de taxare efectivă capital-muncă"</span>, </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Sursa: Banca Mondială, Globalization Factor Taxation Dataset"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Anul"</span>, <span class="at">y=</span><span class="cn">NULL</span>, <span class="at">colour=</span><span class="st">"Indicator"</span>) <span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span>culori[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)]) <span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -718,25 +912,80 @@ tbody tr:last-child {
 <h2 data-number="1.3" class="anchored" data-anchor-id="categorii-de-impozite-pe-venit"><span class="header-section-number">1.3</span> Categorii de impozite pe venit</h2>
 <p>Vom vizualiza profile de ţări după veniturile şi cheltuielile lor ca procent din PIB. Acest lucru ne ajută pentru a ne face o idee despre diversele moduri în care cheltuie sau colectează ţările europene banii la buget. Vom aplica metodologia PCA (“Principal Component Analysis” sau “Analiza componentelor principale”) pentru a reduce dimensionalitatea de la un set cu număr mare de variabile originale (categorii de venituri sau cheltuieli, după caz) la doar două axe principale care reprezintă o hartă a similarităţii ţărilor considerând variabilele originale. Important, vom folosi versiunea robustă, insensibilă la outlieri, nu cea originală. Axele sunt ecuaţii liniare, simple funcţii liniare compuse din variabile originale, coeficienţii fiind calculaţi în aşa fel încât axele noastre să surprindă cel mai mult cu putinţă din variaţia variabilelor originale.</p>
 <div class="cell">
-
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>rbiplot <span class="ot">&lt;-</span> <span class="cf">function</span>(mat, <span class="at">p=</span><span class="dv">1</span>, <span class="at">clusters=</span><span class="dv">4</span>, <span class="at">k=</span><span class="dv">15</span>, <span class="at">scale=</span><span class="cn">TRUE</span>){</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> mat[,<span class="fu">apply</span>(mat, <span class="at">MARGIN=</span><span class="dv">2</span>, <span class="at">FUN=</span>mean)<span class="sc">&gt;</span>p, drop<span class="ot">=</span>F] <span class="sc">%&gt;%</span> <span class="fu">colnames</span>()</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  pca <span class="ot">&lt;-</span> sparsepca<span class="sc">::</span><span class="fu">robspca</span>(mat, <span class="at">scale=</span>scale, <span class="at">verbose=</span><span class="cn">FALSE</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  procent <span class="ot">&lt;-</span> pca<span class="sc">$</span>eigenvalues<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(pca<span class="sc">$</span>eigenvalues<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  procent <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>procent[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"%"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  rot <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(pca<span class="sc">$</span>loadings) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">var=</span><span class="fu">colnames</span>(mat)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(var<span class="sc">%in%</span>x)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(pca<span class="sc">$</span>scores[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">centers=</span>clusters)<span class="sc">$</span>cluster</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  coords <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(pca<span class="sc">$</span>scores, <span class="at">rownames=</span><span class="st">"geo"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cluster =</span> <span class="fu">as.factor</span>(model))</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(coords, <span class="fu">aes</span>(<span class="at">x=</span>V1, <span class="at">y=</span>V2)) <span class="sc">+</span> </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    ggConvexHull<span class="sc">::</span><span class="fu">geom_convexhull</span>(<span class="fu">aes</span>(<span class="at">x=</span>V1, <span class="at">y=</span>V2, <span class="at">group=</span>cluster, <span class="at">fill=</span>cluster), <span class="at">alpha=</span><span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">colour=</span><span class="st">'red3'</span>) <span class="sc">+</span> </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label=</span>geo),<span class="at">nudge_y=</span><span class="fl">0.3</span>, <span class="at">max.overlaps =</span> <span class="dv">10</span>, <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>,<span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data=</span>rot, <span class="fu">aes</span>(<span class="at">xend=</span>k<span class="sc">*</span>V1, <span class="at">x=</span><span class="dv">0</span>, <span class="at">yend=</span>k<span class="sc">*</span>V2, <span class="at">y=</span><span class="dv">0</span>), </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.25</span>, <span class="st">"cm"</span>)), <span class="at">colour=</span>culori[<span class="dv">7</span>]) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="at">data=</span>rot, <span class="fu">aes</span>(<span class="at">label=</span>var,<span class="at">x=</span>k<span class="sc">*</span>V1, <span class="at">y=</span>k<span class="sc">*</span>V2), </span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>                             <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">colour=</span>culori[<span class="dv">7</span>], <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"PCA - Biplot"</span>, </span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle=</span><span class="st">"Componentele principale (robuste) ale cheltuielilor COFOG99 pe 2017-2021"</span>, </span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption=</span><span class="st">"Sursa: calcule pe Eurostat, gov_10a_main"</span>,</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">x=</span><span class="fu">paste0</span>(<span class="st">"Dim1 ("</span>, procent[<span class="dv">1</span>], <span class="st">")"</span>), <span class="at">y=</span><span class="fu">paste0</span>(<span class="st">"Dim2 ("</span>, procent[<span class="dv">2</span>],<span class="st">")"</span>)) <span class="sc">+</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>)) <span class="sc">+</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> culori)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Să începem cu veniturile. Avem 34 de variabile originale pe care le vom reduce la cele două axe principale. Împreună cele două axe explică 58.8 % din variabilitatea datelor originale (vezi valorile din paranteză). Cu albastru avem contribuţia variabilelor originale la axele noastre afişate. Practic putem explica de ce România este în poziţia în care este observând săgeţile albastre ce bat înspre ea: contribuţiile sociale ale angajaţilor. Asta însemnă că ţările din direcţia asta (est-europene şi baltice în general) au un procent din PIB mai mare colectat în această categorie de venituri. Culorile reprezintă clusterii descoperiţi de metodologia <code>k-means</code>.</p>
 <div class="cell">
-
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mat_venituri <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/home/petre/R/proiecte/taxare/database/PCA_venituri.csv"</span>) <span class="sc">%&gt;%</span> <span class="fu">column_to_rownames</span>(<span class="st">"geo"</span>) </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mat_cheltuieli <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'/home/petre/R/proiecte/taxare/database/PCA_cheltuieli.csv'</span>) <span class="sc">%&gt;%</span> <span class="fu">column_to_rownames</span>(<span class="st">"geo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbiplot</span>(mat_venituri, <span class="at">p=</span><span class="fl">0.5</span>, <span class="at">clusters=</span><span class="dv">6</span>, <span class="at">k=</span><span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Componentele principale (robuste) ale veniturilor bugetare pe 2017-2021"</span>, <span class="at">title=</span><span class="st">"PCA - biplot cu veniturile bugetare"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="1500"></p>
 </div>
 </div>
 <p>Să vedem şi la cheltuieli. Aici putem folosi 71 de variabile originale din setul original furnizat de Eurostat. Fiind un set mai mare, este de aşteptat că avem mai puţină variabilitate explicată de aceste două axe (circa 52. 7 %). Dar profilele sunt foarte clare: România cheltuie asemenea ţărilor est-europene şi baltice, doar că pe poliţie, ordine publică (unde suntem locul 4 în Europa ca procent din PIB), cheltuieli cu organe legislative şi executive, apărare, etc. La polul opus sunt statele progresiste cu cheltuieli pe protecţie socială, sănătate, educaţie, etc.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rbiplot</span>(mat_cheltuieli, <span class="at">p=</span><span class="fl">0.3</span>, <span class="at">clusters=</span><span class="dv">4</span>, <span class="at">k=</span><span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"PCA - biplot cu cheltuielile bugetare"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="1500"></p>
 </div>
 </div>
 <p>Ghidându-ne după aceste grafice putem face analize punctuale mai interesante. De exemplu, care este topul ţărilor care colectează venituri din contribuţii sociale ?</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>mat_venituri <span class="sc">%&gt;%</span> <span class="fu">as_tibble</span>(<span class="at">rownames=</span><span class="st">'geo'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(geo, <span class="fu">matches</span>(<span class="st">"Compulsory"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">geo =</span> <span class="fu">fct_reorder</span>(geo, <span class="st">`</span><span class="at">Compulsory employees' actual social contributions</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>geo, <span class="at">y=</span><span class="st">`</span><span class="at">Compulsory employees' actual social contributions</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill=</span>culori[<span class="dv">1</span>]) <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Contribuţii sociale obligatorii"</span>, </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">"Pentru angajaţi, media 2017-2021"</span>, </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Procent din PIB"</span>, <span class="at">x=</span><span class="st">"Ţară"</span>, <span class="at">caption=</span><span class="st">"Sursa: Eurostat, gov_10a_main"</span>) <span class="sc">+</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="1500"></p>
 </div>
@@ -744,12 +993,39 @@ tbody tr:last-child {
 <p>România este prima, lucru care şi explică poziţionarea ei în direcţia acestei variabile pe biplotul cu venituri. La contribuţiile sociale ale gospodăriilor suntem pe locul 3, lucru de aşteptat întrucât aşa cum arată şi biplotul, ele sunt variabile corelate între ele (săgeţi apropiate ca poziţie şi magnitudine înseamnă variabile bine corelate).</p>
 <p>Să rămânem însă la impozitele pe venit. Graficul următor este relevator.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>taxe <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Taxes on income$"</span>, na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(time<span class="sc">==</span><span class="st">"2021-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">geo=</span><span class="fu">fct_reorder</span>(geo, values)) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>geo, <span class="at">y=</span>values)) <span class="sc">+</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill=</span>culori[<span class="dv">1</span>]) <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span> </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Impozit pe venit - total"</span>, <span class="at">subtitle=</span><span class="st">"Anul 2021"</span>, </span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Procent din PIB"</span>, <span class="at">x=</span><span class="st">"Ţară"</span>, <span class="at">fill=</span><span class="st">"Ţară"</span>, </span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Sursa: Eurostat, gov_10a_taxag"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="1500"></p>
 </div>
 </div>
 <p>E interesant de văzut şi evoluţia acestei categorii.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>taxe <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Taxes on income$"</span>, na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Romania|Bulgaria|Ungaria|Polonia|Croatia|Media UE"</span>, geo)) <span class="sc">%&gt;%</span>  </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>time, <span class="at">y=</span>values, <span class="at">group=</span>geo)) <span class="sc">+</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">colour=</span>geo, <span class="at">size=</span>geo<span class="sc">==</span><span class="st">"Romania"</span>), </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="fu">c</span>(<span class="st">"size"</span><span class="ot">=</span><span class="cn">FALSE</span>)) <span class="sc">+</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Impozite pe venit - total"</span>, <span class="at">x=</span><span class="st">"An"</span>, <span class="at">y=</span><span class="st">"Procent din PIB"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Sursa: Eurostat, gov_10a_taxag"</span>, <span class="at">colour=</span><span class="st">'Ţară'</span>) <span class="sc">+</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span>culori)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="1400"></p>
 </div>
@@ -758,37 +1034,78 @@ tbody tr:last-child {
 <h3 data-number="1.3.1" class="anchored" data-anchor-id="impozitul-pe-profit"><span class="header-section-number">1.3.1</span> Impozitul pe profit</h3>
 <p>Era de aşteptat, România taxează profiturile mai puţin decât media europeană, dar nu cu mult.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>taxe <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time<span class="sc">==</span><span class="st">"2021-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"profits.+gains"</span>, na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>((values)) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">geo=</span><span class="fu">fct_reorder</span>(geo, values)) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>geo, <span class="at">y=</span>values)) <span class="sc">+</span> <span class="fu">geom_col</span>(<span class="at">fill=</span>culori[<span class="dv">1</span>]) <span class="sc">+</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Impozitul pe profit"</span>, </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">subtitle=</span><span class="st">"Anul 2021"</span>, <span class="at">y=</span><span class="st">"Procent din PIB"</span>, <span class="at">x=</span><span class="st">"Ţară"</span>, </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">caption=</span><span class="st">"Sursa: Eurostat, gov_10a_taxag"</span>) <span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="1500"></p>
 </div>
 </div>
 <p>Graficul următor e doar pentru noi, nu l-aş include în raport.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>taxe <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time<span class="sc">==</span><span class="st">"2021-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">"Total"</span>, na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Media UE|Romania"</span>, geo)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>time) <span class="sc">%&gt;%</span> <span class="fu">spread</span>(geo, values) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="sc">~</span><span class="fu">replace_na</span>(., <span class="dv">0</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">delta =</span> <span class="st">`</span><span class="at">Media UE</span><span class="st">`</span><span class="sc">-</span>Romania) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(delta))) <span class="sc">%&gt;%</span> <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">na_item =</span> <span class="fu">fct_reorder</span>(na_item, delta)) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>na_item, <span class="at">y=</span>delta)) <span class="sc">+</span> </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill=</span>culori[<span class="dv">1</span>]) <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Diferenţa dintre media UE şi România"</span>, <span class="at">subtitle=</span><span class="st">"Anul 2021"</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Ţară"</span>, <span class="at">y=</span><span class="st">"Procent din PIB"</span>, <span class="at">caption=</span><span class="st">"Sursa: Eurostat, gov_10a_main"</span>) <span class="sc">+</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title.position =</span> <span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="1500"></p>
 </div>
 </div>
 <p>Se pare că doar din impozitul pe venit putem creşte vreo 8 puncte procentuale. Să vedem aceleaşi date sub formă de tabel.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>taxe <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time<span class="sc">==</span><span class="st">"2021-01-01"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">"Total"</span>, na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Romania|Media UE"</span>, geo)) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(geo, values)  <span class="sc">%&gt;%</span> </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Diferenta =</span> <span class="st">`</span><span class="at">Media UE</span><span class="st">`</span><span class="sc">-</span>Romania) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>((Diferenta))) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>time) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">taxa=</span>na_item) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Diferenta<span class="sc">!=</span><span class="dv">0</span>) <span class="sc">%&gt;%</span> gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_percent</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">decimals =</span> <span class="dv">1</span>, <span class="at">scale_values =</span> F) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_header</span>(<span class="at">title=</span><span class="st">"Diferenţa dintre media europeană şi România la veniturile din taxe"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
-<div id="kihfxmskzb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kihfxmskzb table {
+<div id="spnnoymggl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#spnnoymggl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#kihfxmskzb thead, #kihfxmskzb tbody, #kihfxmskzb tfoot, #kihfxmskzb tr, #kihfxmskzb td, #kihfxmskzb th {
+#spnnoymggl thead, #spnnoymggl tbody, #spnnoymggl tfoot, #spnnoymggl tr, #spnnoymggl td, #spnnoymggl th {
   border-style: none;
 }
 
-#kihfxmskzb p {
+#spnnoymggl p {
   margin: 0;
   padding: 0;
 }
 
-#kihfxmskzb .gt_table {
+#spnnoymggl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -814,12 +1131,12 @@ tbody tr:last-child {
   border-left-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_caption {
+#spnnoymggl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#kihfxmskzb .gt_title {
+#spnnoymggl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -831,7 +1148,7 @@ tbody tr:last-child {
   border-bottom-width: 0;
 }
 
-#kihfxmskzb .gt_subtitle {
+#spnnoymggl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -843,7 +1160,7 @@ tbody tr:last-child {
   border-top-width: 0;
 }
 
-#kihfxmskzb .gt_heading {
+#spnnoymggl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -855,13 +1172,13 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_bottom_border {
+#spnnoymggl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_col_headings {
+#spnnoymggl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -876,7 +1193,7 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_col_heading {
+#spnnoymggl .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -896,7 +1213,7 @@ tbody tr:last-child {
   overflow-x: hidden;
 }
 
-#kihfxmskzb .gt_column_spanner_outer {
+#spnnoymggl .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -908,15 +1225,15 @@ tbody tr:last-child {
   padding-right: 4px;
 }
 
-#kihfxmskzb .gt_column_spanner_outer:first-child {
+#spnnoymggl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kihfxmskzb .gt_column_spanner_outer:last-child {
+#spnnoymggl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kihfxmskzb .gt_column_spanner {
+#spnnoymggl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -928,11 +1245,11 @@ tbody tr:last-child {
   width: 100%;
 }
 
-#kihfxmskzb .gt_spanner_row {
+#spnnoymggl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#kihfxmskzb .gt_group_heading {
+#spnnoymggl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -958,7 +1275,7 @@ tbody tr:last-child {
   text-align: left;
 }
 
-#kihfxmskzb .gt_empty_group_heading {
+#spnnoymggl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -973,15 +1290,15 @@ tbody tr:last-child {
   vertical-align: middle;
 }
 
-#kihfxmskzb .gt_from_md > :first-child {
+#spnnoymggl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kihfxmskzb .gt_from_md > :last-child {
+#spnnoymggl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kihfxmskzb .gt_row {
+#spnnoymggl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1000,7 +1317,7 @@ tbody tr:last-child {
   overflow-x: hidden;
 }
 
-#kihfxmskzb .gt_stub {
+#spnnoymggl .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1013,7 +1330,7 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#kihfxmskzb .gt_stub_row_group {
+#spnnoymggl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1027,15 +1344,15 @@ tbody tr:last-child {
   vertical-align: top;
 }
 
-#kihfxmskzb .gt_row_group_first td {
+#spnnoymggl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kihfxmskzb .gt_row_group_first th {
+#spnnoymggl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#kihfxmskzb .gt_summary_row {
+#spnnoymggl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1045,16 +1362,16 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#kihfxmskzb .gt_first_summary_row {
+#spnnoymggl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_first_summary_row.thick {
+#spnnoymggl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kihfxmskzb .gt_last_summary_row {
+#spnnoymggl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1064,7 +1381,7 @@ tbody tr:last-child {
   border-bottom-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_grand_summary_row {
+#spnnoymggl .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1074,7 +1391,7 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#kihfxmskzb .gt_first_grand_summary_row {
+#spnnoymggl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1084,7 +1401,7 @@ tbody tr:last-child {
   border-top-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_last_grand_summary_row_top {
+#spnnoymggl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1094,11 +1411,11 @@ tbody tr:last-child {
   border-bottom-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_striped {
+#spnnoymggl .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kihfxmskzb .gt_table_body {
+#spnnoymggl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1107,7 +1424,7 @@ tbody tr:last-child {
   border-bottom-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_footnotes {
+#spnnoymggl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1121,7 +1438,7 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_footnote {
+#spnnoymggl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1130,7 +1447,7 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#kihfxmskzb .gt_sourcenotes {
+#spnnoymggl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1144,7 +1461,7 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#kihfxmskzb .gt_sourcenote {
+#spnnoymggl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1152,63 +1469,63 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#kihfxmskzb .gt_left {
+#spnnoymggl .gt_left {
   text-align: left;
 }
 
-#kihfxmskzb .gt_center {
+#spnnoymggl .gt_center {
   text-align: center;
 }
 
-#kihfxmskzb .gt_right {
+#spnnoymggl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kihfxmskzb .gt_font_normal {
+#spnnoymggl .gt_font_normal {
   font-weight: normal;
 }
 
-#kihfxmskzb .gt_font_bold {
+#spnnoymggl .gt_font_bold {
   font-weight: bold;
 }
 
-#kihfxmskzb .gt_font_italic {
+#spnnoymggl .gt_font_italic {
   font-style: italic;
 }
 
-#kihfxmskzb .gt_super {
+#spnnoymggl .gt_super {
   font-size: 65%;
 }
 
-#kihfxmskzb .gt_footnote_marks {
+#spnnoymggl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#kihfxmskzb .gt_asterisk {
+#spnnoymggl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kihfxmskzb .gt_indent_1 {
+#spnnoymggl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#kihfxmskzb .gt_indent_2 {
+#spnnoymggl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#kihfxmskzb .gt_indent_3 {
+#spnnoymggl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#kihfxmskzb .gt_indent_4 {
+#spnnoymggl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#kihfxmskzb .gt_indent_5 {
+#spnnoymggl .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -1379,26 +1696,41 @@ tbody tr:last-child {
 <h2 data-number="1.4" class="anchored" data-anchor-id="concluzie"><span class="header-section-number">1.4</span> Concluzie</h2>
 <p>Mai avem mult de colectat până să ajungem la media grupului Visegrad, care este ilustrată în tabelul următor:</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>agregate <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Total general government revenue"</span>, na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Romania|Cehia|Slovacia|Ungaria|Polonia"</span>, geo)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(geo, values) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">delta =</span> <span class="sc">-</span>Romania <span class="sc">+</span> (Cehia <span class="sc">+</span> Polonia <span class="sc">+</span> Slovacia <span class="sc">+</span> Ungaria)<span class="sc">/</span><span class="dv">4</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time<span class="sc">&gt;</span><span class="st">"2011-01-01"</span>) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Anul=</span>time) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">%&gt;%</span> gtExtras<span class="sc">::</span><span class="fu">gt_theme_538</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title=</span><span class="st">"Bugetul total pentru România şi Vişegrad"</span>, </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">subtitle=</span><span class="st">"Sursa: Eurostat, gov_10a_main"</span>) <span class="sc">%&gt;%</span> <span class="fu">opt_row_striping</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">footnote=</span><span class="st">"Diferenţa dintre media Vişegrad şi România"</span>, </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">locations=</span><span class="fu">cells_column_labels</span>(<span class="at">columns=</span>delta)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  gtExtras<span class="sc">::</span><span class="fu">gt_color_rows</span>(<span class="at">columns=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_percent</span>(<span class="at">columns=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>, <span class="at">decimals=</span><span class="dv">2</span>, <span class="at">scale_values =</span> F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
-<div id="gbvfrrbtlb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="yxunesdtke" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#gbvfrrbtlb table {
+#yxunesdtke table {
   font-family: Chivo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gbvfrrbtlb thead, #gbvfrrbtlb tbody, #gbvfrrbtlb tfoot, #gbvfrrbtlb tr, #gbvfrrbtlb td, #gbvfrrbtlb th {
+#yxunesdtke thead, #yxunesdtke tbody, #yxunesdtke tfoot, #yxunesdtke tr, #yxunesdtke td, #yxunesdtke th {
   border-style: none;
 }
 
-#gbvfrrbtlb p {
+#yxunesdtke p {
   margin: 0;
   padding: 0;
 }
 
-#gbvfrrbtlb .gt_table {
+#yxunesdtke .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1424,12 +1756,12 @@ tbody tr:last-child {
   border-left-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_caption {
+#yxunesdtke .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gbvfrrbtlb .gt_title {
+#yxunesdtke .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1441,7 +1773,7 @@ tbody tr:last-child {
   border-bottom-width: 0;
 }
 
-#gbvfrrbtlb .gt_subtitle {
+#yxunesdtke .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1453,7 +1785,7 @@ tbody tr:last-child {
   border-top-width: 0;
 }
 
-#gbvfrrbtlb .gt_heading {
+#yxunesdtke .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -1465,13 +1797,13 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_bottom_border {
+#yxunesdtke .gt_bottom_border {
   border-bottom-style: none;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_col_headings {
+#yxunesdtke .gt_col_headings {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1486,7 +1818,7 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_col_heading {
+#yxunesdtke .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1506,7 +1838,7 @@ tbody tr:last-child {
   overflow-x: hidden;
 }
 
-#gbvfrrbtlb .gt_column_spanner_outer {
+#yxunesdtke .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1518,15 +1850,15 @@ tbody tr:last-child {
   padding-right: 4px;
 }
 
-#gbvfrrbtlb .gt_column_spanner_outer:first-child {
+#yxunesdtke .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gbvfrrbtlb .gt_column_spanner_outer:last-child {
+#yxunesdtke .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gbvfrrbtlb .gt_column_spanner {
+#yxunesdtke .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #000000;
@@ -1538,11 +1870,11 @@ tbody tr:last-child {
   width: 100%;
 }
 
-#gbvfrrbtlb .gt_spanner_row {
+#yxunesdtke .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gbvfrrbtlb .gt_group_heading {
+#yxunesdtke .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1568,7 +1900,7 @@ tbody tr:last-child {
   text-align: left;
 }
 
-#gbvfrrbtlb .gt_empty_group_heading {
+#yxunesdtke .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1583,15 +1915,15 @@ tbody tr:last-child {
   vertical-align: middle;
 }
 
-#gbvfrrbtlb .gt_from_md > :first-child {
+#yxunesdtke .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gbvfrrbtlb .gt_from_md > :last-child {
+#yxunesdtke .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gbvfrrbtlb .gt_row {
+#yxunesdtke .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -1610,7 +1942,7 @@ tbody tr:last-child {
   overflow-x: hidden;
 }
 
-#gbvfrrbtlb .gt_stub {
+#yxunesdtke .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1623,7 +1955,7 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#gbvfrrbtlb .gt_stub_row_group {
+#yxunesdtke .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1637,15 +1969,15 @@ tbody tr:last-child {
   vertical-align: top;
 }
 
-#gbvfrrbtlb .gt_row_group_first td {
+#yxunesdtke .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gbvfrrbtlb .gt_row_group_first th {
+#yxunesdtke .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gbvfrrbtlb .gt_summary_row {
+#yxunesdtke .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1655,16 +1987,16 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#gbvfrrbtlb .gt_first_summary_row {
+#yxunesdtke .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_first_summary_row.thick {
+#yxunesdtke .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gbvfrrbtlb .gt_last_summary_row {
+#yxunesdtke .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1674,7 +2006,7 @@ tbody tr:last-child {
   border-bottom-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_grand_summary_row {
+#yxunesdtke .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1684,7 +2016,7 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#gbvfrrbtlb .gt_first_grand_summary_row {
+#yxunesdtke .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1694,7 +2026,7 @@ tbody tr:last-child {
   border-top-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_last_grand_summary_row_top {
+#yxunesdtke .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1704,11 +2036,11 @@ tbody tr:last-child {
   border-bottom-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_striped {
+#yxunesdtke .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gbvfrrbtlb .gt_table_body {
+#yxunesdtke .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1717,7 +2049,7 @@ tbody tr:last-child {
   border-bottom-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_footnotes {
+#yxunesdtke .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1731,7 +2063,7 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_footnote {
+#yxunesdtke .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1740,7 +2072,7 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#gbvfrrbtlb .gt_sourcenotes {
+#yxunesdtke .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1754,7 +2086,7 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#gbvfrrbtlb .gt_sourcenote {
+#yxunesdtke .gt_sourcenote {
   font-size: 12px;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1762,63 +2094,63 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#gbvfrrbtlb .gt_left {
+#yxunesdtke .gt_left {
   text-align: left;
 }
 
-#gbvfrrbtlb .gt_center {
+#yxunesdtke .gt_center {
   text-align: center;
 }
 
-#gbvfrrbtlb .gt_right {
+#yxunesdtke .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gbvfrrbtlb .gt_font_normal {
+#yxunesdtke .gt_font_normal {
   font-weight: normal;
 }
 
-#gbvfrrbtlb .gt_font_bold {
+#yxunesdtke .gt_font_bold {
   font-weight: bold;
 }
 
-#gbvfrrbtlb .gt_font_italic {
+#yxunesdtke .gt_font_italic {
   font-style: italic;
 }
 
-#gbvfrrbtlb .gt_super {
+#yxunesdtke .gt_super {
   font-size: 65%;
 }
 
-#gbvfrrbtlb .gt_footnote_marks {
+#yxunesdtke .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gbvfrrbtlb .gt_asterisk {
+#yxunesdtke .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gbvfrrbtlb .gt_indent_1 {
+#yxunesdtke .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gbvfrrbtlb .gt_indent_2 {
+#yxunesdtke .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gbvfrrbtlb .gt_indent_3 {
+#yxunesdtke .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gbvfrrbtlb .gt_indent_4 {
+#yxunesdtke .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gbvfrrbtlb .gt_indent_5 {
+#yxunesdtke .gt_indent_5 {
   text-indent: 25px;
 }
 
@@ -1935,6 +2267,23 @@ tbody tr:last-child {
 </div>
 <p>Observăm că suntem cu circa 7.5 -8 % procente din PIB în urma grupului Vişegrad la veniturile totale, şi asta în vremurile bune. Făcând o medie pe ultimii zece ani, avem o diferenţă de circa <code>28 miliarde de EURO</code> (nu RON !) faţă de media acestui grup.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>taxe <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Total tax"</span>, na_item)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"Romania|Cehia|Slovacia|Ungaria|Polonia"</span>, geo)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spread</span>(geo, values) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">medie =</span> (Cehia <span class="sc">+</span> Polonia <span class="sc">+</span> Slovacia <span class="sc">+</span> Ungaria)<span class="sc">/</span><span class="dv">4</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time<span class="sc">&gt;</span><span class="st">"2011-01-01"</span>) <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">Anul=</span>time) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> <span class="fu">select</span>(Anul, Romania, medie) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gather</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">key=</span><span class="st">"Indicator"</span>, <span class="at">value=</span><span class="st">'valoare'</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Anul, <span class="at">y=</span>valoare, <span class="at">group=</span>Indicator)) <span class="sc">+</span> </span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">colour=</span>Indicator), <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Veniturile fiscale: media Vişegrad şi România"</span>, </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="st">"% din PIB"</span>, <span class="at">colour=</span><span class="st">"Regiune"</span>, </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption=</span><span class="st">"Sursa: Eurostat, gov_10a_taxag"</span>) <span class="sc">+</span>  </span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_manual</span>(<span class="at">values=</span>culori[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>)]) <span class="sc">+</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'top'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Generalitati_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="1000"></p>
 </div>

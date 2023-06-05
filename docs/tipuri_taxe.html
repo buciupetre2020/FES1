@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-0.9.481">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,12 +11,99 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./tranzactii_imobiliare.html" rel="next">
+<link href="./Impozit_profit.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -39,24 +126,6 @@ ul.task-list{list-style: none;}
 
 
 <link rel="stylesheet" href="style.css">
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./tranzactii_imobiliare.html" rel="next">
-<link href="./Impozit_profit.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-sidebar floating">
@@ -148,6 +217,7 @@ ul.task-list{list-style: none;}
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -156,72 +226,239 @@ ul.task-list{list-style: none;}
 
 <p>În acest capitol ne vom ocupa de tipurile de taxe calculate de Comisia Europeană. În speţă este vorba de taxele pe capital, contribuţii, muncă, consum şi proprietate. Datele brute sunt <a href="https://taxation-customs.ec.europa.eu/taxation-1/economic-analysis-taxation/data-taxation-trends_en">aici</a>.</p>
 <div class="cell">
-
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtExtras)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>culori <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#EA5B0C"</span>, <span class="st">"#a44a08"</span>, <span class="st">"#ea960c"</span>, <span class="st">"#ea150c"</span>, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"#a40e08"</span>, <span class="st">"#000000"</span>, <span class="st">"#0865a4"</span>, <span class="st">"#a48408"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(hrbrthemes<span class="sc">::</span><span class="fu">theme_ipsum_tw</span>(<span class="at">strip_text_size =</span> <span class="dv">14</span>, </span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">strip_text_family =</span> <span class="st">"Frutiger Bold"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">strip_text_face =</span> <span class="st">"italic"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">axis_title_size =</span> <span class="dv">10</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">axis_text_size =</span> <span class="dv">8</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">base_family =</span> <span class="st">"Frutiger"</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">plot_title_family =</span> <span class="st">"Frutiger Bold"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">subtitle_family =</span> <span class="st">"Frutiger"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">caption_family =</span> <span class="st">"Frutiger"</span>, </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">caption_size =</span> <span class="dv">8</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">plot_title_size =</span> <span class="dv">14</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">subtitle_size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>), </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">"cm"</span>)))</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>taxari <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"database"</span>, <span class="st">"taxation_trends_eurostat.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>grafice <span class="ot">&lt;-</span> <span class="cf">function</span>(df, var, <span class="at">numar=</span><span class="dv">10</span>){</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  segmente <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(time<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"2009"</span>, <span class="st">"2021"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(geo, what, time, var) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">spread</span>(what, var) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> time, <span class="at">values_from =</span> <span class="fu">c</span>(PIB, Total)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">"Luxemb|Irlanda|Malta|Cipru"</span>, geo)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">centru_x =</span> <span class="fl">0.5</span><span class="sc">*</span>(Total_2009<span class="sc">+</span>Total_2021), </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">centru_y=</span><span class="fl">0.5</span><span class="sc">*</span>(PIB_2009<span class="sc">+</span>PIB_2021)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">delta =</span> <span class="fu">sqrt</span>((PIB_2021<span class="sc">-</span>PIB_2009)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (Total_2021<span class="sc">-</span>Total_2009)<span class="sc">^</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">directie =</span> <span class="fu">if_else</span>(PIB_2021 <span class="sc">&lt;</span> PIB_2009 <span class="sc">&amp;</span> Total_2021 <span class="sc">&lt;</span> Total_2009, </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"Scădere"</span>, <span class="st">"Creştere"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>              <span class="fu">arrange</span>(<span class="fu">desc</span>(delta)) </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  tari <span class="ot">&lt;-</span> segmente <span class="sc">%&gt;%</span> </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(delta)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">index =</span> <span class="fu">if_else</span>(<span class="fu">row_number</span>()<span class="sc">&lt;</span>numar <span class="sc">|</span> geo<span class="sc">==</span><span class="st">"Romania"</span>, <span class="dv">1</span>, <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(index<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>index) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(geo)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  segmente <span class="sc">%&gt;%</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Total_2009, <span class="at">y=</span>PIB_2009)) <span class="sc">+</span> </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">colour=</span><span class="st">'red3'</span>) <span class="sc">+</span> </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">colour=</span><span class="st">'red3'</span>, <span class="fu">aes</span>(<span class="at">x=</span>Total_2021, <span class="at">y=</span>PIB_2021)) <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    geomtextpath<span class="sc">::</span><span class="fu">geom_textsegment</span>(<span class="fu">aes</span>(<span class="at">x=</span>Total_2009, <span class="at">xend=</span>Total_2021, </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">y=</span>PIB_2009, <span class="at">yend=</span>PIB_2021, <span class="at">label=</span>geo, <span class="at">size=</span>delta,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">colour=</span>directie),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">vjust=</span><span class="sc">-</span><span class="fl">0.3</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length=</span><span class="fu">unit</span>(<span class="fl">0.3</span>, <span class="st">"cm"</span>)),</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">show.legend =</span> <span class="fu">c</span>(<span class="st">"size"</span><span class="ot">=</span><span class="cn">FALSE</span>)) <span class="sc">+</span> </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_size_continuous</span>(<span class="at">range=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_colour_manual</span>(<span class="at">values=</span><span class="fu">c</span>(culori[<span class="dv">7</span>], culori[<span class="dv">4</span>])) <span class="sc">+</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    gghighlight<span class="sc">::</span><span class="fu">gghighlight</span>(geo<span class="sc">%in%</span>tari) <span class="sc">+</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">'top'</span>)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
-
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rbiplot <span class="ot">&lt;-</span> <span class="cf">function</span>(mat, <span class="at">p=</span><span class="dv">1</span>, <span class="at">clusters=</span><span class="dv">4</span>, <span class="at">k=</span><span class="dv">15</span>, <span class="at">scale=</span><span class="cn">TRUE</span>){</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> mat[,<span class="fu">apply</span>(mat, <span class="at">MARGIN=</span><span class="dv">2</span>, <span class="at">FUN=</span>mean)<span class="sc">&gt;</span>p, drop<span class="ot">=</span>F] <span class="sc">%&gt;%</span> <span class="fu">colnames</span>()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  pca <span class="ot">&lt;-</span> sparsepca<span class="sc">::</span><span class="fu">robspca</span>(mat, <span class="at">scale=</span>scale, <span class="at">verbose=</span><span class="cn">FALSE</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  procent <span class="ot">&lt;-</span> pca<span class="sc">$</span>eigenvalues<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sum</span>(pca<span class="sc">$</span>eigenvalues<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  procent <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>procent[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"%"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  rot <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(pca<span class="sc">$</span>loadings) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">var=</span><span class="fu">colnames</span>(mat)) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(var<span class="sc">%in%</span>x)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  model <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(pca<span class="sc">$</span>scores[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">centers=</span>clusters)<span class="sc">$</span>cluster</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  coords <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(pca<span class="sc">$</span>scores, <span class="at">rownames=</span><span class="st">"geo"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">cluster =</span> <span class="fu">as.factor</span>(model))</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(coords, <span class="fu">aes</span>(<span class="at">x=</span>V1, <span class="at">y=</span>V2)) <span class="sc">+</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    ggConvexHull<span class="sc">::</span><span class="fu">geom_convexhull</span>(<span class="fu">aes</span>(<span class="at">x=</span>V1, <span class="at">y=</span>V2, <span class="at">group=</span>cluster, <span class="at">fill=</span>cluster), <span class="at">alpha=</span><span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">colour=</span><span class="st">'red3'</span>) <span class="sc">+</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="fu">aes</span>(<span class="at">label=</span>geo),<span class="at">nudge_y=</span><span class="fl">0.3</span>, <span class="at">max.overlaps =</span> <span class="dv">10</span>, <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>,<span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_segment</span>(<span class="at">data=</span>rot, <span class="fu">aes</span>(<span class="at">xend=</span>k<span class="sc">*</span>V1, <span class="at">x=</span><span class="dv">0</span>, <span class="at">yend=</span>k<span class="sc">*</span>V2, <span class="at">y=</span><span class="dv">0</span>), </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.25</span>, <span class="st">"cm"</span>)), <span class="at">colour=</span>culori[<span class="dv">7</span>]) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="at">data=</span>rot, <span class="fu">aes</span>(<span class="at">label=</span>var,<span class="at">x=</span>k<span class="sc">*</span>V1, <span class="at">y=</span>k<span class="sc">*</span>V2), </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                             <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">colour=</span>culori[<span class="dv">7</span>], <span class="at">size=</span><span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"PCA - Biplot"</span>, </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle=</span><span class="st">"Componentele principale (robuste) ale cheltuielilor COFOG99 pe 2017-2021"</span>, </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption=</span><span class="st">"Sursa: calcule pe Eurostat, gov_10a_main"</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>         <span class="at">x=</span><span class="fu">paste0</span>(<span class="st">"Dim1 ("</span>, procent[<span class="dv">1</span>], <span class="st">")"</span>), <span class="at">y=</span><span class="fu">paste0</span>(<span class="st">"Dim2 ("</span>, procent[<span class="dv">2</span>],<span class="st">")"</span>)) <span class="sc">+</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>)) <span class="sc">+</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> culori)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Vom ilustra situaţia cu toate aceste tipuri de taxe în grafice cu două axe - pe axa x fiind procentul din total taxe iar pe y procentul din PIB colectat. Să începem cu taxarea pe capital.</p>
 <div class="cell" data-fig.dpi="200">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grafice</span>(taxari, <span class="at">var =</span> <span class="st">"capital"</span>, <span class="at">numar=</span><span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">"Taxarea pe capital"</span>, <span class="st">"2009 vs 2021"</span>), </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle=</span><span class="st">"Sursa: Taxation trends in the European Union"</span>, </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x=</span><span class="st">"din Total"</span>, <span class="at">y=</span><span class="st">"din PIB"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="tipuri_taxe_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="576"></p>
 </div>
 </div>
 <p>Taxarea pe contribuţii</p>
 <div class="cell" data-fig.dpi="200">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grafice</span>(taxari, <span class="at">var =</span> <span class="st">"contributii"</span>, <span class="at">numar=</span><span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">"Taxarea pe contribuţii"</span>, <span class="st">"2009 vs 2021"</span>), </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle=</span><span class="st">"Sursa: Taxation trends in the European Union"</span>, </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x=</span><span class="st">"din Total"</span>, <span class="at">y=</span><span class="st">"din PIB"</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">50</span>), </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_y_continuous</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">20</span>), </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="tipuri_taxe_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="576"></p>
 </div>
 </div>
 <p>Taxarea pe muncă</p>
 <div class="cell" data-fig.dpi="200">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grafice</span>(taxari, <span class="at">var =</span> <span class="st">"munca"</span>, <span class="at">numar=</span><span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">"Taxarea pe muncă"</span>, <span class="st">"2009 vs 2021"</span>), </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle=</span><span class="st">"Sursa: Taxation trends in the European Union"</span>, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x=</span><span class="st">"din Total"</span>, <span class="at">y=</span><span class="st">"din PIB"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="tipuri_taxe_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="576"></p>
 </div>
 </div>
 <p>Taxarea pe consum</p>
 <div class="cell" data-fig.dpi="200">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grafice</span>(taxari, <span class="at">var =</span> <span class="st">"consum"</span>, <span class="at">numar=</span><span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">"Taxarea pe consum"</span>, <span class="st">"2009 vs 2021"</span>), </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle=</span><span class="st">"Sursa: Taxation trends in the European Union"</span>, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x=</span><span class="st">"din Total"</span>, <span class="at">y=</span><span class="st">"din PIB"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="tipuri_taxe_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="576"></p>
 </div>
 </div>
 <p>Taxele pe proprietate</p>
 <div class="cell" data-fig.dpi="200">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grafice</span>(taxari, <span class="at">var =</span> <span class="st">"proprietate"</span>, <span class="at">numar=</span><span class="dv">10</span>) <span class="sc">+</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title=</span><span class="fu">paste</span>(<span class="st">"Taxarea pe proprietate"</span>, <span class="st">"2009 vs 2021"</span>), </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle=</span><span class="st">"Sursa: Taxation trends in the European Union"</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">x=</span><span class="st">"din Total"</span>, <span class="at">y=</span><span class="st">"din PIB"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="tipuri_taxe_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="576"></p>
 </div>
 </div>
 <p>Şi multidimensional, o hartă a taxării în Europa. Vom folosi ca valori pentru diferitele tipuri de taxări media între 2018-2021 pentru o imagine mai robustă.</p>
 <div class="cell" data-fig.dpi="200">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">&lt;-</span> taxari <span class="sc">%&gt;%</span> <span class="fu">filter</span>(what<span class="sc">==</span><span class="st">"PIB"</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">time=</span><span class="fu">as.numeric</span>(time)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">filter</span>(time<span class="sc">&gt;</span><span class="st">"2017"</span>) <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(geo) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">summarise</span>(<span class="fu">across</span>(capital<span class="sc">:</span>proprietate, mean)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">select</span>(geo, capital<span class="sc">:</span>proprietate) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(geo<span class="sc">!=</span><span class="st">"Irlanda"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>       <span class="fu">column_to_rownames</span>(<span class="st">"geo"</span>) </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rbiplot</span>(mat, <span class="at">p=</span><span class="dv">0</span>, <span class="at">clusters=</span><span class="dv">3</span>, <span class="at">k=</span><span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Componentele principale ale diferitelor tipuri de taxe"</span>, </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">"Media 2018-2021"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="tipuri_taxe_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Observăm că taxarea pe capital, proprietate şi muncă sunt corelate pozitiv şi invers corelate fiecare în mod negativ cu taxarea pe consum. Contribuţiile sunt relativ puţin corelate cu restul variabilelor. România se află împreună cu statele est-europene şi baltice în zona taxelor care taxează mai degrabă consumul decât celelalte categorii. Mai jos, un tabel cu aceste valori pentru România.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>taxari <span class="sc">%&gt;%</span> <span class="fu">filter</span>(geo<span class="sc">==</span><span class="st">"Romania"</span>,what<span class="sc">==</span><span class="st">"PIB"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>what, <span class="sc">-</span>geo) <span class="sc">%&gt;%</span> gt<span class="sc">::</span><span class="fu">gt</span>(<span class="at">rowname_col =</span> <span class="st">"time"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">decimals =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_header</span>(<span class="at">title=</span><span class="st">"România - % din PIB pentru diferite taxe"</span>, </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subtitle =</span> <span class="st">"Sursa: Taxation Trends in European Union"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  gtExtras<span class="sc">::</span><span class="fu">gt_theme_538</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style =</span> gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">5</span>]), </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations =</span> gt<span class="sc">::</span><span class="fu">cells_title</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span>gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">color=</span><span class="st">"white"</span>), <span class="at">locations=</span>gt<span class="sc">::</span><span class="fu">cells_title</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span>gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">1</span>]), </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations =</span> gt<span class="sc">::</span><span class="fu">cells_column_labels</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span>gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">color=</span><span class="st">"white"</span>), </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations=</span>gt<span class="sc">::</span><span class="fu">cells_column_labels</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span>gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">3</span>], <span class="at">alpha=</span><span class="fl">0.3</span>), </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations=</span>gt<span class="sc">::</span><span class="fu">cells_body</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_options</span>(<span class="at">table.border.left.color =</span> <span class="st">"#000000"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span>gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">1</span>], <span class="at">alpha=</span><span class="fl">0.5</span>), </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations=</span><span class="fu">cells_row_groups</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  gtExtras<span class="sc">::</span><span class="fu">gt_color_rows</span>(<span class="at">columns=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
-<div id="quetbrhnna" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="kusuhtopds" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#quetbrhnna table {
+#kusuhtopds table {
   font-family: Chivo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#quetbrhnna thead, #quetbrhnna tbody, #quetbrhnna tfoot, #quetbrhnna tr, #quetbrhnna td, #quetbrhnna th {
+#kusuhtopds thead, #kusuhtopds tbody, #kusuhtopds tfoot, #kusuhtopds tr, #kusuhtopds td, #kusuhtopds th {
   border-style: none;
 }
 
-#quetbrhnna p {
+#kusuhtopds p {
   margin: 0;
   padding: 0;
 }
 
-#quetbrhnna .gt_table {
+#kusuhtopds .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -247,12 +484,12 @@ ul.task-list{list-style: none;}
   border-left-color: #000000;
 }
 
-#quetbrhnna .gt_caption {
+#kusuhtopds .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#quetbrhnna .gt_title {
+#kusuhtopds .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -264,7 +501,7 @@ ul.task-list{list-style: none;}
   border-bottom-width: 0;
 }
 
-#quetbrhnna .gt_subtitle {
+#kusuhtopds .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -276,7 +513,7 @@ ul.task-list{list-style: none;}
   border-top-width: 0;
 }
 
-#quetbrhnna .gt_heading {
+#kusuhtopds .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -288,13 +525,13 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#quetbrhnna .gt_bottom_border {
+#kusuhtopds .gt_bottom_border {
   border-bottom-style: none;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#quetbrhnna .gt_col_headings {
+#kusuhtopds .gt_col_headings {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -309,7 +546,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#quetbrhnna .gt_col_heading {
+#kusuhtopds .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -329,7 +566,7 @@ ul.task-list{list-style: none;}
   overflow-x: hidden;
 }
 
-#quetbrhnna .gt_column_spanner_outer {
+#kusuhtopds .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -341,15 +578,15 @@ ul.task-list{list-style: none;}
   padding-right: 4px;
 }
 
-#quetbrhnna .gt_column_spanner_outer:first-child {
+#kusuhtopds .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#quetbrhnna .gt_column_spanner_outer:last-child {
+#kusuhtopds .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#quetbrhnna .gt_column_spanner {
+#kusuhtopds .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #000000;
@@ -361,11 +598,11 @@ ul.task-list{list-style: none;}
   width: 100%;
 }
 
-#quetbrhnna .gt_spanner_row {
+#kusuhtopds .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#quetbrhnna .gt_group_heading {
+#kusuhtopds .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -391,7 +628,7 @@ ul.task-list{list-style: none;}
   text-align: left;
 }
 
-#quetbrhnna .gt_empty_group_heading {
+#kusuhtopds .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -406,15 +643,15 @@ ul.task-list{list-style: none;}
   vertical-align: middle;
 }
 
-#quetbrhnna .gt_from_md > :first-child {
+#kusuhtopds .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#quetbrhnna .gt_from_md > :last-child {
+#kusuhtopds .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#quetbrhnna .gt_row {
+#kusuhtopds .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -433,7 +670,7 @@ ul.task-list{list-style: none;}
   overflow-x: hidden;
 }
 
-#quetbrhnna .gt_stub {
+#kusuhtopds .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -446,7 +683,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#quetbrhnna .gt_stub_row_group {
+#kusuhtopds .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -460,15 +697,15 @@ ul.task-list{list-style: none;}
   vertical-align: top;
 }
 
-#quetbrhnna .gt_row_group_first td {
+#kusuhtopds .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#quetbrhnna .gt_row_group_first th {
+#kusuhtopds .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#quetbrhnna .gt_summary_row {
+#kusuhtopds .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -478,16 +715,16 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#quetbrhnna .gt_first_summary_row {
+#kusuhtopds .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#quetbrhnna .gt_first_summary_row.thick {
+#kusuhtopds .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#quetbrhnna .gt_last_summary_row {
+#kusuhtopds .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -497,7 +734,7 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#quetbrhnna .gt_grand_summary_row {
+#kusuhtopds .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -507,7 +744,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#quetbrhnna .gt_first_grand_summary_row {
+#kusuhtopds .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -517,7 +754,7 @@ ul.task-list{list-style: none;}
   border-top-color: #D3D3D3;
 }
 
-#quetbrhnna .gt_last_grand_summary_row_top {
+#kusuhtopds .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -527,11 +764,11 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#quetbrhnna .gt_striped {
+#kusuhtopds .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#quetbrhnna .gt_table_body {
+#kusuhtopds .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -540,7 +777,7 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#quetbrhnna .gt_footnotes {
+#kusuhtopds .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -554,7 +791,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#quetbrhnna .gt_footnote {
+#kusuhtopds .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -563,7 +800,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#quetbrhnna .gt_sourcenotes {
+#kusuhtopds .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -577,7 +814,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#quetbrhnna .gt_sourcenote {
+#kusuhtopds .gt_sourcenote {
   font-size: 12px;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -585,63 +822,63 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#quetbrhnna .gt_left {
+#kusuhtopds .gt_left {
   text-align: left;
 }
 
-#quetbrhnna .gt_center {
+#kusuhtopds .gt_center {
   text-align: center;
 }
 
-#quetbrhnna .gt_right {
+#kusuhtopds .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#quetbrhnna .gt_font_normal {
+#kusuhtopds .gt_font_normal {
   font-weight: normal;
 }
 
-#quetbrhnna .gt_font_bold {
+#kusuhtopds .gt_font_bold {
   font-weight: bold;
 }
 
-#quetbrhnna .gt_font_italic {
+#kusuhtopds .gt_font_italic {
   font-style: italic;
 }
 
-#quetbrhnna .gt_super {
+#kusuhtopds .gt_super {
   font-size: 65%;
 }
 
-#quetbrhnna .gt_footnote_marks {
+#kusuhtopds .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#quetbrhnna .gt_asterisk {
+#kusuhtopds .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#quetbrhnna .gt_indent_1 {
+#kusuhtopds .gt_indent_1 {
   text-indent: 5px;
 }
 
-#quetbrhnna .gt_indent_2 {
+#kusuhtopds .gt_indent_2 {
   text-indent: 10px;
 }
 
-#quetbrhnna .gt_indent_3 {
+#kusuhtopds .gt_indent_3 {
   text-indent: 15px;
 }
 
-#quetbrhnna .gt_indent_4 {
+#kusuhtopds .gt_indent_4 {
   text-indent: 20px;
 }
 
-#quetbrhnna .gt_indent_5 {
+#kusuhtopds .gt_indent_5 {
   text-indent: 25px;
 }
 
@@ -758,6 +995,24 @@ tbody tr:last-child {
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -779,7 +1034,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -807,31 +1079,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

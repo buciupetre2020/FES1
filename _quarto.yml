@@ -3,7 +3,6 @@ project:
   output-dir: docs
 
 execute:
-  echo: false
   warning: false
   message: false
   error: false
@@ -28,6 +27,8 @@ format:
     theme: cosmo
     cover-image: cover.png
     css: style.css
+    code-fold: true
+    code-summary: "Arată codul"
     
   pdf:
     documentclass: scrreprt

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-0.9.481">
+<meta name="generator" content="quarto-1.2.335">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,12 +11,98 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./tranzactii_imobiliare.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -39,23 +125,6 @@ ul.task-list{list-style: none;}
 
 
 <link rel="stylesheet" href="style.css">
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./tranzactii_imobiliare.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-sidebar floating">
@@ -132,13 +201,13 @@ ul.task-list{list-style: none;}
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#impozitul-pe-dividendele-companiilor-listate" id="toc-impozitul-pe-dividendele-companiilor-listate" class="nav-link active" data-scroll-target="#impozitul-pe-dividendele-companiilor-listate"> <span class="header-section-number">7.1</span> Impozitul pe dividendele companiilor listate</a></li>
-  <li><a href="#o-încercare-de-impozit-pe-averi" id="toc-o-încercare-de-impozit-pe-averi" class="nav-link" data-scroll-target="#o-încercare-de-impozit-pe-averi"> <span class="header-section-number">7.2</span> O încercare de impozit pe averi</a></li>
-  <li><a href="#simulări-finale" id="toc-simulări-finale" class="nav-link" data-scroll-target="#simulări-finale"> <span class="header-section-number">7.3</span> Simulări finale</a></li>
+  <li><a href="#impozitul-pe-dividendele-companiilor-listate" id="toc-impozitul-pe-dividendele-companiilor-listate" class="nav-link active" data-scroll-target="#impozitul-pe-dividendele-companiilor-listate"><span class="toc-section-number">7.1</span>  Impozitul pe dividendele companiilor listate</a></li>
+  <li><a href="#o-încercare-de-impozit-pe-averi" id="toc-o-încercare-de-impozit-pe-averi" class="nav-link" data-scroll-target="#o-încercare-de-impozit-pe-averi"><span class="toc-section-number">7.2</span>  O încercare de impozit pe averi</a></li>
+  <li><a href="#simulări-finale" id="toc-simulări-finale" class="nav-link" data-scroll-target="#simulări-finale"><span class="toc-section-number">7.3</span>  Simulări finale</a></li>
   </ul>
 </nav>
     </div>
@@ -155,6 +224,7 @@ ul.task-list{list-style: none;}
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -166,25 +236,64 @@ ul.task-list{list-style: none;}
 <h2 data-number="7.1" class="anchored" data-anchor-id="impozitul-pe-dividendele-companiilor-listate"><span class="header-section-number">7.1</span> Impozitul pe dividendele companiilor listate</h2>
 <p>Impozitul din venitul pe dividende în 2021 a fost de circa 2.596 miliarde de RON, puţin mai mic de 10 % din totalul impozitului pe venitul personal. Pe anul 2021 a fost în efect rata de impozitare de 5 %.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>culori <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#EA5B0C"</span>, <span class="st">"#a44a08"</span>, <span class="st">"#ea960c"</span>, <span class="st">"#ea150c"</span>, </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">"#a40e08"</span>, <span class="st">"#000000"</span>, <span class="st">"#0865a4"</span>, <span class="st">"#a48408"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(hrbrthemes<span class="sc">::</span><span class="fu">theme_ipsum_tw</span>(<span class="at">strip_text_size =</span> <span class="dv">14</span>, </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">strip_text_family =</span> <span class="st">"Frutiger Bold"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">strip_text_face =</span> <span class="st">"italic"</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">axis_title_size =</span> <span class="dv">10</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">axis_text_size =</span> <span class="dv">8</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">base_family =</span> <span class="st">"Frutiger"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">plot_title_family =</span> <span class="st">"Frutiger Bold"</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">subtitle_family =</span> <span class="st">"Frutiger"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">caption_family =</span> <span class="st">"Frutiger"</span>, </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">caption_size =</span> <span class="dv">8</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">plot_title_size =</span> <span class="dv">14</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">subtitle_size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">8</span>), </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">"cm"</span>)))</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">read_html</span>(<span class="st">"https://m.bvb.ro/FinancialInstruments/CorporateActions/InfoDividend"</span>) <span class="sc">%&gt;%</span> <span class="fu">html_table</span>(<span class="at">header=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> .[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> </span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="dv">1</span>, Year, <span class="st">`</span><span class="at">Dividends Total</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Dividends Total</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">parse_number</span>(<span class="st">`</span><span class="at">Dividends Total</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">sum</span>(<span class="st">`</span><span class="at">Dividends Total</span><span class="st">`</span>, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">impozit =</span> total<span class="sc">*</span><span class="fl">0.05</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">An=</span>Year, <span class="at">Dividende=</span>total, <span class="at">Impozit=</span>impozit) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>(<span class="at">rowname_col =</span> <span class="st">"An"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns=</span><span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">sep_mark =</span> <span class="st">","</span>, <span class="at">decimals =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">cols_width</span>(<span class="sc">~</span><span class="st">"150px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
-<div id="dihlbzitpi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dihlbzitpi table {
+<div id="tdjehxylrx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tdjehxylrx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dihlbzitpi thead, #dihlbzitpi tbody, #dihlbzitpi tfoot, #dihlbzitpi tr, #dihlbzitpi td, #dihlbzitpi th {
+#tdjehxylrx thead, #tdjehxylrx tbody, #tdjehxylrx tfoot, #tdjehxylrx tr, #tdjehxylrx td, #tdjehxylrx th {
   border-style: none;
 }
 
-#dihlbzitpi p {
+#tdjehxylrx p {
   margin: 0;
   padding: 0;
 }
 
-#dihlbzitpi .gt_table {
+#tdjehxylrx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -210,12 +319,12 @@ ul.task-list{list-style: none;}
   border-left-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_caption {
+#tdjehxylrx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dihlbzitpi .gt_title {
+#tdjehxylrx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -227,7 +336,7 @@ ul.task-list{list-style: none;}
   border-bottom-width: 0;
 }
 
-#dihlbzitpi .gt_subtitle {
+#tdjehxylrx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -239,7 +348,7 @@ ul.task-list{list-style: none;}
   border-top-width: 0;
 }
 
-#dihlbzitpi .gt_heading {
+#tdjehxylrx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -251,13 +360,13 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_bottom_border {
+#tdjehxylrx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_col_headings {
+#tdjehxylrx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -272,7 +381,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_col_heading {
+#tdjehxylrx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -292,7 +401,7 @@ ul.task-list{list-style: none;}
   overflow-x: hidden;
 }
 
-#dihlbzitpi .gt_column_spanner_outer {
+#tdjehxylrx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -304,15 +413,15 @@ ul.task-list{list-style: none;}
   padding-right: 4px;
 }
 
-#dihlbzitpi .gt_column_spanner_outer:first-child {
+#tdjehxylrx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dihlbzitpi .gt_column_spanner_outer:last-child {
+#tdjehxylrx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dihlbzitpi .gt_column_spanner {
+#tdjehxylrx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -324,11 +433,11 @@ ul.task-list{list-style: none;}
   width: 100%;
 }
 
-#dihlbzitpi .gt_spanner_row {
+#tdjehxylrx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dihlbzitpi .gt_group_heading {
+#tdjehxylrx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -354,7 +463,7 @@ ul.task-list{list-style: none;}
   text-align: left;
 }
 
-#dihlbzitpi .gt_empty_group_heading {
+#tdjehxylrx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -369,15 +478,15 @@ ul.task-list{list-style: none;}
   vertical-align: middle;
 }
 
-#dihlbzitpi .gt_from_md > :first-child {
+#tdjehxylrx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dihlbzitpi .gt_from_md > :last-child {
+#tdjehxylrx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dihlbzitpi .gt_row {
+#tdjehxylrx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -396,7 +505,7 @@ ul.task-list{list-style: none;}
   overflow-x: hidden;
 }
 
-#dihlbzitpi .gt_stub {
+#tdjehxylrx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -409,7 +518,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#dihlbzitpi .gt_stub_row_group {
+#tdjehxylrx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -423,15 +532,15 @@ ul.task-list{list-style: none;}
   vertical-align: top;
 }
 
-#dihlbzitpi .gt_row_group_first td {
+#tdjehxylrx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dihlbzitpi .gt_row_group_first th {
+#tdjehxylrx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dihlbzitpi .gt_summary_row {
+#tdjehxylrx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -441,16 +550,16 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#dihlbzitpi .gt_first_summary_row {
+#tdjehxylrx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_first_summary_row.thick {
+#tdjehxylrx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dihlbzitpi .gt_last_summary_row {
+#tdjehxylrx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -460,7 +569,7 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_grand_summary_row {
+#tdjehxylrx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -470,7 +579,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#dihlbzitpi .gt_first_grand_summary_row {
+#tdjehxylrx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -480,7 +589,7 @@ ul.task-list{list-style: none;}
   border-top-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_last_grand_summary_row_top {
+#tdjehxylrx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -490,11 +599,11 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_striped {
+#tdjehxylrx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dihlbzitpi .gt_table_body {
+#tdjehxylrx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -503,7 +612,7 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_footnotes {
+#tdjehxylrx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -517,7 +626,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_footnote {
+#tdjehxylrx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -526,7 +635,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#dihlbzitpi .gt_sourcenotes {
+#tdjehxylrx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -540,7 +649,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#dihlbzitpi .gt_sourcenote {
+#tdjehxylrx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -548,63 +657,63 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#dihlbzitpi .gt_left {
+#tdjehxylrx .gt_left {
   text-align: left;
 }
 
-#dihlbzitpi .gt_center {
+#tdjehxylrx .gt_center {
   text-align: center;
 }
 
-#dihlbzitpi .gt_right {
+#tdjehxylrx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dihlbzitpi .gt_font_normal {
+#tdjehxylrx .gt_font_normal {
   font-weight: normal;
 }
 
-#dihlbzitpi .gt_font_bold {
+#tdjehxylrx .gt_font_bold {
   font-weight: bold;
 }
 
-#dihlbzitpi .gt_font_italic {
+#tdjehxylrx .gt_font_italic {
   font-style: italic;
 }
 
-#dihlbzitpi .gt_super {
+#tdjehxylrx .gt_super {
   font-size: 65%;
 }
 
-#dihlbzitpi .gt_footnote_marks {
+#tdjehxylrx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dihlbzitpi .gt_asterisk {
+#tdjehxylrx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dihlbzitpi .gt_indent_1 {
+#tdjehxylrx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dihlbzitpi .gt_indent_2 {
+#tdjehxylrx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dihlbzitpi .gt_indent_3 {
+#tdjehxylrx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dihlbzitpi .gt_indent_4 {
+#tdjehxylrx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dihlbzitpi .gt_indent_5 {
+#tdjehxylrx .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -645,26 +754,58 @@ ul.task-list{list-style: none;}
 <h2 data-number="7.2" class="anchored" data-anchor-id="o-încercare-de-impozit-pe-averi"><span class="header-section-number">7.2</span> O încercare de impozit pe averi</h2>
 <p>Putem simula pe baza datelor de la <code>World Inequality Database</code> şi o încercare de impozit pe marile averi. Dar vom avea nevoie de un cadru legislativ pentru acest lucru şi un ANAF performant.</p>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">'database'</span>, <span class="st">"WID"</span>, <span class="st">"WID_data_RO.csv"</span>), <span class="at">delim=</span><span class="st">";"</span>) <span class="sc">%&gt;%</span>  <span class="fu">filter</span>(variable<span class="sc">==</span><span class="st">"ahwealj992"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>variable) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>     <span class="fu">select</span>(<span class="sc">-</span>country) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="fu">select</span>(percentile, year, value)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>pe <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="dv">100</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>){</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  pe[i] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"p"</span>, i<span class="dv">-1</span>, <span class="st">"p"</span>, i)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>w <span class="ot">&lt;-</span> w <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year<span class="sc">&gt;</span><span class="dv">2016</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>     <span class="fu">group_by</span>(percentile) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">value=</span><span class="fu">mean</span>(value)) </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>w <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"^p[9]{2}</span><span class="sc">\\</span><span class="st">.?[0-9]?p"</span>, percentile)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"p100$"</span>, percentile)) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(value) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">percentila=</span>percentile, <span class="st">`</span><span class="at">Avere medie</span><span class="st">`</span><span class="ot">=</span>value) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">gt</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  gtExtras<span class="sc">::</span><span class="fu">gt_theme_538</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns=</span><span class="dv">2</span>, <span class="at">suffixing =</span> T) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">opt_row_striping</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title=</span><span class="st">"Averea în cadrul top 1 % din populaţie"</span>, </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>             <span class="at">subtitle=</span><span class="st">"Sursa: World Inequality Database"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">5</span>]), </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">locations=</span><span class="fu">cells_title</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_text</span>(<span class="at">color=</span><span class="st">'white'</span>), </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">locations=</span><span class="fu">cells_title</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">1</span>]), </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">locations=</span><span class="fu">cells_column_labels</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_text</span>(<span class="at">color=</span><span class="st">'white'</span>), </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>            <span class="at">locations=</span><span class="fu">cells_column_labels</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
-<div id="iyfzuuycvk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="rilrrelkcv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#iyfzuuycvk table {
+#rilrrelkcv table {
   font-family: Chivo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#iyfzuuycvk thead, #iyfzuuycvk tbody, #iyfzuuycvk tfoot, #iyfzuuycvk tr, #iyfzuuycvk td, #iyfzuuycvk th {
+#rilrrelkcv thead, #rilrrelkcv tbody, #rilrrelkcv tfoot, #rilrrelkcv tr, #rilrrelkcv td, #rilrrelkcv th {
   border-style: none;
 }
 
-#iyfzuuycvk p {
+#rilrrelkcv p {
   margin: 0;
   padding: 0;
 }
 
-#iyfzuuycvk .gt_table {
+#rilrrelkcv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -690,12 +831,12 @@ ul.task-list{list-style: none;}
   border-left-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_caption {
+#rilrrelkcv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#iyfzuuycvk .gt_title {
+#rilrrelkcv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -707,7 +848,7 @@ ul.task-list{list-style: none;}
   border-bottom-width: 0;
 }
 
-#iyfzuuycvk .gt_subtitle {
+#rilrrelkcv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -719,7 +860,7 @@ ul.task-list{list-style: none;}
   border-top-width: 0;
 }
 
-#iyfzuuycvk .gt_heading {
+#rilrrelkcv .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -731,13 +872,13 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_bottom_border {
+#rilrrelkcv .gt_bottom_border {
   border-bottom-style: none;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_col_headings {
+#rilrrelkcv .gt_col_headings {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -752,7 +893,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_col_heading {
+#rilrrelkcv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -772,7 +913,7 @@ ul.task-list{list-style: none;}
   overflow-x: hidden;
 }
 
-#iyfzuuycvk .gt_column_spanner_outer {
+#rilrrelkcv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -784,15 +925,15 @@ ul.task-list{list-style: none;}
   padding-right: 4px;
 }
 
-#iyfzuuycvk .gt_column_spanner_outer:first-child {
+#rilrrelkcv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#iyfzuuycvk .gt_column_spanner_outer:last-child {
+#rilrrelkcv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#iyfzuuycvk .gt_column_spanner {
+#rilrrelkcv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #000000;
@@ -804,11 +945,11 @@ ul.task-list{list-style: none;}
   width: 100%;
 }
 
-#iyfzuuycvk .gt_spanner_row {
+#rilrrelkcv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#iyfzuuycvk .gt_group_heading {
+#rilrrelkcv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -834,7 +975,7 @@ ul.task-list{list-style: none;}
   text-align: left;
 }
 
-#iyfzuuycvk .gt_empty_group_heading {
+#rilrrelkcv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -849,15 +990,15 @@ ul.task-list{list-style: none;}
   vertical-align: middle;
 }
 
-#iyfzuuycvk .gt_from_md > :first-child {
+#rilrrelkcv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#iyfzuuycvk .gt_from_md > :last-child {
+#rilrrelkcv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#iyfzuuycvk .gt_row {
+#rilrrelkcv .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -876,7 +1017,7 @@ ul.task-list{list-style: none;}
   overflow-x: hidden;
 }
 
-#iyfzuuycvk .gt_stub {
+#rilrrelkcv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -889,7 +1030,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#iyfzuuycvk .gt_stub_row_group {
+#rilrrelkcv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -903,15 +1044,15 @@ ul.task-list{list-style: none;}
   vertical-align: top;
 }
 
-#iyfzuuycvk .gt_row_group_first td {
+#rilrrelkcv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#iyfzuuycvk .gt_row_group_first th {
+#rilrrelkcv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#iyfzuuycvk .gt_summary_row {
+#rilrrelkcv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -921,16 +1062,16 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#iyfzuuycvk .gt_first_summary_row {
+#rilrrelkcv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_first_summary_row.thick {
+#rilrrelkcv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#iyfzuuycvk .gt_last_summary_row {
+#rilrrelkcv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -940,7 +1081,7 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_grand_summary_row {
+#rilrrelkcv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -950,7 +1091,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#iyfzuuycvk .gt_first_grand_summary_row {
+#rilrrelkcv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -960,7 +1101,7 @@ ul.task-list{list-style: none;}
   border-top-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_last_grand_summary_row_top {
+#rilrrelkcv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -970,11 +1111,11 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_striped {
+#rilrrelkcv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#iyfzuuycvk .gt_table_body {
+#rilrrelkcv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -983,7 +1124,7 @@ ul.task-list{list-style: none;}
   border-bottom-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_footnotes {
+#rilrrelkcv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -997,7 +1138,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_footnote {
+#rilrrelkcv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1006,7 +1147,7 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#iyfzuuycvk .gt_sourcenotes {
+#rilrrelkcv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1020,7 +1161,7 @@ ul.task-list{list-style: none;}
   border-right-color: #D3D3D3;
 }
 
-#iyfzuuycvk .gt_sourcenote {
+#rilrrelkcv .gt_sourcenote {
   font-size: 12px;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1028,63 +1169,63 @@ ul.task-list{list-style: none;}
   padding-right: 5px;
 }
 
-#iyfzuuycvk .gt_left {
+#rilrrelkcv .gt_left {
   text-align: left;
 }
 
-#iyfzuuycvk .gt_center {
+#rilrrelkcv .gt_center {
   text-align: center;
 }
 
-#iyfzuuycvk .gt_right {
+#rilrrelkcv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#iyfzuuycvk .gt_font_normal {
+#rilrrelkcv .gt_font_normal {
   font-weight: normal;
 }
 
-#iyfzuuycvk .gt_font_bold {
+#rilrrelkcv .gt_font_bold {
   font-weight: bold;
 }
 
-#iyfzuuycvk .gt_font_italic {
+#rilrrelkcv .gt_font_italic {
   font-style: italic;
 }
 
-#iyfzuuycvk .gt_super {
+#rilrrelkcv .gt_super {
   font-size: 65%;
 }
 
-#iyfzuuycvk .gt_footnote_marks {
+#rilrrelkcv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#iyfzuuycvk .gt_asterisk {
+#rilrrelkcv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#iyfzuuycvk .gt_indent_1 {
+#rilrrelkcv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#iyfzuuycvk .gt_indent_2 {
+#rilrrelkcv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#iyfzuuycvk .gt_indent_3 {
+#rilrrelkcv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#iyfzuuycvk .gt_indent_4 {
+#rilrrelkcv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#iyfzuuycvk .gt_indent_5 {
+#rilrrelkcv .gt_indent_5 {
   text-indent: 25px;
 }
 
@@ -1138,26 +1279,96 @@ tbody tr:last-child {
 <section id="simulări-finale" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="simulări-finale"><span class="header-section-number">7.3</span> Simulări finale</h2>
 <div class="cell">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>insumari <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"database"</span>, </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"taxe_sectoriale_scutiri.csv"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sector=</span><span class="fu">str_to_upper</span>(sector)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sector) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">valoare=</span><span class="fu">sum</span>(valoare)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Masura =</span> sector, <span class="at">Impact=</span>valoare) <span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="st">"Masura"</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">"Impozit progresiv pe venit"</span>, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Impozit pe dividende"</span>, </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"TRANZACŢII IMOBILIARE"</span>, </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                              <span class="st">"Coborâre prag microîntreprinderi"</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"Impact"</span><span class="ot">=</span><span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">6</span>, <span class="fl">0.35</span>, <span class="fl">2.5</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sector =</span> <span class="fu">c</span>(<span class="st">"Eliminare scutiri"</span>, <span class="st">"Eliminare scutiri"</span>, <span class="st">"Taxe sectoriale"</span>, <span class="st">"Eliminare scutiri"</span>, <span class="st">"Taxe sectoriale"</span>, <span class="st">"Taxe sectoriale"</span>, <span class="st">"Creştere impozite"</span>, <span class="st">"Creştere impozite"</span>, <span class="st">"Taxe sectoriale"</span>, <span class="st">"Creştere impozite"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(sector) </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>tabel_total <span class="ot">&lt;-</span> insumari <span class="sc">%&gt;%</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>gt<span class="sc">::</span><span class="fu">gt</span>(<span class="at">groupname_col =</span> <span class="st">"sector"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">fmt_number</span>(<span class="at">columns=</span><span class="dv">3</span>, <span class="at">decimals =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_header</span>(<span class="at">title=</span><span class="st">"Impact tipuri de măsuri propuse (miliarde RON)"</span>, </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>             <span class="at">subtitle=</span><span class="st">"Calcule proprii pe bilanţurile anilor 2019-2021"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary_rows</span>(<span class="at">columns=</span><span class="dv">3</span>, <span class="at">fns=</span><span class="fu">list</span>(<span class="st">`</span><span class="at">TOTAL GRUP</span><span class="st">`</span><span class="ot">=</span><span class="er">~</span><span class="fu">sum</span>(., <span class="at">na.rm=</span><span class="cn">TRUE</span>)), </span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>               <span class="at">fmt =</span> <span class="sc">~</span><span class="fu">fmt_number</span>(.,<span class="at">decimals=</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grand_summary_rows</span>(<span class="at">columns=</span><span class="dv">3</span>, <span class="at">fns=</span><span class="fu">list</span>(<span class="at">TOTAL =</span><span class="sc">~</span> <span class="fu">sum</span>(., <span class="at">na.rm=</span><span class="cn">TRUE</span>)), </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fmt=</span><span class="sc">~</span><span class="fu">fmt_number</span>(., <span class="at">decimals=</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">grand_summary_rows</span>(<span class="at">columns=</span><span class="dv">3</span>, <span class="at">fns=</span><span class="fu">list</span>(<span class="at">TOTAL =</span> <span class="sc">~</span><span class="fu">sum</span>(., <span class="at">na.rm=</span><span class="cn">TRUE</span>)), </span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fmt =</span> <span class="sc">~</span><span class="fu">fmt_number</span>(., <span class="at">decimals =</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">3</span>]), <span class="at">locations =</span> <span class="fu">cells_row_groups</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_borders</span>(<span class="at">color=</span>culori[<span class="dv">3</span>]), <span class="at">locations=</span><span class="fu">cells_row_groups</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>), <span class="at">locations=</span><span class="fu">cells_row_groups</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">5</span>]), <span class="at">locations=</span><span class="fu">cells_column_labels</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_text</span>(<span class="at">color=</span><span class="st">'#fff'</span>), <span class="at">locations=</span><span class="fu">cells_column_labels</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">5</span>]), <span class="at">locations=</span><span class="fu">cells_stubhead</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">5</span>]), <span class="at">locations=</span><span class="fu">cells_grand_summary</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_fill</span>(<span class="at">color=</span>culori[<span class="dv">3</span>], <span class="at">alpha=</span><span class="fl">0.5</span>), </span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>            <span class="at">locations=</span><span class="fu">cells_summary</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_text</span>(<span class="at">color=</span><span class="st">"#fff"</span>), </span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">locations=</span><span class="fu">cells_grand_summary</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_options</span>(<span class="at">container.width =</span> <span class="st">"90%"</span>, <span class="at">table.layout =</span> <span class="st">"auto"</span>, </span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>                  <span class="at">table.align =</span> <span class="st">"center"</span>, </span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>                  <span class="at">table.additional_css =</span> <span class="st">"table.gt_table {border: 2px solid black;}"</span>, <span class="at">footnotes.padding =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">footnote=</span><span class="st">"10 % taxă pe tranzacţiile imobiliare"</span>,</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>                   <span class="at">locations=</span><span class="fu">cells_body</span>(<span class="at">columns=</span>Masura, </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">rows=</span><span class="fu">grepl</span>(<span class="st">"IMOBILIARE"</span>, Masura))) <span class="sc">%&gt;%</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">footnote=</span><span class="st">"1.2 % impozit pe cifra de afaceri netă ce depăşeşte 1 miliard RON"</span>, <span class="at">locations =</span> <span class="fu">cells_body</span>(<span class="at">columns=</span>Masura, <span class="at">rows=</span><span class="fu">grepl</span>(<span class="st">"ENERGIE"</span>, Masura))) <span class="sc">%&gt;%</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">footnote =</span> <span class="st">"1.2 % impozit pe cifra de afaceri pentru toate firmele"</span>,</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>                   <span class="at">locations=</span><span class="fu">cells_body</span>(<span class="at">columns=</span>Masura, </span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">rows=</span><span class="fu">grepl</span>(<span class="st">"JOCURI"</span>, Masura))) <span class="sc">%&gt;%</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">footnote=</span><span class="st">"1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON"</span>, <span class="at">locations=</span><span class="fu">cells_body</span>(<span class="at">columns=</span>Masura, </span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">rows=</span><span class="fu">grepl</span>(<span class="st">"RETAIL"</span>, Masura))) <span class="sc">%&gt;%</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">footnote =</span> <span class="st">"Asumând cote de 16 % şi 21 % pentru ce trece de 2200 EURO lunar brut (scenariul slovac atenuat)"</span>, </span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>                   <span class="at">locations=</span><span class="fu">cells_body</span>(<span class="at">columns=</span>Masura, </span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">rows=</span><span class="fu">grepl</span>(<span class="st">"venit"</span>, Masura))) <span class="sc">%&gt;%</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">footnote=</span><span class="st">"Impozit pe dividende de 18 %"</span>, </span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>                   <span class="at">locations=</span><span class="fu">cells_body</span>(<span class="at">columns=</span>Masura, </span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>                                        <span class="at">rows=</span><span class="fu">grepl</span>(<span class="st">"dividende"</span>, Masura))) <span class="sc">%&gt;%</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">footnote=</span><span class="st">"Scăderea pragului de venit al microîntreprinderii la 250.000 EURO"</span>, </span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>                   <span class="at">locations=</span><span class="fu">cells_body</span>(<span class="at">columns=</span>Masura, <span class="at">rows=</span><span class="fu">grepl</span>(<span class="st">"prag"</span>, Masura))) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_footnote</span>(<span class="at">footnote =</span> <span class="st">"Mai probabilă este estimarea MF de 0.9 miliarde RON"</span>, <span class="at">locations=</span><span class="fu">cells_body</span>(<span class="at">columns=</span>Impact, </span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">rows=</span><span class="fu">grepl</span>(<span class="st">"IT"</span>, Masura))) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>  gtExtras<span class="sc">::</span><span class="fu">gt_theme_538</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>), </span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations=</span><span class="fu">cells_summary</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_text</span>(<span class="at">weight=</span><span class="st">'bold'</span>), </span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>                <span class="at">locations=</span><span class="fu">cells_grand_summary</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_text</span>(<span class="at">size =</span> <span class="fu">px</span>(<span class="dv">12</span>)), <span class="at">locations=</span><span class="fu">cells_body</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_text</span>(<span class="at">size=</span><span class="fu">px</span>(<span class="dv">14</span>)), <span class="at">locations=</span><span class="fu">cells_summary</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">tab_style</span>(<span class="at">style=</span><span class="fu">cell_text</span>(<span class="at">size=</span><span class="fu">px</span>(<span class="dv">12</span>)), <span class="at">locations=</span><span class="fu">cells_footnotes</span>())</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>tabel_total</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
-<div id="fpraxzyuhk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:90%;height:auto;">
+<div id="bekdeynsrn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:90%;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-#fpraxzyuhk table {
+#bekdeynsrn table {
   font-family: Chivo, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fpraxzyuhk thead, #fpraxzyuhk tbody, #fpraxzyuhk tfoot, #fpraxzyuhk tr, #fpraxzyuhk td, #fpraxzyuhk th {
+#bekdeynsrn thead, #bekdeynsrn tbody, #bekdeynsrn tfoot, #bekdeynsrn tr, #bekdeynsrn td, #bekdeynsrn th {
   border-style: none;
 }
 
-#fpraxzyuhk p {
+#bekdeynsrn p {
   margin: 0;
   padding: 0;
 }
 
-#fpraxzyuhk .gt_table {
+#bekdeynsrn .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1183,12 +1394,12 @@ tbody tr:last-child {
   border-left-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_caption {
+#bekdeynsrn .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fpraxzyuhk .gt_title {
+#bekdeynsrn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1200,7 +1411,7 @@ tbody tr:last-child {
   border-bottom-width: 0;
 }
 
-#fpraxzyuhk .gt_subtitle {
+#bekdeynsrn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1212,7 +1423,7 @@ tbody tr:last-child {
   border-top-width: 0;
 }
 
-#fpraxzyuhk .gt_heading {
+#bekdeynsrn .gt_heading {
   background-color: #FFFFFF;
   text-align: left;
   border-bottom-color: #FFFFFF;
@@ -1224,13 +1435,13 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_bottom_border {
+#bekdeynsrn .gt_bottom_border {
   border-bottom-style: none;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_col_headings {
+#bekdeynsrn .gt_col_headings {
   border-top-style: none;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1245,7 +1456,7 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_col_heading {
+#bekdeynsrn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1265,7 +1476,7 @@ tbody tr:last-child {
   overflow-x: hidden;
 }
 
-#fpraxzyuhk .gt_column_spanner_outer {
+#bekdeynsrn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1277,15 +1488,15 @@ tbody tr:last-child {
   padding-right: 4px;
 }
 
-#fpraxzyuhk .gt_column_spanner_outer:first-child {
+#bekdeynsrn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fpraxzyuhk .gt_column_spanner_outer:last-child {
+#bekdeynsrn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fpraxzyuhk .gt_column_spanner {
+#bekdeynsrn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #000000;
@@ -1297,11 +1508,11 @@ tbody tr:last-child {
   width: 100%;
 }
 
-#fpraxzyuhk .gt_spanner_row {
+#bekdeynsrn .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fpraxzyuhk .gt_group_heading {
+#bekdeynsrn .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1327,7 +1538,7 @@ tbody tr:last-child {
   text-align: left;
 }
 
-#fpraxzyuhk .gt_empty_group_heading {
+#bekdeynsrn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1342,15 +1553,15 @@ tbody tr:last-child {
   vertical-align: middle;
 }
 
-#fpraxzyuhk .gt_from_md > :first-child {
+#bekdeynsrn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fpraxzyuhk .gt_from_md > :last-child {
+#bekdeynsrn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fpraxzyuhk .gt_row {
+#bekdeynsrn .gt_row {
   padding-top: 3px;
   padding-bottom: 3px;
   padding-left: 5px;
@@ -1369,7 +1580,7 @@ tbody tr:last-child {
   overflow-x: hidden;
 }
 
-#fpraxzyuhk .gt_stub {
+#bekdeynsrn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 80%;
@@ -1382,7 +1593,7 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#fpraxzyuhk .gt_stub_row_group {
+#bekdeynsrn .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1396,15 +1607,15 @@ tbody tr:last-child {
   vertical-align: top;
 }
 
-#fpraxzyuhk .gt_row_group_first td {
+#bekdeynsrn .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fpraxzyuhk .gt_row_group_first th {
+#bekdeynsrn .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fpraxzyuhk .gt_summary_row {
+#bekdeynsrn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1414,16 +1625,16 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#fpraxzyuhk .gt_first_summary_row {
+#bekdeynsrn .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_first_summary_row.thick {
+#bekdeynsrn .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fpraxzyuhk .gt_last_summary_row {
+#bekdeynsrn .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1433,7 +1644,7 @@ tbody tr:last-child {
   border-bottom-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_grand_summary_row {
+#bekdeynsrn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1443,7 +1654,7 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#fpraxzyuhk .gt_first_grand_summary_row {
+#bekdeynsrn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1453,7 +1664,7 @@ tbody tr:last-child {
   border-top-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_last_grand_summary_row_top {
+#bekdeynsrn .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1463,11 +1674,11 @@ tbody tr:last-child {
   border-bottom-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_striped {
+#bekdeynsrn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fpraxzyuhk .gt_table_body {
+#bekdeynsrn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1476,7 +1687,7 @@ tbody tr:last-child {
   border-bottom-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_footnotes {
+#bekdeynsrn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1490,7 +1701,7 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_footnote {
+#bekdeynsrn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 1px;
@@ -1499,7 +1710,7 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#fpraxzyuhk .gt_sourcenotes {
+#bekdeynsrn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1513,7 +1724,7 @@ tbody tr:last-child {
   border-right-color: #D3D3D3;
 }
 
-#fpraxzyuhk .gt_sourcenote {
+#bekdeynsrn .gt_sourcenote {
   font-size: 12px;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1521,63 +1732,63 @@ tbody tr:last-child {
   padding-right: 5px;
 }
 
-#fpraxzyuhk .gt_left {
+#bekdeynsrn .gt_left {
   text-align: left;
 }
 
-#fpraxzyuhk .gt_center {
+#bekdeynsrn .gt_center {
   text-align: center;
 }
 
-#fpraxzyuhk .gt_right {
+#bekdeynsrn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fpraxzyuhk .gt_font_normal {
+#bekdeynsrn .gt_font_normal {
   font-weight: normal;
 }
 
-#fpraxzyuhk .gt_font_bold {
+#bekdeynsrn .gt_font_bold {
   font-weight: bold;
 }
 
-#fpraxzyuhk .gt_font_italic {
+#bekdeynsrn .gt_font_italic {
   font-style: italic;
 }
 
-#fpraxzyuhk .gt_super {
+#bekdeynsrn .gt_super {
   font-size: 65%;
 }
 
-#fpraxzyuhk .gt_footnote_marks {
+#bekdeynsrn .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fpraxzyuhk .gt_asterisk {
+#bekdeynsrn .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fpraxzyuhk .gt_indent_1 {
+#bekdeynsrn .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fpraxzyuhk .gt_indent_2 {
+#bekdeynsrn .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fpraxzyuhk .gt_indent_3 {
+#bekdeynsrn .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fpraxzyuhk .gt_indent_4 {
+#bekdeynsrn .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fpraxzyuhk .gt_indent_5 {
+#bekdeynsrn .gt_indent_5 {
   text-indent: 25px;
 }
 
@@ -1689,11 +1900,45 @@ tbody tr:last-child {
 </div>
 <p>Şi acum sub formă de pie chart.</p>
 <div class="cell" data-fig.dpi="200">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>insumari <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">index =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">6</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(index)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">procent =</span> <span class="dv">100</span><span class="sc">*</span>Impact<span class="sc">/</span><span class="fu">sum</span>(Impact), </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">ypos=</span><span class="fu">cumsum</span>(procent)<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>procent,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">eticheta =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(procent, <span class="dv">2</span>), <span class="st">" %"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">1.8</span>, <span class="at">y =</span> procent, <span class="at">fill =</span> Masura)) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">theta=</span><span class="st">"y"</span>, <span class="at">start =</span> <span class="dv">0</span>, <span class="at">direction=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  geomtextpath<span class="sc">::</span><span class="fu">geom_textpath</span>(<span class="fu">aes</span>(<span class="at">y =</span> ypos, </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">label =</span> eticheta), <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#0073C2FF"</span>, <span class="st">"#EFC000FF"</span>, <span class="st">"#868686FF"</span>, <span class="st">"#CD534CFF"</span>, <span class="st">"seagreen4"</span>, <span class="st">"red3"</span>, <span class="st">"royalblue4"</span>, <span class="st">"orange3"</span>, <span class="st">"black"</span>, <span class="st">"purple4"</span>)) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="calcule_finale_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell" data-fig.dpi="200">
+<details>
+<summary>Arată codul</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>insumari <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">procent =</span> <span class="dv">100</span><span class="sc">*</span>Impact<span class="sc">/</span><span class="fu">sum</span>(Impact)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sector) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Impact=</span><span class="fu">sum</span>(Impact), <span class="at">procent=</span><span class="fu">sum</span>(procent)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(sector)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ypos=</span><span class="fu">cumsum</span>(procent)<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>procent,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">eticheta =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(procent, <span class="dv">2</span>), <span class="st">" %"</span>, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="st">"("</span>, <span class="fu">round</span>(Impact,<span class="dv">2</span>), <span class="st">")"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fl">1.8</span>, <span class="at">y =</span> procent, <span class="at">fill =</span> sector)) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">theta=</span><span class="st">"y"</span>, <span class="at">start =</span> <span class="dv">0</span>, <span class="at">direction=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  geomtextpath<span class="sc">::</span><span class="fu">geom_textpath</span>(<span class="fu">aes</span>(<span class="at">y =</span> ypos, </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">label =</span> eticheta), <span class="at">size=</span><span class="dv">4</span>, <span class="at">color =</span> <span class="st">"white"</span>)<span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(culori[<span class="dv">1</span>], culori[<span class="dv">5</span>], culori[<span class="dv">8</span>])) <span class="sc">+</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fl">0.5</span>, <span class="fl">2.5</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="calcule_finale_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1705,6 +1950,24 @@ tbody tr:last-child {
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -1726,7 +1989,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1754,31 +2034,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
