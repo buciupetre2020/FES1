@@ -72,12 +72,9 @@ w %>% filter(grepl("^p[9]{2}\\.?[0-9]?p", percentile)) %>%
   gtExtras::gt_theme_538() %>% 
   gt::fmt_number(columns=2, suffixing = T) %>% 
   opt_row_striping() %>% 
+  gt::opt_table_font(font="Frutiger") %>%
   tab_header(title="Averea în cadrul top 1 % din populaţie", 
-             subtitle="Sursa: World Inequality Database") %>% 
-  tab_style(style=cell_fill(color=culori[5]), 
-            locations=cells_title()) %>% 
-  tab_style(style=cell_text(color='white'), 
-            locations=cells_title()) %>% 
+             subtitle="Sursa: World Inequality Database") %>%
   tab_style(style=cell_fill(color=culori[1]), 
             locations=cells_column_labels()) %>% 
   tab_style(style=cell_text(color='white'), 
@@ -90,7 +87,10 @@ Doar la o primă vedere cu o taxă marginală de 1 % pe averile celor din top 1 
 
 ## Simulări finale
 
+<div>
+
 ```{r}
+
 insumari <- read_csv(here::here("database", 
                                 "taxe_sectoriale_scutiri.csv")) %>%
   mutate(sector=str_to_upper(sector)) %>%
@@ -117,7 +117,8 @@ gt::gt(groupname_col = "sector") %>%
                          fmt = ~fmt_number(., decimals = 2)) %>%
   tab_style(style=cell_fill(color=culori[3]), locations = cells_row_groups()) %>%
   tab_style(style=cell_borders(color=culori[3]), locations=cells_row_groups()) %>%
-  tab_style(style=cell_text(weight = "bold"), locations=cells_row_groups()) %>%
+  tab_style(style=cell_text(font = "Frutiger Bold"), 
+            locations=cells_row_groups()) %>%
   tab_style(style=cell_fill(color=culori[5]), locations=cells_column_labels()) %>%
   tab_style(style=cell_text(color='#fff'), locations=cells_column_labels()) %>%
   tab_style(style=cell_fill(color=culori[5]), locations=cells_stubhead()) %>%
@@ -149,16 +150,24 @@ gt::gt(groupname_col = "sector") %>%
   gt::tab_footnote(footnote = "Mai probabilă este estimarea MF de 0.9 miliarde RON", locations=cells_body(columns=Impact, 
                                     rows=grepl("IT", Masura))) %>% 
   gtExtras::gt_theme_538() %>%
-  gt::tab_style(style=cell_text(weight = "bold"), 
+  gt::opt_table_font(font="Frutiger") %>%
+  gt::tab_style(style=cell_text(font="Frutiger Bold"), 
                 locations=cells_summary()) %>%
-  gt::tab_style(style=cell_text(weight='bold'), 
+  gt::tab_style(style=cell_text(font="Frutiger Bold"), 
                 locations=cells_grand_summary()) %>%
     gt::tab_style(style=cell_text(size = px(12)), locations=cells_body()) %>%
-    gt::tab_style(style=cell_text(size=px(14)), locations=cells_summary()) %>% 
-    gt::tab_style(style=cell_text(size=px(12)), locations=cells_footnotes())
+    gt::tab_style(style=cell_text(size=px(14), font = "Frutiger Bold"),
+                  locations=cells_summary()) %>% 
+    gt::tab_style(style=cell_text(size=px(12)), 
+                  locations=cells_footnotes()) %>%
+    gt::tab_style(cell_text(font="Frutiger Bold"), 
+                  cells_title(groups="title"))
 
 tabel_total
+
 ```
+
+</div>
 
 Şi acum sub formă de pie chart.
 
@@ -167,7 +176,12 @@ tabel_total
 #| fig-height: 7
 #| fig-dpi: 200
 
-insumari %>% mutate(index = c(1, 3, 4, 7, 8, 9, 6, 5, 10, 2)) %>%
+insumari %>% 
+  mutate(Masura = fct_lump(Masura, n=7, w = Impact)) %>% 
+  group_by(sector, Masura) %>% 
+  summarise(Impact = sum(Impact)) %>% 
+  mutate(Masura = gsub("Other", "Altele", Masura)) %>% ungroup() %>%
+  mutate(index = c(3, 5, 6, 1, 4, 7, 8, 2)) %>%
   arrange(desc(index)) %>%
   mutate(procent = 100*Impact/sum(Impact), 
          ypos=cumsum(procent)-0.5*procent,
@@ -177,9 +191,10 @@ insumari %>% mutate(index = c(1, 3, 4, 7, 8, 9, 6, 5, 10, 2)) %>%
   coord_polar(theta="y", start = 0, direction=1)+
   geomtextpath::geom_textpath(aes(y = ypos, 
                                   label = eticheta), color = "white")+
-  scale_fill_manual(values=c("#0073C2FF", "#EFC000FF", "#868686FF", "#CD534CFF", "seagreen4", "red3", "royalblue4", "orange3", "black", "purple4")) +
+  scale_fill_manual(values=c("#0073C2FF", "#868686FF", "#CD534CFF", "seagreen4", "red3", "royalblue4", culori[1], "purple4")) +
   theme_void() +
-  xlim(0.5, 2.5)
+  xlim(0.5, 2.5) +
+  theme(legend.margin = margin(l=-0.5, unit="cm"))
 
 ```
 
@@ -202,7 +217,9 @@ insumari %>%
                                   label = eticheta), size=4, color = "white")+
   scale_fill_manual(values=c(culori[1], culori[5], culori[8])) +
   theme_void() +
-  xlim(0.5, 2.5) 
+  xlim(0.5, 2.5) +
+  theme(legend.margin = margin(l=-0.5, unit="cm"))
+
 
 
 ```

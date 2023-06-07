@@ -100,6 +100,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="style.css">
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -344,32 +345,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="distributional_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="576"></p>
 </div>
 </div>
-<p>Observăm că România are cel mai mare raport atât pre cât şi post taxare. Acest lucru sugerează că sistemul fiscal nu redistribuie suficient către cei din decilele inferioare ale distribuţiei. Acest lucru se întâmplă în ţara cu cea mai mare inegalitate din Europa dacă excludem Serbia (nu apare în imagine). Merită să calculăm şi procentele cu care sistemul fiscal reduce inegalitatea pre-taxe pentru fiecare ţară, media pe ultimii zece ani.</p>
-<div class="cell" data-fig.dpi="200">
+<p>Observăm că România are cel mai mare raport atât pre cât şi post taxare. Acest lucru sugerează că sistemul fiscal nu redistribuie suficient către cei din decilele inferioare ale distribuţiei. Acest lucru se întâmplă în ţara cu cea mai mare inegalitate din Europa dacă excludem Serbia (nu apare în imagine). Merită să calculăm şi procentele cu care sistemul fiscal reduce inegalitatea pre-taxe pentru fiecare ţară, media pe ultimii zece ani. Vom folosi formula:</p>
+<p><span class="math display">\[
+R = -\frac{  Inc_{top10/bottom50}^{post-taxe} - Inc_{top10/bottom50}^{pre-taxe} }{ Inc_{top10/bottom50}^{pre-taxe}   }
+\]</span></p>
+<div class="cell">
 <details>
 <summary>Arată codul</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"adiincj992|aptincj992"</span>, variable)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">&gt;</span> <span class="dv">2011</span>, age<span class="sc">==</span><span class="st">"992"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>age, <span class="sc">-</span>pop) <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spread</span>(variable, value) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(country, percentile, region, geo) <span class="sc">%&gt;%</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="fu">across</span>(adiincj992<span class="sc">:</span>aptincj992, mean)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(percentile<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"p0p50"</span>, <span class="st">"p90p100"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>percentile, </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> <span class="fu">c</span>(adiincj992, aptincj992)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">ratio_pre =</span> aptincj992_p90p100<span class="sc">/</span>aptincj992_p0p50, </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>           <span class="at">ratio_post =</span> adiincj992_p90p100<span class="sc">/</span>adiincj992_p0p50) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">delta =</span> <span class="dv">100</span><span class="sc">*</span>(ratio_pre <span class="sc">-</span> ratio_post)<span class="sc">/</span>ratio_pre) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(geo, region, delta) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">"Cipru|Lituania"</span>,geo)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">geo=</span><span class="fu">fct_reorder</span>(geo, delta)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>geo, <span class="at">y=</span>delta)) <span class="sc">+</span> <span class="fu">geom_col</span>(<span class="at">fill=</span>culori[<span class="dv">1</span>]) <span class="sc">+</span> </span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>)) <span class="sc">+</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Reducerea inegalităţii pre-taxe de sistemul fiscal"</span>, </span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">x=</span><span class="st">"Ţară"</span>, <span class="at">subtitle=</span><span class="st">"Media 2012 - 2021"</span>, <span class="at">y=</span><span class="st">"Procent (%)"</span>, <span class="at">colour=</span><span class="st">"Ţară"</span>,</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption=</span><span class="st">"Sursa: calcule pe datele din World Inequality Database"</span>) <span class="sc">+</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 7</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-dpi: 200</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">grepl</span>(<span class="st">"adiincj992|aptincj992"</span>, variable)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">&gt;</span> <span class="dv">2011</span>, age<span class="sc">==</span><span class="st">"992"</span>) <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>age, <span class="sc">-</span>pop) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spread</span>(variable, value) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(country, percentile, region, geo) <span class="sc">%&gt;%</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="fu">across</span>(adiincj992<span class="sc">:</span>aptincj992, mean)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(percentile<span class="sc">%in%</span><span class="fu">c</span>(<span class="st">"p0p50"</span>, <span class="st">"p90p100"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>percentile, </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> <span class="fu">c</span>(adiincj992, aptincj992)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">ratio_pre =</span> aptincj992_p90p100<span class="sc">/</span>aptincj992_p0p50, </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">ratio_post =</span> adiincj992_p90p100<span class="sc">/</span>adiincj992_p0p50) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">delta =</span> <span class="dv">100</span><span class="sc">*</span>(ratio_pre <span class="sc">-</span> ratio_post)<span class="sc">/</span>ratio_pre) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(geo, region, delta) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">"Cipru|Lituania"</span>,geo)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">geo=</span><span class="fu">fct_reorder</span>(geo, delta)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>geo, <span class="at">y=</span>delta)) <span class="sc">+</span> <span class="fu">geom_col</span>(<span class="at">fill=</span>culori[<span class="dv">1</span>]) <span class="sc">+</span> </span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>)) <span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Reducerea inegalităţii pre-taxe de sistemul fiscal"</span>, </span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>         <span class="at">x=</span><span class="st">"Ţară"</span>, <span class="at">subtitle=</span><span class="st">"Media 2012 - 2021"</span>, <span class="at">y=</span><span class="st">"Procent (%)"</span>, <span class="at">colour=</span><span class="st">"Ţară"</span>,</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption=</span><span class="st">"Sursa: calcule pe datele din World Inequality Database"</span>) <span class="sc">+</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>scales<span class="sc">::</span><span class="fu">percent_format</span>(<span class="at">scale=</span><span class="dv">1</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="distributional_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>

@@ -530,7 +530,9 @@ tibble("Scenariu"=c("Scenariul I: cote 10%, 16%",
   gt::opt_vertical_padding(scale=1.2) %>%
   tab_style(style=cell_borders(sides = "bottom", color="black", 
                                weight = px(2)), 
-            locations=cells_body(rows = 4))
+            locations=cells_body(rows = 4)) %>%
+  gt::opt_table_font(font='Frutiger') %>%
+  tab_style(cell_text(font="Frutiger Bold"), cells_title(groups='title'))
   
 ```
 

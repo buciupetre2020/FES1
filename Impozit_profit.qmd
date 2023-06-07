@@ -16,7 +16,6 @@ culori <- c("#EA5B0C", "#a44a08", "#ea960c", "#ea150c",
 
 theme_set(hrbrthemes::theme_ipsum_tw(strip_text_size = 14, 
                                      strip_text_family = "Frutiger Bold",
-                                     strip_text_face = "italic",
                                      axis_title_size = 10,
                                      axis_text_size = 8,
                                      base_family = "Frutiger",
@@ -55,14 +54,16 @@ firme %>% mutate(impozit=profit_brut-profit_net) %>%
   group_by(categorie) %>% 
   summarise(ratio = 100*sum(profit_brut-profit_net, na.rm=TRUE)/sum(profit_brut, na.rm=TRUE)) %>% 
   mutate(categorie = gsub("_an2021.txt|web_", "", categorie)) %>% 
+  mutate(categorie = gsub("bl_bs_sl", "Plătitoare de CIT", categorie) %>%
+                     gsub("ir", "Plătitoare de CIT (bilanţ IFRS)", .) %>%
+                     gsub("uu", "Microîntreprinderi", .)) %>%
   gt::gt() %>% gt::fmt_percent(columns=ratio, decimals=2, scale_values = FALSE) %>% 
   gt::tab_header(title="Rata de taxare efectivă în 2021", 
                  subtitle="Sursa: situaţiile financiare de pe data.gov.ro") %>%
-  gt::tab_style(style=gt::cell_fill(color=culori[1]), locations=cells_title()) %>%
-  gt::tab_style(style=gt::cell_text(color="white"), locations=cells_title()) %>% 
   gtExtras::gt_theme_538() %>%
-  gt::tab_style(style=cell_fill(color=culori[5]), locations = cells_column_labels()) %>%
-  gt::tab_style(style=gt::cell_text(color="white"), locations=cells_column_labels())
+  gt::tab_style(style=cell_fill(color=culori[1]), locations = cells_column_labels()) %>%
+  gt::tab_style(style=gt::cell_text(color="white"), locations=cells_column_labels()) %>%
+  gt::opt_table_font(font="Frutiger") 
 ```
 
 Regimul de impozitare pe cifra de afaceri este cu siguranţă avantajos per total.
@@ -160,7 +161,10 @@ gt(df_fosili) %>%
   tab_header(title = "Impozit colectat teoretic (milioane RON)", 
              subtitle="Scenariul spaniol şi cel propus") %>%
   gt::fmt_number(columns = 3:4, decimals = 2) %>% 
-  gt::grand_summary_rows(3:4, fns = list(Total=~sum(.)))
+  gt::grand_summary_rows(3:4, fns = list(Total=~sum(.))) %>%
+  gtExtras::gt_theme_538() %>%
+  gt::opt_table_font(font='Frutiger Light') %>%
+  gt::tab_style(cell_fill(color=culori[1]), cells_column_labels()) 
 ```
 
 Sunt în total 2290 de firme din sectorul energiei, dar doar 22 au cifra de afaceri peste 1 miliard de RON (scenariul nostru). Şi 7 din ele au declarat pierderi în 2021. Săraci, dar cinstiţi...
@@ -182,7 +186,11 @@ map_dbl(c(0, 1000000, 10000000, 100000000),
   mutate(name=c("Toate", "1 milion", "10 milioane", "100 milioane")) %>%
   relocate(name) %>% rename(Prag=name, Valoare=value) %>%
   gt() %>% 
-  tab_header("Impozit colectat de la jocurile de noroc", subtitle="Milioane RON") %>% gt::fmt_number(columns=2, decimals=2)
+  tab_header("Impozit colectat de la jocurile de noroc", subtitle="Milioane RON") %>% 
+  gt::fmt_number(columns=2, decimals=2) %>%
+  gtExtras::gt_theme_538() %>%
+  gt::opt_table_font(font='Frutiger Light') %>%
+  gt::tab_style(cell_fill(color=culori[1]), cells_column_labels()) 
 ```
 
 Vom opta pentru pragul 0, adică toate vor fi impozitate în această manieră.
@@ -243,7 +251,12 @@ medii_it <- read_csv(here::here("database", "FOM107D.csv")) %>%
 
 sume_it <- numar_it %>% inner_join(medii_it) %>% 
   mutate(sume = 12*salariati*valoare/10000000000) 
-gt::gt(sume_it)
+
+gt::gt(sume_it) %>%
+  gtExtras::gt_theme_538() %>%
+  gt::opt_table_font(font='Frutiger') %>%
+  gt::tab_style(cell_fill(color=culori[1]), cells_column_labels()) %>%
+  gt::fmt_number(columns=3:4)
 
 ```
 
@@ -336,5 +349,7 @@ insumat %>% rename(CAEN=caen, VALOARE = valoare) %>%
   gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri netă ce depăşeşte 1 miliard RON", locations = cells_row_groups(groups="ENERGIE")) %>%
   gt::tab_footnote(footnote = "1.2 % impozit pe cifra de afaceri pentru toate firmele",
                    locations=cells_row_groups("JOCURI DE NOROC")) %>%
-  gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON", locations=cells_row_groups(groups="RETAIL")) %>% gtExtras::gt_theme_538()
+  gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON", locations=cells_row_groups(groups="RETAIL")) %>% gtExtras::gt_theme_538() %>%
+  gt::opt_table_font(font="Frutiger") %>%
+  tab_style(style=cell_text(font="Frutiger Bold"), cells_title(groups="title"))
 ```

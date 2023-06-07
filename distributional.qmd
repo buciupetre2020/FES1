@@ -129,9 +129,14 @@ ratios %>% filter(!geo%in%"Lituania") %>%
     
 ```
 
-Observăm că România are cel mai mare raport atât pre cât şi post taxare. Acest lucru sugerează că sistemul fiscal nu redistribuie suficient către cei din decilele inferioare ale distribuţiei. Acest lucru se întâmplă în ţara cu cea mai mare inegalitate din Europa dacă excludem Serbia (nu apare în imagine). Merită să calculăm şi procentele cu care sistemul fiscal reduce inegalitatea pre-taxe pentru fiecare ţară, media pe ultimii zece ani.
+Observăm că România are cel mai mare raport atât pre cât şi post taxare. Acest lucru sugerează că sistemul fiscal nu redistribuie suficient către cei din decilele inferioare ale distribuţiei. Acest lucru se întâmplă în ţara cu cea mai mare inegalitate din Europa dacă excludem Serbia (nu apare în imagine). Merită să calculăm şi procentele cu care sistemul fiscal reduce inegalitatea pre-taxe pentru fiecare ţară, media pe ultimii zece ani. Vom folosi formula:
+
+$$
+R = -\frac{  Inc_{top10/bottom50}^{post-taxe} - Inc_{top10/bottom50}^{pre-taxe} }{ Inc_{top10/bottom50}^{pre-taxe}   } 
+$$
 
 ```{r}
+
 #| fig-width: 7
 #| fig-height: 5
 #| fig-dpi: 200
