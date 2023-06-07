@@ -8,9 +8,10 @@ execute:
   error: false
 
 book:
-  title: "Raport final despre analiza fiscalităţii"
+  title: "Reforma fiscală ca alternativă la austeritate"
+  subtitle: "Draft la studiul FES cu acelaşi nume"
   author: "Petre Buciu"
-  date: "5/25/2023"
+  date: "6/07/2023"
   chapters:
     - index.qmd
     - Generalitati.qmd
