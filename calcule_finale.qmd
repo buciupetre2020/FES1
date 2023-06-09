@@ -100,7 +100,7 @@ insumari <- read_csv(here::here("database",
                               "Impozit pe dividende", 
                               "TRANZACŢII IMOBILIARE", 
                               "Coborâre prag microîntreprinderi"),
-                   "Impact"=c(25, 6, 0.35, 2.5))) %>%
+                   "Impact"=c(18, 6, 0.35, 2.5))) %>%
   mutate(sector = c("Eliminare scutiri", "Eliminare scutiri", "Taxe sectoriale", "Eliminare scutiri", "Taxe sectoriale", "Taxe sectoriale", "Creştere impozite", "Creştere impozite", "Taxe sectoriale", "Creştere impozite")) %>% 
   relocate(sector) 
 

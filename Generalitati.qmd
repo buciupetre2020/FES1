@@ -158,6 +158,41 @@ agregate %>% filter(grepl("Total general", na_item)) %>%
 
 Concluzia acestei secţiuni este că nu cheltuielile sunt mari, într-adevăr cu greu ar putea fi tăiate şi mai mult, ci veniturile sunt foarte mici. Doar Irlanda, Elveţia şi Lituania au venituri din PIB mai mici ca noi făcând media ultimilor 10 ani. Pentru anul 2022 România a avut cel mai mic procent din PIB ca venituri, în afară de Irlanda.
 
+## Povara taxării e totuşi mare
+
+Deşi stăm foarte prost ca venituri fiscale şi totale ca procent din PIB, cheltuielile fiind şi ele la coada clasamentului european, povara efectivă asupra salariatului obişnuit este deosebit de mare. OECD are un instrument de calcul al poverii fiscale, `OECD tax calculator`, pentru ţările membre şi câteva nemembre, printre care şi România. Povara fiscală (partea sub 0 a graficului), este cea mai mare în România din toată Europa.
+
+```{r}
+#| fig-width: 9
+#| fig-height: 6
+#| fig-dpi: 200
+
+oecd <- read_csv(here::here("database", "oecd_calculator.csv")) %>%
+        inner_join(read_csv(here::here("database", "dictionar_tari.csv")) %>% 
+                   rename(Country=geo)) %>% select(-Country) %>% 
+        rename(geo=tari) %>% relocate(geo) %>% select(-year)
+
+oecd %>% 
+  mutate(across(net:sc, ~100*./`Average Wage`)) %>% 
+  mutate(across(it:sc, ~-.)) %>% mutate(geo = fct_reorder(geo, net)) %>% 
+  gather(gross:sc, key='Indicator', value='valoare') %>% 
+  mutate(Indicator = gsub("^it$", "Impozit pe venit", Indicator) %>%
+                     gsub("^gross$", "Venit brut din muncă", .) %>%
+                     gsub("^iw$", "Beneficii în muncă", .) %>%
+                     gsub("^sc$", "Contribuţii sociale", .)) %>%
+  ggplot(aes(x=geo, y=valoare, fill=Indicator)) + 
+  geom_col(aes(fill=Indicator)) + 
+  geom_point(aes(x=geo, y=net), shape=8, show.legend = F) + 
+  scale_fill_manual(values=culori[c(7, 3, 5, 1)]) + 
+  theme(axis.text.x=element_text(angle=90, size=12), legend.position = "top") +
+  labs(title = "Povara fiscală şi venitul net per gospodărie", 
+       subtitle="* - Venitul net per gospodărie pentru un cuplu fără copii", 
+       x=NULL, y="%", 
+       caption='Sursa: OECD Tax Calculator, 2022') +
+  scale_y_continuous(labels=scales::percent_format(scale=1), 
+                     breaks = c(200, 150, 100, 50, 0, -50, -100)) 
+```
+
 ## Taxarea capital - muncă conform Băncii Mondiale
 
 Există [un nou set de date](https://blogs.worldbank.org/developmenttalk/new-dataset-measure-effective-taxation-capital-and-labor-globally-1960s) de la Banca Mondială care permite compararea ratelor de taxare efectivă pe capital şi muncă de-a lungul ţărilor şi anilor. Să vedem evoluţia în cele patru ţări din zona noastră.
