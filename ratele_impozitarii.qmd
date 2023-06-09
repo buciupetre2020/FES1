@@ -476,7 +476,7 @@ multiplicator <- expand_grid("cota_1"=0.1,
                          ~insumare(.x, praguri=c(2000*12, 2200*60))/28)) %>% 
   mutate(ratio2 = cut(ratio, breaks=c(-0.01, 1, 2, 3, 4, 5, 10))) %>% 
   ggplot(aes(x=cota_2, y=cota_3, fill=ratio2, 
-             text=paste("Raport:", round(ratio, 3)))) + geom_tile() +
+             text=paste("Raport:", round(ratio, 3)))) + geom_tile(colour='white') +
   scale_fill_viridis_d(option="E") +
   scale_x_continuous(labels=scales::percent_format()) +
   scale_y_continuous(labels=scales::percent_format()) +
