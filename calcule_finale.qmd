@@ -107,7 +107,7 @@ insumari <- read_csv(here::here("database",
 tabel_total <- insumari %>%
 gt::gt(groupname_col = "sector") %>% 
   gt::fmt_number(columns=3, decimals = 2) %>% 
-  tab_header(title="Impact tipuri de măsuri propuse (miliarde RON)", 
+tab_header(title="Impact tipuri de măsuri propuse (miliarde RON)", 
              subtitle="Calcule proprii pe bilanţurile anilor 2019-2021") %>%
   summary_rows(columns=3, fns=list(`TOTAL GRUP`=~sum(., na.rm=TRUE)), 
                fmt = ~fmt_number(.,decimals=2)) %>%
