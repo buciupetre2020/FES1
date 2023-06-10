@@ -477,7 +477,7 @@ multiplicator <- expand_grid("cota_1"=0.1,
   mutate(coefs = pmap(list(cota_1, cota_2, cota_3), c)) %>% 
   mutate(ratio = future_map_dbl(coefs, 
                          ~insumare(.x, praguri=c(600, 2200))/28)) %>% 
-  mutate(ratio2 = cut(ratio, breaks=c(-0.01, 1, 2, 3, 4, 5, 10))) %>% 
+  mutate(ratio2 = cut(ratio, breaks=c(-0.01, 1, 1.5,  2, 2.5, 3, 3.5, 4, 4.5 ,5, 10))) %>% 
   ggplot(aes(x=cota_2, y=cota_3, fill=ratio2, 
              text=paste("Raport:", round(ratio, 3)))) + 
   geom_tile(colour='white') +
