@@ -87,8 +87,7 @@ Doar la o primă vedere cu o taxă marginală de 1 % pe averile celor din top 1 
 
 ## Simulări finale
 
-<div>
-
+::: {style="all:initial;"}
 ```{r}
 
 insumari <- read_csv(here::here("database", 
@@ -100,7 +99,7 @@ insumari <- read_csv(here::here("database",
                               "Impozit pe dividende", 
                               "TRANZACŢII IMOBILIARE", 
                               "Coborâre prag microîntreprinderi"),
-                   "Impact"=c(18, 6, 0.35, 2.5))) %>%
+                   "Impact"=c(15, 6, 0.35, 2.5))) %>%
   mutate(sector = c("Eliminare scutiri", "Eliminare scutiri", "Taxe sectoriale", "Eliminare scutiri", "Taxe sectoriale", "Taxe sectoriale", "Creştere impozite", "Creştere impozite", "Taxe sectoriale", "Creştere impozite")) %>% 
   relocate(sector) 
 
@@ -139,7 +138,7 @@ tab_header(title="Impact tipuri de măsuri propuse (miliarde RON)",
                                         rows=grepl("JOCURI", Masura))) %>%
   gt::tab_footnote(footnote="1.2 % impozit pe cifra de afaceri ce depăşeşte 100 de milioane RON", locations=cells_body(columns=Masura, 
                                           rows=grepl("RETAIL", Masura))) %>%
-  gt::tab_footnote(footnote = "Asumând cote de 16 % şi 21 % pentru ce trece de 2200 EURO lunar brut (scenariul slovac atenuat)", 
+  gt::tab_footnote(footnote = "Cote de 10%, 16 % şi 21 % pentru ce trece de 600, respectiv 2200 EURO lunar brut", 
                    locations=cells_body(columns=Masura, 
                                         rows=grepl("venit", Masura))) %>%
   gt::tab_footnote(footnote="Impozit pe dividende de 18 %", 
@@ -163,11 +162,10 @@ tab_header(title="Impact tipuri de măsuri propuse (miliarde RON)",
     gt::tab_style(cell_text(font="Frutiger Bold"), 
                   cells_title(groups="title"))
 
-tabel_total
+tabel_total |> gt::as_raw_html()
 
 ```
-
-</div>
+:::
 
 Şi acum sub formă de pie chart.
 
@@ -223,3 +221,5 @@ insumari %>%
 
 
 ```
+
+Important de menţionat, în cazul în care se optează pentru implementarea unui credit fiscal pentru ultimii 10 % ai distribuţiei veniturilor (\< 100 euro brut lunar), suma totală mai scade cu 2.5 miliarde RON.
